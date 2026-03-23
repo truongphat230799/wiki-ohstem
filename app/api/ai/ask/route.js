@@ -44,7 +44,7 @@ export async function POST(request) {
 
         // Stream response using Gemini (SDK v1 format)
         const response = await ai.models.generateContentStream({
-            model: 'gemini-2.0-flash',
+            model: 'gemini-3-flash-preview',
             contents: fullPrompt,
             config: {
                 temperature: 0.3,
