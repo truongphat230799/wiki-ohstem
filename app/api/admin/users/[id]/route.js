@@ -1,4 +1,4 @@
-import { getCurrentUser, updateUser, deleteUser, findUserById, sanitizeUser } from '../../../../../../lib/auth'
+import { getCurrentUser, updateUser, deleteUser, findUserById, sanitizeUser } from '../../../../../lib/auth'
 
 // PUT: Update user (level1 only)
 export async function PUT(request, { params }) {
