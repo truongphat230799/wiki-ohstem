@@ -1,0 +1,61 @@
+---
+title: "5. LED 16x8"
+---
+
+# 5. LED 16x8
+
+## **1. Giới thiệu:**
+![led 16x8.1](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/led_16x8.1.png)
+
+
+LED ma trận (16 x 8) có tổng cộng 128 LED đơn được căn chỉnh. Màn hình LED có màu xanh dương. Bằng cách lập trình từ nhiều ngôn ngữ khác nhau, bạn có thể lập trình để đèn LED ma trận chạy chữ, số hoặc ký hiệu tùy thích.
+
+**Thông số kỹ thuật**
+
+    + Điện áp: 3.3V
+    + Giao tiếp: I2C
+    + Kích thước module: 73 x 31 x 15 mm (DxRxC)
+    
+    
+## **2. Chuẩn bị các thiết bị:**
+
+   :header-rows: 1
+
+   * - ![yolo uno](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/yolo_uno.png)
+
+     - ![led 16x8.1](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/led_16x8.1.png)
+    
+   * - Máy tính lập trình Yolo UNO
+     - Led ma trận 16x8
+   * - [Mua sản phẩm ](https://shop.ohstem.vn/san-pham/yolo-uno/)
+     - [Mua sản phẩm ](https://shop.ohstem.vn/san-pham/led-ma-tran-16-8/)
+    
+    
+## **3. Kết nối phần cứng**
+- Kết nối màn hình LED 16x8 vào cổng I2C:
+![led 16x8.2](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/led_16x8.2.jpg)
+
+
+## **4. Hướng dẫn lập trình:**
+- **Tải thư viện LED Matrix 16x8**, bằng các dán đường link bên dưới vào mục tìm kiến thư viện:
+
+    [https://github.com/AITT-VN/yolouno_extension_led_matrix_8x16.git](https://github.com/AITT-VN/yolouno_extension_led_matrix_8x16.git)
+    
+    Xem hướng dẫn tải thư viện `tại đây ](https://docs.ohstem.vn/en/latest/module/thu-vien-yolouno.html)
+![led 16x8.3](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/led_16x8.3.png)
+
+
+Các khối lệnh sau để làm việc với cảm biến:
+![led 16x8.4](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/led_16x8.4.jpg)
+
+
+- **Viết chương trình**:
+![led 16x8.5](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/led_16x8.5.png)
+
+
+    [https://app.ohstem.vn/#!/share/yolouno/2kxUASfJ7N6nAGgzV6GcSu5oQ3K](https://app.ohstem.vn/#!/share/yolouno/2kxUASfJ7N6nAGgzV6GcSu5oQ3K)
+    
+    
+> **Ghi chú:** **Giải thích chương trình:**
+
+Sau mỗi 5 giây, màn hình sẽ hiện dòng chữ “Hello, World!”

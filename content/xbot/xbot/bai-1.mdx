@@ -1,0 +1,135 @@
+---
+title: "5. Bài 1: Cùng di chuyển nào"
+---
+
+# 5. Bài 1: Cùng di chuyển nào
+
+**Mục tiêu:**
+
+Hiểu về động cơ và các khối lệnh giúp cho xBot có thể di chuyển theo ý muốn.
+
+
+## 1. Giới thiệu về động cơ
+Để điều khiển xBot di chuyển, bạn cần hiểu về động cơ và cách hoạt động của chúng.
+
+Các động cơ này sẽ giúp cho xBot di chuyển tự do nhiều hướng (tiến tới, lùi lại, rẽ trái, rẽ phải) hoặc thực hiện một tác vụ phức tạp nào đó theo yêu cầu.
+![xbot bai 1.1](/images/xbot/xbot/Images/xbot_bai_1.1.png)
+
+
+**Động cơ có trên xBot**
+![xbot bai 1.2](/images/xbot/xbot/Images/xbot_bai_1.2.png)
+
+
+## 2. Khối kệnh điều khiển động cơ
+Để điều khiển động cơ, bạn sẽ dùng các khối lệnh theo những cách sau:
+
+- **Cách 1: Điều khiển 2 động cơ cùng lúc**
+![xbot bai 1.3](/images/xbot/xbot/Images/xbot_bai_1.3.png)
+
+
+Bạn hãy thử đặt xBot xuống nền nhà và chạy thử lệnh trên xem robot di chuyển đúng không nhé.
+
+Ngoài ra, bạn cũng có thể sử dụng khối lệnh di chuyển với thời gian vô hạn sau:
+![xbot bai 1.4](/images/xbot/xbot/Images/xbot_bai_1.4.png)
+![xbot bai 1.5](/images/xbot/xbot/Images/xbot_bai_1.5.png)
+
+
+- **Cách 2: Điều khiển từng động cơ riêng biệt**
+
+Bạn cũng có thể điều khiển từng động cơ riêng biệt để xBot di chuyển theo ý muốn.
+![xbot bai 1.6](/images/xbot/xbot/Images/xbot_bai_1.6.png)
+![xbot bai 1.7](/images/xbot/xbot/Images/xbot_bai_1.7.png)
+![xbot bai 1.8](/images/xbot/xbot/Images/xbot_bai_1.8.png)
+
+
+- **Mô tả**
+
+1. Tốc độ quay của mỗi động cơ có giá trị từ -100 đến 100.
+
+    ◼ Tốc độ > 0: Động cơ quay thuận chiều, xBot đi tới.
+    
+    ◼ Tốc độ < 0: Động cơ quay ngược chiều, xBot lùi lại.
+    
+2. Giá trị tốc độ càng lớn thì động cơ quay càng nhanh.
+
+
+## 3. Viết chương trình di chuyển
+- **Chương trình 1:** Ở trên xBot có một nút nhấn, khi nút được nhấn, xBot di chuyển về phía trước 1 giây và sau đó lùi lại 1 giây.
+![xbot bai 1.10](/images/xbot/xbot/Images/xbot_bai_1.10.png)
+
+
+**Khối lệnh chương trình**
+![xbot bai 1.11](/images/xbot/xbot/Images/xbot_bai_1.11.png)
+
+
+**Sơ đồ hoạt động**
+![xbot bai 1.12](/images/xbot/xbot/Images/xbot_bai_1.12.png)
+
+
+- **Chương trình 2:** Khi nút được nhấn, xBot sẽ rẽ sang trái trong 1 giây và sau đó rẽ sang phải trong 1 giây.
+
+**Sơ đồ hoạt động**
+![xbot bai 1.13](/images/xbot/xbot/Images/xbot_bai_1.13.png)
+
+
+**Khối lệnh chương trình**
+![xbot bai 1.14](/images/xbot/xbot/Images/xbot_bai_1.14.png)
+
+
+- **Chương trình 3**: Khi nút được nhấn, chương trình hoạt động theo mô tả sau:
+
+1. Quay động cơ trái trong vòng 1 giây (dừng động cơ phải)
+
+2. Quay động cơ phải trong vòng 1 giây (dừng động cơ phải)
+
+3. Dừng cả 2 động cơ
+
+
+**Sơ đồ hoạt động**
+![xbot bai 1.15](/images/xbot/xbot/Images/xbot_bai_1.15.png)
+
+
+**Khối lệnh chương trình**
+![xbot bai 1.16](/images/xbot/xbot/Images/xbot_bai_1.16.png)
+
+
+## 4. Chương trình mở rộng
+Trong phần trước, bạn đã biết cách điều khiển xBot di chuyển đơn giản.
+
+Trong phần này, bạn hãy thử viết một chương trình phức tạp hơn: **Cho xBot di chuyển theo hình vuông sau khi được nhấn** như hình bên cạnh.
+
+**Điều kiện**: *xBot sẽ tiến tới và rẽ sau mỗi 2 giây.*
+![xbot bai 1.17](/images/xbot/xbot/Images/xbot_bai_1.17.png)
+
+
+**Bước 1**: Cho xBot tiến tới 2 giây vẽ rẽ phải 0.5 giây.
+![xbot bai 1.18](/images/xbot/xbot/Images/xbot_bai_1.18.png)
+
+
+*Bạn cần thử nghiệm và chỉnh sửa thời gian rẽ phải để xBot có thể rẽ được một góc vuông. Thời gian này sẽ khác nhau tùy thuộc vào địa hình và dung lượng pin của xBot.*
+
+**Bước 2**: Tạo ra 4 bản sao của thao tác di chuyển, ứng với 4 cạnh hình vuông.
+![xbot bai 1.19](/images/xbot/xbot/Images/xbot_bai_1.19.png)
+
+
+Sau khi chạy chương trình, hãy đặt xBot lên mặt phẳng rộng và nhấn nút để bắt đầu di chuyển.
+
+Do nhiều yếu tố, xBot sẽ không thể chạy hình vuông chính xác. Bạn cần tinh chỉnh tốc độ (càng chậm càng chính xác) và thời gian rẽ để đường đi giống hình vuông nhất.
+
+## 5. Bài tập mở rộng
+Chúng ta thấy chương trình ở phần 3-4 khá dài, có 2 khối lệnh tiến tới và rẽ phải được lặp lại 4 lần. Để rút gọn chương trình, bạn có thể sử dụng khối lệnh lặp lại 4 lần.
+
+Chương trình khi đó sẽ như sau:
+
+**Sơ đồ hoạt động**
+![xbot bai 1.20](/images/xbot/xbot/Images/xbot_bai_1.20.png)
+
+
+**Khối lệnh chương trình**
+![xbot bai 1.21](/images/xbot/xbot/Images/xbot_bai_1.21.png)
+
+
+## 6. Câu hỏi ôn tập
+1. Công dụng của động cơ trên xBot là gì?
+
+2. Có bao nhiều cách để lập trình điểu khiển động cơ? Liệt kê những khối lệnh cần dùng.

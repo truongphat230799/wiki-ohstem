@@ -1,0 +1,75 @@
+---
+title: "10. Bài 7: Khóa cửa thông minh"
+---
+
+# 10. Bài 7: Khóa cửa thông minh
+
+## Mục tiêu
+Trong bài học này, chúng ta sẽ cùng làm một kháo cửa thông minh bằng mật mã cho mô hình Smart Home nhé. Bạn sẽ dùng nút A và B trên Yolo:Bit để nhập mật khẩu, nếu đúng thì cửa sẽ mở, nếu sai thì Smart Home sẽ thông báo sai mật khẩu để nhập lại.
+
+## Thiết bị cần dùng
+- Màn hình LCD
+![homebit 39](/images/yolobit_v2/homebit/Images/homebit_39.png)
+
+
+- Động cơ Servo
+![homebit 75](/images/yolobit_v2/homebit/Images/homebit_75.png)
+
+
+## Kết nối
+- Kết nối màn hình LCD vào cổng l2C 1
+
+- Kết nối Servo vào chân P6
+![homebit 76](/images/yolobit_v2/homebit/Images/homebit_76.png)
+
+
+## Giới thiệu về động cơ Servo
+Servo là một dạng động cơ điện đặc biệt, chỉ quay khi được điều khiển (bằng tín hiệu xung) với góc quay nằm trong khảong bất kỳ từ 0 - 180 độ.
+
+## Giới thiệu khối lệnh
+![homebit 77](/images/yolobit_v2/homebit/Images/homebit_77.png)
+![homebit 78](/images/yolobit_v2/homebit/Images/homebit_78.png)
+![homebit 79](/images/yolobit_v2/homebit/Images/homebit_79.png)
+![homebit 80](/images/yolobit_v2/homebit/Images/homebit_80.png)
+
+
+## Viết chương trình
+1. Tạo 2 biến: **mật khẩu cài đặt** (Mật khẩu đúng để mở cửa) và **mật khẩu đã nhập** (Mật khẩu khi nhập vào)
+
+    Gán giá trị **AABB** cho mật khẩu cài đặt và gán giá trị rỗng cho mật khẩu đã nhập
+![homebit 81](/images/yolobit_v2/homebit/Images/homebit_81.png)
+
+
+2. Khi nút A được nhấn, phát ra một nốt nhạc và thêm 1 kí tự A vào chuỗi mật khẩu đã nhập trước đó
+
+Ví dụ: nếu bạn đã nhâkp AAB trước đó, sau khi nhấn A lần nữa, mật khẩu đã nhập sẽ là AABA
+![homebit 82](/images/yolobit_v2/homebit/Images/homebit_82.png)
+
+
+3. Xóa màn hình LCD trước đó và hiển thị mật khẩu đã nhập lên màn hình LCD trong vòng 300 ms (0.3 giây)
+![homebit 83](/images/yolobit_v2/homebit/Images/homebit_83.png)
+
+
+4. Tương tự, nếu nút B được nhấn thì Yolo:Bit sẽ phát nốt nhạc G3 để báo hiệu, đồng thời lưu thông tin vào mật khẩu đã nhập và hiển thị chúng ra màn hình LCD trong 300 ms:
+![homebit 84](/images/yolobit_v2/homebit/Images/homebit_84.png)
+
+
+5. Kiểm tra độ dài của mật khẩu đã nhập đủ 4 ký tự chưa. Nếu đủ thì xóa màn hình LCD
+![homebit 85](/images/yolobit_v2/homebit/Images/homebit_85.png)
+
+
+6. Nếu mật khẩu đúng (mật khẩu đã nhập bằng mật khẩu cài đặt) thì LCD hiển thị dòng “Xin moi vao” và phát bài nhạc POWER_UP, đồng thời quay Servo mở cửa trong 3 giây, sau đó đóng cửa và tắt Servo (Bạn nhớ đổi cổng của Servo thành cổng P6):
+![homebit 86](/images/yolobit_v2/homebit/Images/homebit_86.png)
+
+
+7. Nếu mật khẩu sai, màn hình LCD hiển thị “Sai mật khẩu” và phát bài nhạc POWER_DOWN, đồng thời xóa mật khẩu đã nhập tại cuối chương trình (Cho biến mật khẩu đã nhập bằng giá trị rỗng)
+![homebit 87](/images/yolobit_v2/homebit/Images/homebit_87.png)
+
+
+Chương trình trong lặp lại mãi như sau:
+![homebit 88](/images/yolobit_v2/homebit/Images/homebit_88.png)
+
+
+## Chương trình mẫu
+- Khóa cửa thông minh: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2Cvv7s5egExaIP4Lc9tR9Nx8P9q)
+![homebit 89](/images/yolobit_v2/homebit/Images/homebit_89.png)

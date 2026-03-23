@@ -1,0 +1,60 @@
+---
+title: "4. Bài 1: Điều khiển đèn bằng Remote"
+---
+
+# 4. Bài 1: Điều khiển đèn bằng Remote
+
+## Mục tiêu
+Trong bài học đầu tiên, chúng ta sẽ sử dụng đèn LED trên Yolo:Bit để mô phỏng đèn chiếu sáng trong nhà, có thể bật tắt bằng remote hồng ngoại điều khiển từ xa:
+
+- Nhấn nút A trên remote để bật đèn
+
+- Nhấn nút C trên remote để tắt đèn
+
+## Thiết bị cần dùng
+- Mắt đọc IR
+![homebit 23.1](/images/yolobit_v2/homebit/Images/homebit_23.1.png)
+
+
+- Remote điều khiển
+![homebit 23](/images/yolobit_v2/homebit/Images/homebit_23.png)
+
+
+## Kết nối
+Kết nối **mắt đọc IR** vào cổng P1
+![homebit 24](/images/yolobit_v2/homebit/Images/homebit_24.png)
+
+
+## Giới thiệu khối lệnh
+![homebit 22.1](/images/yolobit_v2/homebit/Images/homebit_22.1.png)
+![homebit 22.3](/images/yolobit_v2/homebit/Images/homebit_22.3.png)
+![homebit 22.2](/images/yolobit_v2/homebit/Images/homebit_22.2.png)
+![homebit 22](/images/yolobit_v2/homebit/Images/homebit_22.png)
+
+
+## Viết chương trình
+1. Kéo khối lệnh điều kiện vào phần lặp lại mãi mãi
+![homebit 25](/images/yolobit_v2/homebit/Images/homebit_25.png)
+
+
+2. Nếu nút A được nhấn, đèn LED sẽ bật màu đỏ
+
+**Cách thực hiện:**
+
+- Kéo khối **cảm biến IR đọc được nút A** vào phần Nếu
+
+- Kéo khối lệnh **đổi màu tất cả đèn LED** thành màu đỏ vào phần Thực hiện
+![homebit 26](/images/yolobit_v2/homebit/Images/homebit_26.png)
+
+
+3. Xóa tín hiệu đã thu được từ remote (để không trùng lặp với tín hiệu sau đó)
+![homebit 27](/images/yolobit_v2/homebit/Images/homebit_27.png)
+
+
+4. Tương tự, lập trình để khi nút C được nhấn, đèn LED sẽ tắt (chuyển thành màu đen)
+![homebit 28](/images/yolobit_v2/homebit/Images/homebit_28.png)
+
+
+## Chương trình mẫu
+- Điều khiển đèn bằng Remote: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2CvfwiFXldLghTqTQf9B19e19N6)
+![homebit 28.1](/images/yolobit_v2/homebit/Images/homebit_28.1.png)

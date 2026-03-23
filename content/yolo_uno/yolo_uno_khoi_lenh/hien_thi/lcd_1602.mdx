@@ -1,0 +1,68 @@
+---
+title: "2. Hiển thị chữ \"Hello\" lên màn hình LCD 1602"
+---
+
+# 2. Hiển thị chữ "Hello" lên màn hình LCD 1602
+
+## 1. Mục tiêu
+Làm quen mới module LCD 16x2 để hiện thị các thông tin dạng ký tự
+
+## 2. Thiết bị cần sử dụng
+- Mạch Yolo UNO:
+![yolo uno](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/yolo_uno.png)
+
+
+- Module led RGB kèm dây tín hiệu:
+![lcd 1602](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/lcd_1602.png)
+
+
+## 3. Kết nối phần cứng
+- Kết nối màn hình LCD 1602 với cổng I2C1 trên Yolo UNO
+![lcd 1602 2](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/lcd_1602_2.png)
+
+
+## 4. Chương trình lập trình
+- **Câu lệnh hiển thị lên màn hình LCD:**
+![lcd 1602 1](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/lcd_1602_1.png)
+
+
+- **Chương trình lập trình:**
+![lcd 1602 3](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/lcd_1602_3.png)
+
+
+## 5. Chương trình mẫu
+Nhấp vào chữ tại đây để xem chương trình mẫu, hoặc quét mã QR bên dưới để xem chương trình.
+
+Hiển thị chữ "Hello" lên màn hình LCD 1602: [Tại đây ](https://app.ohstem.vn/#!/share/yolouno/2aLhIA7hTZTg3i7un0onIfXzpUE)
+![lcd 1602 4](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/lcd_1602_4.png)
+
+
+## 6. Hướng dẫn sử dụng nhiều màn hình I2C với Yolo UNO
+Để kết nối thêm nhiều màn hình LCD1602 trên mạch Yolo UNO, hãy chú ý đến các chân ở vị trí mặt sau của màn hình LCD là A0, A1, A2. Các chân này dùng để điều chỉnh địa chỉ giao tiếp của LCD.
+![lcd 1602 5](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/lcd_1602_5.png)
+
+
+**Cách thay đổi địa chỉ I2C của màn hình LCD:**
+
+Để sử dụng thêm các màn hình khác **bạn hãy dùng mỏ hàn chì để hàn để nối 2 đầu của 1 điểm lại với nhau để thay đổi địa chỉ I2C của màn hình**, tương tự minh họa sau:
+![lcd 1602 6](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/lcd_1602_6.png)
+
+
+**Hình trên đã nối điểm A0 lại với nhau, do đó màn hình sẽ thay đổi địa chỉ I2C thành 0x20 (theo hệ Hexa) tương đương địa chỉ 32 (hệ thập phân)**. Và mặc định địa chỉ I2C LCD của OhStem là 0x21, tương đương địa chỉ 33.
+
+Với 3 điểm A0, A1, A2, chúng ta sẽ có cách nối chân và địa chỉ của từng điểm như sau:
+![lcd 1602 7](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/lcd_1602_7.png)
+
+
+Sau khi thay đổi xong, kết nối 2 màn hình LCD với Yolo UNO như sau:
+![lcd 1602 8](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/lcd_1602_8.png)
+
+
+**Chương trình minh họa:**
+![lcd 1602 9](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/lcd_1602_9.png)
+
+
+    Link chương trình mẫu: [https://app.ohstem.vn/#!/share/yolouno/2beztfKCZVhSZx83KqmAZiwOplv](https://app.ohstem.vn/#!/share/yolouno/2beztfKCZVhSZx83KqmAZiwOplv)
+    
+**Giải thích chương trình:** Sử dụng 1 biến đếm để kiểm tra sự thay đổi của màn hình sau mỗi 4 giây để đảm bảo 2 màn hình hoạt động song song ổn định. Chạy chương trình và kiểm tra thử kết quả, Yolo UNO đã dùng được 2 màn hình song song
+![lcd 1602 10](/images/yolo_uno/yolo_uno_khoi_lenh/hien_thi/images/lcd_1602_10.png)

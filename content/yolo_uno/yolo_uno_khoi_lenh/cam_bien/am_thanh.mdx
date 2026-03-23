@@ -1,0 +1,67 @@
+---
+title: "7. Cảm biến âm thanh"
+---
+
+# 7. Cảm biến âm thanh
+
+## **1. Giới thiệu:**
+![am thanh.1](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/am_thanh.1.jpg)
+
+
+Cảm biến âm thanh là loại cảm biến dùng để phát hiện cường độ âm thanh trong môi trường xung quanh. Thành phần chính của cảm biến này là bộ khuếch đại công suất thấp LM358. Cảm biến thường được sử dụng để xây dựng một số dự án như: Công tắc điều khiển bằng giọng nói, cảnh báo tiếng ồn…
+
+Với hướng dẫn này, chúng ta sẽ làm dự án cảnh báo tiếng ồn và hiển thị ra màn hình kết quả âm thanh đo được.
+
+
+**Thông số kỹ thuật**
+
+    + Điện áp hoạt động: 3.3V
+    + Độ nhạy microphone (1 Khz): 50-54dB
+    + Nội trở microphone: 2.2 KΩ
+    + Tần số của microphone : 16-20 KHz
+    + Dạng tín hiệu: ngõ ra analog
+    + Dòng điện tối đa: 0.5mA
+    + IC khuếch đại công suất: LM358
+    
+    
+## **2. Chuẩn bị các thiết bị:**
+
+   :header-rows: 1
+
+   * - ![yolo uno](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/yolo_uno.png)
+
+     - ![am thanh.1](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/am_thanh.1.jpg)
+    
+   * - Máy tính lập trình Yolo UNO
+     - Cảm biến âm thanh
+   * - [Mua sản phẩm ](https://shop.ohstem.vn/san-pham/yolo-uno/)
+     - [Mua sản phẩm ](https://shop.ohstem.vn/san-pham/cam-bien-am-thanh/)
+    
+    
+## **3. Kết nối phần cứng**
+Kết nối cảm biến âm thanh vào **cổng Analog: A0 - A1** (có thể kết nối các cổng Analog khác từ A0 - A6)
+![am thanh.2](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/am_thanh.2.jpg)
+
+
+## **4. Hướng dẫn lập trình:**
+- **Giới thiệu khối lệnh:**
+
+    + Câu lệnh dùng để đọc kết quả đo tiếng ồn
+![am thanh.3](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/am_thanh.3.jpg)
+
+
+    + Câu lệnh in kết quả ra cửa sổ Serial
+![am thanh.4](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/am_thanh.4.jpg)
+
+
+- **Viết chương trình:**
+![am thanh.5](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/am_thanh.5.jpg)
+
+
+        [https://app.ohstem.vn/#!/share/yolouno/2kuBRft3hvQQIaNm2fBIueH4jQr](https://app.ohstem.vn/#!/share/yolouno/2kuBRft3hvQQIaNm2fBIueH4jQr)
+    
+    Sau khi hoàn thiện chương trình, thực hiện thao tác bật cửa sổ Serial như sau:
+![am thanh.6](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/am_thanh.6.jpg)
+
+
+Kết nối và gửi chương trình xuống Yolo UNO, kết quả chương trình sẽ được in ra cửa sổ serial sau mỗi giây. Đồng thời, nếu kết quả đo được trên mức 20 thì đèn LED trên board bật đèn đỏ. Ngược lại, tắt đèn.

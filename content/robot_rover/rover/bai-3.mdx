@@ -1,0 +1,59 @@
+---
+title: "6. Bài 3: Thắp sáng"
+---
+
+# 6. Bài 3: Thắp sáng
+
+*Trời đã xế chiều, Rover cần đi qua một đường hầm tối để đến thành phố bên kia. Hãy giúp Rover bật đèn chiếu sáng khi trời tối để đi qua đường hầm.*
+
+
+## Mục tiêu
+1. Điều khiển đèn pha trên Rover
+2. Hiểu biết và ứng dụng cảm biến ánh sáng trên Yolo:Bit
+3. Biết cách sử dụng câu lệnh điều kiện
+4. Làm quen với phép toán tử so sánh
+
+## Bộ phận điện tử
+- Cảm biến ánh sáng có thể cảm nhận cường độ ánh sáng của môi trường, cụ thể là sáng hoặc tối
+![bai 3.1](/images/robot_rover/rover/images/bai_3.1.png)
+
+
+- Đèn LED có tác dụng phát sáng, Rover sử dụng đèn LED với chức năng là đèn pha
+![bai 3.2](/images/robot_rover/rover/images/bai_3.2.png)
+
+
+## Giới thiệu khối lệnh
+- Khối lệnh điều kiện:
+![bai 3.3](/images/robot_rover/rover/images/bai_3.3.png)
+
+
+- Khối lệnh so sánh:
+![bai 3.4](/images/robot_rover/rover/images/bai_3.4.png)
+
+
+- Khối lệnh độ sáng:
+
+    Giá trị độ sáng được giới hạn trong khoảng từ 0-100.Trong đó: 80-100 là ánh sáng ngoài trời, 30-79 là ánh sáng trong phòng, 10-29 là ánh sáng tối, 0-9 là trời tối
+![bai 3.5](/images/robot_rover/rover/images/bai_3.5.png)
+
+
+- Khối lệnh bật đèn pha:
+![bai 3.6](/images/robot_rover/rover/images/bai_3.6.png)
+
+
+- Khối lệnh số:
+![bai 3.7](/images/robot_rover/rover/images/bai_3.7.png)
+
+
+## Viết chương trình
+1. Tạo điều kiện: kiểm tra độ sáng môi trường, nếu trời tối (giá trị < 5)
+![bai 3.8](/images/robot_rover/rover/images/bai_3.8.png)
+
+
+2. Bật đèn khi điều kiện đúng, tắt đèn khi điều kiện sai, cho thời gian tạm dừng là 0,1s (100 milli giây)
+![bai 3.9](/images/robot_rover/rover/images/bai_3.9.png)
+
+
+## Chương trình mẫu
+- Thắp sáng [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2BeUMyVld6irjlm4IwBoNkwOAAy)
+![bai 3.10](/images/robot_rover/rover/images/bai_3.10.png)

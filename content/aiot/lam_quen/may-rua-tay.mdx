@@ -1,0 +1,65 @@
+---
+title: "13. Máy rửa tay không chạm"
+---
+
+# 13. Máy rửa tay không chạm
+
+## 1. Mục tiêu
+Thực hiện một hệ thống máy rửa tay không tiếp xúc sử dụng cảm biến siêu âm và bơm mini góp phần phòng chống các bệnh lây nhiễm.
+
+## 2. Thiết bị cần dùng
+- Mạch Yolo:Bit
+- Mạch mở rộng Yolo:Bit.
+![4.1](/images/aiot/lam_quen/images/4.1.jpg)
+
+
+- Module đóng ngắt 2 kênh
+![12.2](/images/aiot/lam_quen/images/12.2.jpg)
+
+
+- Máy bơm mini
+![12.3](/images/aiot/lam_quen/images/12.3.jpg)
+
+
+- Cảm biến siêu âm
+![13.1](/images/aiot/lam_quen/images/13.1.jpg)
+
+
+## 3. Kết nối
+- Kết nối module đóng ngắt 2 kênh vào cổng P14/15
+- Kết nối máy bơm mini ở cổng output1
+- Kết nối cảm biến siêu âm với cổng P10/13
+![13.2](/images/aiot/lam_quen/images/13.2.png)
+
+
+## 4. Lập trình
+- **Giới thiệu khối lệnh**
+Để làm việc cảm biến siêu âm, chúng ta sẽ sử dụng các khối lệnh sau:
+![13.3](/images/aiot/lam_quen/images/13.3.png)
+
+
+Khối lệnh đầu tiên sẽ giúp chúng ta đo khoảng cách từ cảm biến đến vật thể. Khối lệnh thứ 2 sẽ đo khoảng cách từ cảm biến và so sánh với điều kiện nhập vào.
+
+- **Lập trình**
+
+Khi sử dụng cảm biến siêu âm, trước tiên, chúng ta cần khai báo tên cổng mà bạn cắm cảm biến trên mạch mở rộng:
+![13.4](/images/aiot/lam_quen/images/13.4.png)
+
+
+Ở dự án này, để đơn giản nhất, chúng ta sẽ sử dụng khối lệnh thứ 2:
+![13.5](/images/aiot/lam_quen/images/13.5.png)
+
+
+Chúng ta sẽ kết hợp khối lệnh trên với câu lệnh điều kiện để viết chương trình: Nếu khoảng cách bé hơn 5cm, máy bơm sẽ bật 3 giây rồi tắt. Ngược lại, nếu khoảng cách lớn hơn 5cm,  máy bơm sẽ không hoạt động.
+
+Chương trình sẽ như sau:
+![13.6](/images/aiot/lam_quen/images/13.6.png)
+
+
+Ghép hai chương trình lại với nhau, ta có chương trình hoàn chỉnh như sau:
+![13.7](/images/aiot/lam_quen/images/13.7.png)
+
+
+## 5. Chương trình mẫu
+- Máy rửa tay tự động: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2EWaqT2WCLVzMDowaSU8ntHQa63)
+![13.8](/images/aiot/lam_quen/images/13.8.png)

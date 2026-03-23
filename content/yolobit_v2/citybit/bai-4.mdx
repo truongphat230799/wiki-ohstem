@@ -1,0 +1,117 @@
+---
+title: "6. Bài 4: Hệ thống cảnh báo tiếng ồn"
+---
+
+# 6. Bài 4: Hệ thống cảnh báo tiếng ồn
+
+## Mục tiêu
+Tại các khu vực cần sự yên tĩnh như trường học, bệnh viện, chúng ta sẽ thiết lập một hệ thống đo lường và cảnh báo khi tiếng ồn vượt hạn mức cho phép. Hệ thống sẽ lưu lại số lần vượt mức và hiển thị chúng lên màn hình LCD.
+
+
+## Kết nối
+- Cảm biến âm thanh (P0)
+![bai 4.1](/images/yolobit_v2/citybit/images/bai_4.1.png)
+
+    |
+- Màn hình LCD OLED (I2C1)
+![bai 4.2](/images/yolobit_v2/citybit/images/bai_4.2.png)
+
+    |
+- **Kết nối**
+![bai 4.3](/images/yolobit_v2/citybit/images/bai_4.3.png)
+
+    |
+    
+## Lắp ráp mô hình
+![bai 4.4](/images/yolobit_v2/citybit/images/bai_4.4.png)
+
+    |
+![bai 4.5](/images/yolobit_v2/citybit/images/bai_4.5.png)
+
+    |
+    
+## Giới thiệu khối lệnh
+![bai 4.6](/images/yolobit_v2/citybit/images/bai_4.6.png)
+
+    |
+![bai 4.7](/images/yolobit_v2/citybit/images/bai_4.7.png)
+
+    |
+![bai 4.8](/images/yolobit_v2/citybit/images/bai_4.8.png)
+
+    |
+    
+    
+## Giới thiệu về hàm
+- Với những chương trình dài có nhiều khối lệnh, chúng ta sẽ sử dụng **Hàm** để rút gọn những chương trình đó.
+![bai 4.9](/images/yolobit_v2/citybit/images/bai_4.9.png)
+
+    |
+- **Hàm** giống như việc bạn tạo thêm một loại khối lệnh mới để sử dụng, và khối lệnh này bao gồm các khối lệnh con bên trong
+![bai 4.10](/images/yolobit_v2/citybit/images/bai_4.10.png)
+
+    |
+**Cách tạo và sử dụng hàm**
+
+1. Chọn mục **Nâng cao** >> **Hàm**: sử dụng khối lệnh hàm để làm gì để tạo hàm.
+![bai 4.11](/images/yolobit_v2/citybit/images/bai_4.11.png)
+
+    |
+2. Đưa các khối lệnh vào trong hàm, sau đó đặt tên cho hàm.
+![bai 4.12](/images/yolobit_v2/citybit/images/bai_4.12.png)
+
+    |
+3. Khối lệnh mới với tên vừa đặt sẽ xuất hiện trong mục **Hàm**.
+![bai 4.13](/images/yolobit_v2/citybit/images/bai_4.13.png)
+
+    |
+    
+## Viết chương trình
+1. Tạo một hàm để khởi động lại màn hình.
+
+    • In ra nội dung “Vi pham: 0”, “Do on toi da: 0” tại dòng 15 và dòng 30
+![bai 4.14](/images/yolobit_v2/citybit/images/bai_4.14.png)
+
+    |
+2. Tạo 2 biến để chứa thông tin về số lần tiếng ồn vượt mức và giá trị tiếng ồn cao nhất, gán dữ liệu số cho 2 biến:
+![bai 4.15](/images/yolobit_v2/citybit/images/bai_4.15.png)
+
+    |
+3. Khởi tạo màn hình LCD và đổi màu tất cả đèn LED thành màu xanh lá, sau đó khởi động lại màn hình LCD
+![bai 4.16](/images/yolobit_v2/citybit/images/bai_4.16.png)
+
+    |
+4. Tạo biến độ ồn và gán giá trị nhận từ cảm biến âm thanh
+![bai 4.17](/images/yolobit_v2/citybit/images/bai_4.17.png)
+
+    |
+5. Nếu tiếng ồn lớn hơn mức 15, ta sẽ hiển thị giá trị tiếng ồn lên màn hình LED của Yolo:Bit dưới dạng biểu đồ phần trăm
+![bai 4.18](/images/yolobit_v2/citybit/images/bai_4.18.png)
+
+    |
+6. Chương trình liên tục kiểm tra và lưu giá trị tiếng ồn cao nhất vào biến
+![bai 4.19](/images/yolobit_v2/citybit/images/bai_4.19.png)
+
+    |
+7. Nếu giá trị tiếng ồn lớn hơn 25:
+
+    - Đổi tất cả LED thành màu đỏ
+    
+    - Cộng thêm 1 vào biến số lần vượt mức
+    
+    - Xóa màn hình LCD trước đó và hiển thị số lần vượt mức (dòng 15), giá trị tiếng ồn cao nhất (dòng 30) ra màn hình
+![bai 4.20](/images/yolobit_v2/citybit/images/bai_4.20.png)
+
+    |
+8.  Tạm dừng 50ms
+![bai 4.21](/images/yolobit_v2/citybit/images/bai_4.21.png)
+
+    |
+9. Nhấn nút A để đặt lại số liệu, bật đèn LED màu xanh để báo hiệu
+![bai 4.22](/images/yolobit_v2/citybit/images/bai_4.22.png)
+
+    |
+    
+## Chương trình mẫu
+- Hệ thống cảnh báo tiếng ồn: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2FzsE3AQWdALyRoOkKQ0IdAesPE)
+![bai 4.24](/images/yolobit_v2/citybit/images/bai_4.24.png)

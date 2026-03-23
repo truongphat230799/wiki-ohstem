@@ -1,0 +1,57 @@
+---
+title: "11. Bài 8: Vết tích để lại"
+---
+
+# 11. Bài 8: Vết tích để lại
+
+*Thủ phạm đã bị bắt, nhưng mọi chuyện chưa dừng ở đó. Rover cần khám nghiệm hiện trường để tìm lại những thứ đã mất. Phát hiện dấu vết là biệt tài của Rover.*
+
+
+## Mục tiêu
+- Làm quen cảm biến dò đường
+
+
+## Bộ phận điện tử
+- Cảm biến dò đường trên Rover gồm 4 mắt đọc nằm ở mặt dưới xe được đánh số từ S1 đến S4.
+
+
+- Cảm biến này giúp Rover phát hiện vạch đen bên dưới để di chuyển, hoặc tránh né tùy theo mục đích lập trình
+![bai 8.1](/images/robot_rover/rover/images/bai_8.1.png)
+
+
+- Cảm biến dò đường trên Rover hoạt động như thế nào?
+![bai 8](/images/robot_rover/rover/images/bai_8.png)
+
+
+    - Mắt đọc dò đường sẽ phát ra và thu về hồng ngoại. Tùy theo mức độ hồng ngoại nhận lại mà xác định được bên dưới là vạch đen hay nền trắng.
+![bai 8.2](/images/robot_rover/rover/images/bai_8.2.png)
+
+
+    - Phía trên Rover có các đèn báo hiệu tương ứng với từng mắt đọc:
+    
+        - Đọc được nền trắng: Đèn sáng
+        - Đọc được nền đen: Đèn tắt
+![bai 8.3](/images/robot_rover/rover/images/bai_8.3.png)
+
+
+## Giới thiệu khối lệnh
+- Khối lệnh đọc line:
+![bai 8.4](/images/robot_rover/rover/images/bai_8.4.png)
+
+
+## Viết chương trình
+1. Viết chương trình
+![bai 8.5](/images/robot_rover/rover/images/bai_8.5.png)
+
+
+2. Tạo điều kiện đầu tiên: **Nếu mắt S1 đọc được vạch đen, bật đèn số 1, 2, 3. Nếu không, tắt đèn**
+![bai 8.6](/images/robot_rover/rover/images/bai_8.6.png)
+
+
+3. Tạo điều kiện thứ 2: **Nếu mắt S4 đọc được vạch đen, bật đèn số 4, 5, 6. Nếu không, tắt đèn**
+![bai 8.7](/images/robot_rover/rover/images/bai_8.7.png)
+
+
+## Chương trình mẫu
+- Vết tích để lại: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2BeWXV0PSKrWqs4gdNub3l7LaW6)
+![bai 8.8](/images/robot_rover/rover/images/bai_8.8.png)

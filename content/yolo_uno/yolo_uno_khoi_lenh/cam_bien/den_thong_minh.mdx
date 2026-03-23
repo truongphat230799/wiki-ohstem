@@ -1,0 +1,55 @@
+---
+title: "1. Đèn thông minh"
+---
+
+# 1. Đèn thông minh
+
+## 1. Mục tiêu
+Chúng ta hãy cùng lập trình một chiếc đèn thông minh, có thể bật tắt tự động dựa vào ánh sáng nhé. Cụ thể, khi trời tối (độ sáng < 30%) thì đèn sẽ tự bật. Ngược lại, khi trời sáng thì đèn sẽ tự tắt.
+
+## 2. Thiết bị cần sử dụng
+- Mạch Yolo UNO:
+![yolo uno](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/yolo_uno.png)
+
+
+- Module led RGB kèm dây tín hiệu:
+![tiny rgb](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/tiny_rgb.png)
+
+
+- Module cảm biến ánh sáng kèm dây tín hiệu:
+![cb anh sang](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/cb_anh_sang.png)
+
+
+## 3. Kết nối phần cứng
+- Module Led RGB kết nối vào cổng D3 - D4
+
+- Module cảm biến ánh sáng kết nối vào cổng A1 - A2
+![den thong minh 1](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/den_thong_minh_1.png)
+
+
+    Cảm biến ánh sáng có giá trị trả về là analog, do đó bạn có thể kết nối với các chân P0, P1, P2 trên mạch mở rộng
+    
+    
+## 4. Chương trình lập trình
+- **Câu lệnh điều kiện:**
+
+Trong phần này, chúng ta sẽ dùng đến khối lệnh điều kiện trong mục LOGIC:
+![den thong minh 2](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/den_thong_minh_2.png)
+
+
+Câu lệnh đọc kết quả của cảm biến ánh sáng:
+![den thong minh 3](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/den_thong_minh_3.png)
+
+
+- **Chương trình lập trình:**
+![den thong minh 4](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/den_thong_minh_4.png)
+
+
+- **Giải thích chương trình:**  Sau khi thực hiện gửi chương trình lên Yolo UNO, đèn LED trên Yolo UNO sẽ chớp tắt đèn đỏ. Hãy thử dùng tay che cảm biến ánh sáng, module 4 LED RGB sẽ bật đèn màu trắng.
+
+
+## 5. Chương trình mẫu
+Nhấp vào chữ tại đây để xem chương trình mẫu, hoặc quét mã QR bên dưới để xem chương trình.
+
+Đèn thông minh: [Tại đây ](https://app.ohstem.vn/#!/share/yolouno/2ciB2FeyKHyc15nCOanH0eAH2wH)
+![den thong minh 5](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/den_thong_minh_5.png)

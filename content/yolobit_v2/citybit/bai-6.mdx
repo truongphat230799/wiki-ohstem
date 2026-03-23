@@ -1,0 +1,93 @@
+---
+title: "8. Bài 6: Đèn giao thông"
+---
+
+# 8. Bài 6: Đèn giao thông
+
+## Mục tiêu
+Trong bài học này, chúng ta sẽ cùng làm một hệ thống mô phỏng đèn giao thông thực tế.
+
+- Khi nhấn nút A: chế độ đèn giao thông bình thường
+
+-  Khi nhấn nút B: chế độ ban đêm (đèn sẽ nhấp nháy đèn vàng)
+
+
+## Kết nối
+- Đèn LED (số lương: 3)
+![bai 6.1](/images/yolobit_v2/citybit/images/bai_6.1.png)
+
+    |
+- Đèn LED Đỏ: P0
+
+- Đèn LED Vàng: P1
+
+- Đèn LED Xanh: P2
+
+
+- **Kết nối**
+![bai 6.2](/images/yolobit_v2/citybit/images/bai_6.2.png)
+
+    |
+    
+## Lắp ráp mô hình
+![bai 6.3](/images/yolobit_v2/citybit/images/bai_6.3.png)
+
+    |
+![bai 6.4](/images/yolobit_v2/citybit/images/bai_6.4.png)
+
+    |
+    
+## Giới thiệu khối lệnh
+![bai 6.5](/images/yolobit_v2/citybit/images/bai_6.5.png)
+
+    |
+![bai 6.6](/images/yolobit_v2/citybit/images/bai_6.6.png)
+
+    |
+    
+    
+## Viết chương trình
+1. Tạo một biến tên là chế độ và gán giá trị 0 vào biến:
+![bai 6.7](/images/yolobit_v2/citybit/images/bai_6.7.png)
+
+    |
+2. Khi nút A được nhấn, cho chế độ bằng 0
+![bai 6.8](/images/yolobit_v2/citybit/images/bai_6.8.png)
+
+    |
+3. Khi nút B được nhấn, cho chế độ bằng 1 và hiển thị hình dấu chấm than lên màn hình Yolo:Bit
+![bai 6.9](/images/yolobit_v2/citybit/images/bai_6.9.png)
+
+    |
+4. Trong chế độ đèn giao thông, cho bật đèn LED màu xanh (chân P2):
+![bai 6.10](/images/yolobit_v2/citybit/images/bai_6.10.png)
+
+    |
+5. Tạo hàm đếm 5 giây
+![bai 6.11](/images/yolobit_v2/citybit/images/bai_6.11.png)
+
+    |
+6. Tạo hàm đếm 3 giây
+![bai 6.12](/images/yolobit_v2/citybit/images/bai_6.12.png)
+
+    |
+7. Bật đèn xanh P2, gọi hàm đếm 5 giây, sau đó tắt đèn
+![bai 6.13](/images/yolobit_v2/citybit/images/bai_6.13.png)
+
+    |
+8. Bật đèn vàng P1, gọi hàm đếm 3 giây, sau đó tắt đèn
+![bai 6.14](/images/yolobit_v2/citybit/images/bai_6.14.png)
+
+    |
+9. Bật đèn đỏ P0, gọi hàm đếm 5 giây, sau đó tắt đèn
+![bai 6.15](/images/yolobit_v2/citybit/images/bai_6.15.png)
+
+    |
+10. Nếu chế độ = 1 (nút B được nhấn), ta tiến hành bật đèn vàng trong 1 giây và tắt đèn trong 0,5 giây liên tục
+![bai 6.16](/images/yolobit_v2/citybit/images/bai_6.16.png)
+
+    |
+    
+## Chương trình mẫu
+- Đèn giao thông: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2BsW3uYe2BBTDV3Oukf7uTGHmgY)
+![bai 6.18](/images/yolobit_v2/citybit/images/bai_6.18.png)

@@ -1,0 +1,59 @@
+---
+title: "6. Bài 3: Bật tắt máy bơm"
+---
+
+# 6. Bài 3: Bật tắt máy bơm
+
+## Mục tiêu
+Trong bài này, chúng ta sẽ điều khiển bật tắt máy bơm nước bằng cách nhấn nút A và B trên Yolo:Bit.
+
+## Thiết bị cần dùng
+- Mạch mở rộng gắn sẵn Yolo:Bit
+![planbit 31](/images/yolobit_v2/plantbit/Images/planbit_31.png)
+
+
+-  Module đóng ngắt 2 kênh
+![planbit 45](/images/yolobit_v2/plantbit/Images/planbit_45.png)
+
+
+-  Động cơ bơm nước
+![planbit 46](/images/yolobit_v2/plantbit/Images/planbit_46.png)
+
+
+## Kết nối
+- Kết nối **Module đóng ngắt 2 kênh** vào cổng P14/P15.
+
+- Nối **động cơ bơm nước** vào cổng USB Output1
+![planbit 47](/images/yolobit_v2/plantbit/Images/planbit_47.png)
+
+
+## Giới thiệu khối lệnh
+![planbit 48](/images/yolobit_v2/plantbit/Images/planbit_48.png)
+![planbit 49](/images/yolobit_v2/plantbit/Images/planbit_49.png)
+
+
+## Viết chương trình
+1. Chọn **khối lệnh khi nút được nhấn** từ mục **Ngõ vào**
+![planbit 50](/images/yolobit_v2/plantbit/Images/planbit_50.png)
+
+
+2. Kéo thả **khối lệnh bật máy bơm** vào **khối lệnh khi nút được nhấn** và chọn tốc độ là 50
+
+Tiếp tục, gắn thêm **khối lệnh đổi màu tất cả LED** và chọn màu xanh lá
+![planbit 51](/images/yolobit_v2/plantbit/Images/planbit_51.png)
+
+
+3. Tương tụ, tạo sự kiện khi nút B được nhấn:
+
+- Tắt máy bơm (tốc độ = 0%)
+
+- Tắt đèn (đổi màu LED thành màu đen)
+![planbit 52](/images/yolobit_v2/plantbit/Images/planbit_52.png)
+
+
+**Ghi chú**: *Động cơ của máy bơm có thể hoạt động với tốc độ từ 0 - 100. Chúng ta nên sử dụng ở mức 50 để tránh tình trạng Yolo:Bit bị nóng (do máy bơm cần nguồn điện lớn để chạy).*
+
+
+## Chương trình mẫu
+- Bật tắt máy bơm: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2CymiptdeuphF0inMtfB5POwvPK)
+![planbit 53](/images/yolobit_v2/plantbit/Images/planbit_53.png)

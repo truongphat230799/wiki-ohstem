@@ -1,0 +1,107 @@
+---
+title: "7. Bài 5: Hệ thống cảnh báo tốc độ"
+---
+
+# 7. Bài 5: Hệ thống cảnh báo tốc độ
+
+## Mục tiêu
+Trong thành phố, di chuyển vượt tốc độ là hành vi vi phạm. Vì vậy, thiết bị đo tốc độ rất cần thiết để kiểm tra tốc độ chạy của xe. Nếu tốc độ của xe vượt mức quy định, hệ thống sẽ hiển thị số lần vi phạm và giá trị vận tốc lớn nhất của xe lên màn hình LCD.
+
+## Kết nối
+- Cảm biến khoảng cách (P3/P6)
+![bai 5.1](/images/yolobit_v2/citybit/images/bai_5.1.png)
+
+    |
+- Màn hình LCD OLED (I2C1)
+![bai 5.2](/images/yolobit_v2/citybit/images/bai_5.2.png)
+
+    |
+- **Kết nối**
+![bai 5.3](/images/yolobit_v2/citybit/images/bai_5.3.png)
+
+    |
+    
+    
+## Lắp ráp mô hình
+![bai 5.4](/images/yolobit_v2/citybit/images/bai_5.4.png)
+
+    |
+![bai 5.5](/images/yolobit_v2/citybit/images/bai_5.5.png)
+
+    |
+    
+## Giới thiệu khối lệnh
+![bai 5.6](/images/yolobit_v2/citybit/images/bai_5.6.png)
+
+    |
+    
+## Cách tính vận tốc
+![bai 5.7](/images/yolobit_v2/citybit/images/bai_5.7.png)
+
+
+Để tính vận tốc xe, chúng ta sẽ sử dụng công thức sau:
+
+    **v = S / t**
+    
+Trong đó:
+    - v là vận tốc
+    - S là quãng đường
+    - t là thời gian
+    
+Ta sẽ tiến hành đo khoảng cách đến xe trong 2 mốc thời gian khác nhau, từ đó tính ra quãng đường xe đi được:
+
+    **S = Khoảng cách 1 - Khoảng cách 2**
+    
+    **Thời gian di chuyển = thời gian giữa 2 mốc thời gian**
+![bai 5.8](/images/yolobit_v2/citybit/images/bai_5.8.png)
+
+
+## Viết chương trình
+1. Tạo 3 biến để chứa giá trị tốc độ, khoảng cách 1 và khoảng cách 2. Gán giá trị 0 cho các biến này
+![bai 5.9](/images/yolobit_v2/citybit/images/bai_5.9.png)
+
+    |
+2. Khởi tạo cảm biến khoảng cách tại cổng P10/P13 và màn hình LCD:
+![bai 5.10](/images/yolobit_v2/citybit/images/bai_5.10.png)
+
+    |
+3.  Nếu phát hiện có xe đến gần (khoảng cách < 40cm), tiến hành đo khoảng cách tại 2 thời điểm cách nhau 1 giây và lưu giá trị vào biến tương ứng:
+![bai 5.11](/images/yolobit_v2/citybit/images/bai_5.11.png)
+
+    |
+4. Lồng điều kiện nếu xe đang tiến lại gần (khoảng cách 2 < khoảng cách 1) vào bên trong:
+![bai 5.12](/images/yolobit_v2/citybit/images/bai_5.12.png)
+
+    |
+5. Áp dụng công thức tính vận tốc vào và gán giá trị tính được vào biến tốc độ (thời gian là 1 giây):
+![bai 5.13](/images/yolobit_v2/citybit/images/bai_5.13.png)
+
+    |
+6. Nếu tốc độ quá hạn mức quy định (15), ta tiến hành bật đèn LED thành màu đỏ và xóa màn hình LCD:
+![bai 5.14](/images/yolobit_v2/citybit/images/bai_5.14.png)
+
+    |
+7. In dòng chữ “Vuot qua toc do” và giá trị tốc độ lên màn hình LCD (lấy thông tin từ biến tốc độ):
+![bai 5.15](/images/yolobit_v2/citybit/images/bai_5.15.png)
+
+    |
+8. Lặp lại 2 nốt nhạc A5 và E3 liên tục 3 lần để báo hiệu:
+![bai 5.16](/images/yolobit_v2/citybit/images/bai_5.16.png)
+
+    |
+9. Nếu tốc độ không vượt mức 15, bật đèn LED thành màu xanh và hiển thị giá trị tốc độ lên màn hình LCD
+![bai 5.17](/images/yolobit_v2/citybit/images/bai_5.17.png)
+
+    |
+10. Tạm dừng chương trình trong 2 giây để xe rời khỏi
+![bai 5.18](/images/yolobit_v2/citybit/images/bai_5.18.png)
+
+    |
+11. Tạm dừng toàn bộ chương trình trong 50ms ở cuối chương trình
+![bai 5.19](/images/yolobit_v2/citybit/images/bai_5.19.png)
+
+    |
+    
+## Chương trình mẫu
+- Hệ thống cảnh báo tốc độ: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2BsHSUZg4JGKkIpGDnjW8Vj86ya)
+![bai 5.20](/images/yolobit_v2/citybit/images/bai_5.20.png)

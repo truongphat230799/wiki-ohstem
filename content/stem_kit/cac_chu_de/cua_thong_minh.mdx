@@ -1,0 +1,56 @@
+---
+title: "10. Cánh cửa thông minh"
+---
+
+# 10. Cánh cửa thông minh
+
+## 1. Giới thiệu
+Với hướng dẫn này, học sinh được thực hành hoàn thiện mô hình cánh cửa thông minh với tính năng bảo mật cao chỉ mở được cửa khi nhập chính xác mật khẩu.
+![cua thong minh 4](/images/stem_kit/cac_chu_de/images/cua_thong_minh_4.png)
+
+
+Các kiến thức và kỹ năng đạt được trong dự án này như sau:
+
+
+    "**Khoa học & Toán học**", "- Tìm hiểu nguyên lý hoạt động của cửa thông minh
+    - Lập trình Yolo:Bit điều khiển các thiết bị hoạt động"
+    "**Công nghệ**", "Bàn phím cảm ứng, động cơ servo"
+    "**Kỹ thuật**", "Đọc hướng dẫn lắp ráp, hoàn thiện mô hình"
+    "**Nghệ thuật**", "Mô hình bắt mắt, trang trí và tô màu"
+    "**Kỹ năng**", "Thuyết trình, làm việc nhóm, giải quyết vấn đề"
+    
+    
+## 2. Hướng dẫn lắp ráp
+- **Chuẩn bị**:
+![cua thong minh](/images/stem_kit/cac_chu_de/images/cua_thong_minh.png)
+
+
+- **Hướng dẫn lắp ráp**:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OVECtuK5SaE?si=CtTMdtVX2cUvy8dN" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+
+- **Kết nối dây**:
+
+    + Bàn phím cảm ứng kết nối vào cổng C
+    + Động cơ servo vào cổng S1
+![cua thong minh 3](/images/stem_kit/cac_chu_de/images/cua_thong_minh_3.png)
+
+
+## 3. Hướng dẫn lập trình
+Viết chương trình như sau:
+![cua thong minh 2](/images/stem_kit/cac_chu_de/images/cua_thong_minh_2.png)
+
+
+Bạn hãy nhập mật khẩu **“1234”** từ bàn phím và nhấn **“#”** để kết thúc, quan sát kết quả. Lúc này, cửa sẽ mở, Yolo:Bit sẽ hiển thị hình ảnh Yes
+
+**Link chương trình:** [https://app.ohstem.vn/#!/share/yolobit/2dtaHeRhHdf2wfwrJUT7ya2Nan0](https://app.ohstem.vn/#!/share/yolobit/2dtaHeRhHdf2wfwrJUT7ya2Nan0)
+
+
+    Ngay khi bắt đầu chương trình, cửa sẽ ở trạng thái đóng vì thế chúng ta cho servo quay ở góc 0 độ.
+    
+    Sau đó, kiểm tra kết quả đã nhập bằng phím “#”:
+    
+        + Nếu kết quả đã nhập là “1234” thì sẽ hiển thị Yes và mở cửa trong 3 giây. Tức là, servo sẽ quay đến góc 90 độ, dừng trong 3 giây và quay lại góc 0 độ để đóng cửa.
+        + Nếu không, thì hiện thị No và không mở cửa.
+    
+    Sau khi thực hiện việc kiểm tra, các phím vừa được nhấn sẽ được xóa đi.

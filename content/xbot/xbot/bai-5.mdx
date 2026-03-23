@@ -1,0 +1,157 @@
+---
+title: "9. Bài 5: Robot né vật cản"
+---
+
+# 9. Bài 5: Robot né vật cản
+
+**Mục tiêu:**
+
+Hiểu về cảm biến khoảng cách và những cách lập trình cho robot vừa di chuyển vừa né tránh vật cản một cách thông minh.
+
+
+## 1. Tốc độ của âm thanh
+Như đã biết, âm thanh được truyền đi dưới dạng sóng. Tốc độ truyền đi của âm thanh trong không khí là 340 m/s nhưng có thể thay đổi tùy vào nhiệt độ và độ ẩm.
+
+Khi ta phát một tín hiệu âm thanh và đo khoảng cách thời gian âm thanh đó vọng lại, ta hoàn toàn có thể tính được khoảng cách đến vật cản.
+![xbot 117](/images/xbot/xbot/Images/xbot_117.png)
+
+
+## 2. Cảm biến khoảng cách
+![xbot 118](/images/xbot/xbot/Images/xbot_118.png)
+
+
+xBot được trang bị một cảm biến khoảng cách có thể phát ra sóng siêu âm và đo thời gian phản hồi về:
+
+- Giúp phát hiện vật cản ở phía trước (nếu có)
+
+- Đo khoảng cách đến vật cản (tối đa 200cm)
+![xbot 119](/images/xbot/xbot/Images/xbot_119.png)
+
+
+Nếu không có phản hồi thì nghĩa là không có vật cản. Nếu có thì cảm biến sẽ dựa vào khoảng thời gian phản hồi để tính ra khoảng cách.
+
+
+## 3. Đọc trạng thái cảm biến
+Cảm biến khoảng cách được kết nối mặc định tới cổng 2 trên mạch điều khiển.
+![xbot 120](/images/xbot/xbot/Images/xbot_120.png)
+
+
+**Khối lệnh làm việc với cảm biến khoảng cách**
+![xbot 121](/images/xbot/xbot/Images/xbot_121.png)
+
+
+Viết chương trình và mở cửa sổ thông tin để xem kết quả:
+![xbot 122](/images/xbot/xbot/Images/xbot_122.png)
+
+
+Bạn hãy đưa tay di chuyển lại gần hoặc ra xa dần cảm biến để xem sự thay đổi của kết quả (mở cửa số thông tin để xem kết quả in ra)
+![xbot 123](/images/xbot/xbot/Images/xbot_123.png)
+
+
+## 4. Áp dụng cảm biến trong di chuyển
+**Robot dừng lại khi phát hiện vật cản**
+
+Trong chương trình này, chúng ta sẽ cho robot di chuyển về phía trước và dừn glại nếu phát hiện vật cản ở khảong cách nhỏ hơn 25cm.
+![xbot 124](/images/xbot/xbot/Images/xbot_124.png)
+
+
+Khối lệnh chương trình
+![xbot 125](/images/xbot/xbot/Images/xbot_125.png)
+
+
+**Robot dừng và phát cảnh báo khi phát hiện vật cản**
+![xbot 126](/images/xbot/xbot/Images/xbot_126.png)
+
+
+Khối lệnh chương trình
+![xbot 127](/images/xbot/xbot/Images/xbot_127.png)
+
+
+**Robot tự động dừng**
+
+Chúng ta thử làm cho robot dừng lại một cách thông minh hơn nữa xem nào. Robot sẽ giảm tốc độ dần dần và dừng lại hẳn khi đến gần vật cản. Hành động này khá giống với chúng ta lái xe phải không nào.
+![xbot 128](/images/xbot/xbot/Images/xbot_128.png)
+
+
+Bạn xây dựng các khối lệnh chương trình như sau:
+
+1. Gắn khối lệnh làm tròn vào khối lệnh di chuyển, ở trước ô giá trị tốc đô. Khối lệnh này giúp bỏ bớt số lẻ khi chia
+![xbot 129](/images/xbot/xbot/Images/xbot_129.png)
+
+
+2. Kéo khối lệnh các phép tính toán vào và đổi thành phép nhân
+![xbot 130](/images/xbot/xbot/Images/xbot_130.png)
+
+
+3. Kéo khối lệnh đọc giá trị cảm biến vào bên trái phép nhân và nhận giá trị 2 vào ô bên phải
+![xbot 131](/images/xbot/xbot/Images/xbot_131.png)
+
+
+## 5. Robot biết né vật cản
+Trong phần này, chúng ta sẽ viết chương trình cho robot vừa di chuyển vừa né vật cản một cách thông minh.
+
+- Nếu cảm biến phát hiện vật cản phía trước gần hơn 20cm thì robot rẽ phải
+
+- Nếu cảm biến phát hiện vật cản phía trước lớn hơn 20cm thì robot cứ đi thẳng
+
+Sơ đồ xử lý như sau:
+![xbot 132](/images/xbot/xbot/Images/xbot_132.png)
+
+
+Khối lệnh chương trình như sau:
+![xbot 133](/images/xbot/xbot/Images/xbot_133.png)
+
+
+**Né qua bên trái hoặc bên phải**
+
+Trong chương trình trên, robot luôn rẽ phải khi gặp vật cản. Chúng ta thử làm cho xBot thông minh hơn bằng cách rẽ trái hoặc phải một cách ngẫu nhiên bằng khối lệnh *chọn một số bất kì* từ mục Tính toán, thực hiện như sau:
+
+Kết hợp khối lệnh *chọn một số bất kì* với câu lệnh điều kiện *nếu... thực hiện*:
+![xbot 134](/images/xbot/xbot/Images/xbot_134.png)
+
+
+Sau khi thay vào chương trình cũ thì sẽ thành:
+![xbot 135](/images/xbot/xbot/Images/xbot_135.png)
+
+
+## 6. Bài tập mở rộng
+1. Robot thoát khỏi mê cung
+
+Robot biết thoát khỏi mê cung là một bài toán rất phổ biến trong các cuộc thi robot.
+![xbot 136](/images/xbot/xbot/Images/xbot_136.png)
+
+
+**Hướng dẫn**
+
+*Dựng mê cung*:Dùng các đồ vật sắp xếp thành một mê cung như hình minh họa
+
+*Xây dựng chương trình:*
+
+- Canh chỉnh thời gian rẽ => tìm thời gian rẽ góc vuông chính xác.
+
+- Xây dựng chương trình theo sơ đồ.
+![xbot 137](/images/xbot/xbot/Images/xbot_137.png)
+
+
+2. Tìm chỗ trống đậu xe
+
+Trong bài này, bạn hãy viết chương trình để robot có thể tìm và đậu xe vào vị trí còn trống bằng cách **nhận diện vật cản**
+![xbot 138](/images/xbot/xbot/Images/xbot_138.png)
+
+
+**Gợi ý cách làm**
+
+1. Dùng biến đếm để đếm số lần nhận vạch ngang
+
+2. Mỗi lần đến vạch ngang, robot sẽ rẽ phải và xem vị trí đậu có trống hay không
+
+3. Nếu ô trống, xe tiến tới và đậu xe
+
+4. Nếu không, xe rẽ trái trở lại và đi đến vạch kế tiếp
+
+## 7. Câu hỏi ôn tập
+1. Chỉ ra cảm biến khoảng cách trên xBot. Công dụng của nó là gì?
+
+2. Nêu nguyên lý hoạt động của cảm biến khoảng cách. Chỉ ra các khối lệnh làm việc với cảm biến khoảng cách trên OhStem App.
+
+3. Cảm biến khoảng cách có thể được ứng dụng vào di chuyển xBot như thế nào? Kể tên ứng dụng và cách lập trình tương ứng.

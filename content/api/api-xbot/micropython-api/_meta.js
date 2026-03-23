@@ -1,0 +1,20 @@
+export default {
+  "index": { "display": "hidden" },
+  "btn_onboard": ":mod:`btn_onboard` --- Onboard Button",
+  "color_sensor": ":mod:`color_sensor` --- Color Sensor Module",
+  "ir_receiver": ":mod:`ir_receiver` --- IR Receiver Sensor",
+  "ir_sender": ":mod:`ir_sender` --- IR Sender",
+  "lcd_1602": ":mod:`lcd_1602` --- LCD 1602 Module",
+  "led_matrix": ":mod:`led_matrix` --- LED Matrix",
+  "led_onboard": ":mod:`led_onboard` --- Onboard LED",
+  "line_array": ":mod:`line_array` --- Line Array Module",
+  "motion": ":mod:`motion` --- Motion",
+  "motor": ":mod:`motor` --- Motor",
+  "oled_i2c": "oled_i2c --- OLED I2C Module",
+  "pins": ":mod:`pins` --- Pins",
+  "robot": ":mod:`robot` --- Robot",
+  "servo": ":mod:`servo` --- Servo",
+  "speaker": ":mod:`speaker` --- Speaker",
+  "ultrasonic": ":mod:`ultrasonic` --- Ultrasonic Module",
+  "wifi": ":mod:`wifi` --- Wifi"
+}

@@ -1,0 +1,60 @@
+---
+title: "10. Bài 8: Hệ thống phát hiện ngập nước"
+---
+
+# 10. Bài 8: Hệ thống phát hiện ngập nước
+
+## Mục tiêu
+- Tại các con đường ở vùng trũng trong thành phố thường xuất hiện tình trạng bị ngập nước. Do đó, chúng ta hãy cùng làm một hệ thống theo dõi và báo động tình trạng ngập nước nhé.
+
+
+- Khi bị ngập nước, đèn LED ở 2 bên đường sẽ báo động để các xe đang lưu thông biết và né tránh các đoạn đường này.
+
+
+## Kết nối
+- Cảm biến mực nước (P1)
+![bai 8.1](/images/yolobit_v2/citybit/images/bai_8.1.png)
+
+    |
+    
+- **Kết nối**
+![bai 8.2](/images/yolobit_v2/citybit/images/bai_8.2.png)
+
+    |
+    
+## Lắp ráp mô hình
+Sử dụng lại mô hình trạm theo dõi thời tiết và chất lượng không khí. Nối thêm module cảm biến mực nước để hoàn thiện.
+![bai 8.3](/images/yolobit_v2/citybit/images/bai_8.3.png)
+
+    |
+    
+## Giới thiệu khối lệnh
+![bai 8.4](/images/yolobit_v2/citybit/images/bai_8.4.png)
+
+    |
+    
+## Viết chương trình
+1. Tạo điều kiện **nếu đọc bộ đếm thời gian ≥ 3000 ms**
+![bai 8.5](/images/yolobit_v2/citybit/images/bai_8.5.png)
+
+    |
+2. Đặt điều kiện: nếu đọc cảm biến ngập nước gặp nước
+![bai 8.6](/images/yolobit_v2/citybit/images/bai_8.6.png)
+
+    |
+3. Nếu điều kiện:
+
+    - Đúng: đổi các LED thành màu đỏ
+    
+    - Sai: Đổi các LED thành màu xanh lá
+![bai 8.7](/images/yolobit_v2/citybit/images/bai_8.7.png)
+
+    |
+4. Reset bộ đếm thời gian ở cuối điều kiện
+![bai 8.8](/images/yolobit_v2/citybit/images/bai_8.8.png)
+
+    |
+    
+## Chương trình mẫu
+- Hệ thống phát hiện ngập nước: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2wiWUcmkOp11M9eXFGDKLF5kP19)
+![bai 8.9](/images/yolobit_v2/citybit/images/bai_8.9.png)

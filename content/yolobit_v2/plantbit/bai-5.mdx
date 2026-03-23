@@ -1,0 +1,71 @@
+---
+title: "8. Bài 5: Hiển thị thông tin"
+---
+
+# 8. Bài 5: Hiển thị thông tin
+
+## Mục tiêu
+Trong bài này, chúng ta sẽ sử dụng cảm biến nhiệt độ độ ẩm DHT20 và cảm biến ánh sáng để đọc giá trị từ môi trường và hiển thị các giá trị đó lên màn hình LCD OLED. Đây là những thông tin quan trọng ảnh hưởng tới sự sinh trưởng của cây. Dựa trên thông tin này, ta có thể đưa ra các quyết định chăm sóc cây hợp lý hơn.
+
+## Thiết bị cần dùng
+- Mạch mở rộng gắn sẵn Yolo:Bit
+![planbit 31](/images/yolobit_v2/plantbit/Images/planbit_31.png)
+
+
+- Màn hình OLED LCD
+![planbit 58](/images/yolobit_v2/plantbit/Images/planbit_58.png)
+
+
+- Cảm biến nhiệt độ, độ ẩm DHT20
+![planbit 59](/images/yolobit_v2/plantbit/Images/planbit_59.png)
+
+
+- Cảm biến ánh sáng
+![planbit 60](/images/yolobit_v2/plantbit/Images/planbit_60.png)
+
+
+## Kết nối
+- Màn hình OLED LCD (I2C 1)
+- Cảm biến nhiệt độ, độ ẩm DHT20 (I2C 2)
+- Cảm biến ánh sáng (P1)
+![planbit 61](/images/yolobit_v2/plantbit/Images/planbit_61.png)
+
+
+## Giới thiệu khối lệnh
+![planbit 62](/images/yolobit_v2/plantbit/Images/planbit_62.png)
+![planbit 63](/images/yolobit_v2/plantbit/Images/planbit_63.png)
+![planbit 64](/images/yolobit_v2/plantbit/Images/planbit_64.png)
+
+
+## Viết chương trình
+1. Khởi tạo màn hình LCD và Reset bộ đếm thời gian
+![planbit 65](/images/yolobit_v2/plantbit/Images/planbit_65.png)
+
+
+2. Tạo điều kiện: Nếu bộ đếm thời gian ≥ 5000ms (5 giây). Điều kiện này giúp mỗi 5 giây chương trình sẽ thực hiện lệnh bên trong
+![planbit 66](/images/yolobit_v2/plantbit/Images/planbit_66.png)
+
+
+3. Bắt đầu cập nhật cảm biến nhiệt độ và xóa màn hình LCD cũ sau mỗi 5 giây:
+
+Kéo thả khối **cập nhật cảm biến DHT20** và **xóa màn hình LCD** vào phần thực hiện
+![planbit 67](/images/yolobit_v2/plantbit/Images/planbit_67.png)
+
+
+4. Tạo văn bản in ra LCD nội dung “nhiet do” lấy thông tin từ **khối lệnh đọc nhiệt độ** cho dòng 1 (tọa độ y=0)
+![planbit 68](/images/yolobit_v2/plantbit/Images/planbit_68.png)
+
+
+5. Tương tự, tạo văn bản in ra 2 nội dung còn lại:
+
+- Nội dung “do am” lấy thông tin từ **khối lệnh đọc độ ẩm** cho dòng 2 (y = 15)
+
+- Nội dung “do sang” lấy thông tin từ **khối lệnh đọc độ sáng** cho dòng 3 (y = 30)
+
+- Reset bộ đếm để đếm lại sau mỗi 5 giây
+![planbit 69](/images/yolobit_v2/plantbit/Images/planbit_69.png)
+
+
+## Chương trình mẫu
+- Hiển thị thông tin: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2Cyq1mX3LGLTUl8N2IxLaYuKCyT)
+![planbit 70](/images/yolobit_v2/plantbit/Images/planbit_70.png)

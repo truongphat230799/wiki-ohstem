@@ -1,0 +1,23 @@
+export default {
+  "index": { "display": "hidden" },
+  "setup": "1. Hướng Dẫn Cài Đặt Arduino và xController",
+  "lesson1": "2. Bài học 1: Hello world",
+  "lesson2": "3. Bài học 2: Blink LED",
+  "lesson3": "4. Bài học 3: Nhấn nút bật đèn LED",
+  "lesson4": "5. Bài học 4: Điều khiển tốc độ chớp tắt đèn LED",
+  "lesson5": "6. Bài học 5: Điều chỉnh độ sáng LED",
+  "lesson6": "7. Bài học 6: Đèn LED RGB cảm ứng",
+  "lesson7": "8. Bài học 7: Vỗ tay thay đổi màu đèn LED",
+  "lesson8": "9. Bài học 8: Phát nhạc với còi báo",
+  "lesson9": "10. Bài học 9: Cảm biến gia tốc góc nghiêng",
+  "lesson10": "11. Bài học 10: Hiển thị thông tin lên màn hình LCD",
+  "lesson11": "12. Bài học 11: Theo dõi nhiệt độ, độ ẩm trên LCD",
+  "lesson12": "13. Bài học 12: Remote hồng ngoại",
+  "lesson13": "14. Bài học 13: Giao tiếp Bluetooth Low Energy",
+  "intro": "15. Giới thiệu về dự án Nhà thông minh",
+  "project1": "16. Project 1: Đèn điều khiển từ xa",
+  "project2": "17. Project 2: Quạt thông minh",
+  "project3": "18. Project 3: Đèn thông minh",
+  "project4": "19. Project 4: Hệ thống chống trộm và báo động",
+  "project5": "20. Project 5: Cửa thông minh"
+}

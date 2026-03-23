@@ -1,0 +1,44 @@
+---
+title: 5. Đèn thông minh
+---
+# 5. Đèn thông minh
+
+## 1. Mục tiêu
+
+Chúng ta hãy cùng lập trình một chiếc đèn thông minh, có thể bật tắt tự động dựa vào ánh sáng nhé. Cụ thể, khi trời tối (độ sáng \< 30%) thì đèn sẽ tự bật. Ngược lại, khi trời sáng thì đèn sẽ tự tắt.
+
+## 2. Thiết bị cần dùng
+
+* Mạch Yolo:Bit
+* Mạch mở rộng Yolo:Bit.
+  !\[4.1]\(/images/aiot/lam\_quen/images/4.1.jpg)
+* Module 4 LED RGB
+  !\[4.2]\(/images/aiot/lam\_quen/images/4.2.jpg)
+* Cảm biến ánh sáng
+  !\[5.1]\(/images/aiot/lam\_quen/images/5.1.jpg)
+
+## 3. Kết nối
+
+* Kết nối cảm biến ánh sáng vào cổng P0
+* Kết nối đèn 4 LED RGB vào cổng P14
+  !\[5.2]\(/images/aiot/lam\_quen/images/5.2.png)
+
+## 4. Lập trình
+
+* **Giới thiệu khối lệnh**
+
+Trong phần này, chúng ta sẽ dùng đến khối lệnh điều kiện trong mục LOGIC:
+!\[5.3]\(/images/aiot/lam\_quen/images/5.3.png)
+
+* **Lập trình**
+
+Đầu tiên, chúng ta sẽ đặt điều kiện nếu trời tối (độ sáng \< 30) như bên dưới. Các khối lệnh được lấy trong từng danh mục tương ứng:
+!\[5.4]\(/images/aiot/lam\_quen/images/5.4.png)
+
+Lập trình bật và tắt đèn LED RGB tùy theo từng trường hợp như yêu cầu:
+!\[5.5]\(/images/aiot/lam\_quen/images/5.5.png)
+
+## 5. Chương trình mẫu
+
+* Đèn thông minh: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2EWGNO7AUl2vRpp3gmYvx0AefQD)
+  !\[5.6]\(/images/aiot/lam\_quen/images/5.6.png)

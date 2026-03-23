@@ -1,0 +1,68 @@
+---
+title: "12. Cảm biến góc MPU6050"
+---
+
+# 12. Cảm biến góc MPU6050
+
+## **1. Giới thiệu:**
+![mpu.1](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/mpu.1.jpg)
+
+
+Cảm biến gia tốc MPU6050 là một trong những module phổ biến được sử dụng để đo gia tốc trong các ứng dụng. Với khả năng đo chính xác và tích hợp các cảm biến gia tốc và con quay hồi chuyển trong cùng một chip, MPU6050 đã trở thành một lựa chọn hàng đầu cho các dự án liên quan đến điều khiển chuyển động, robot học tập, hệ thống định vị và nhiều ứng dụng khác.
+
+Cảm biến gia tốc GY-521 6DOF IMU MPU6050 được sử dụng để đo 6 thông số: 3 trục Góc quay (Gyro), 3 trục gia tốc hướng (Accelerometer), là loại cảm biến gia tốc phổ biến nhất trên thị trường hiện nay. Cảm biến thường được ứng dụng trên các mô hình con lắc động, xe tự cân bằng, máy bay,…
+![mpu.2](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/mpu.2.jpg)
+
+
+**Thông số kỹ thuật**
+
+- Điện áp sử dụng: 3~5VDC
+- Điện áp giao tiếp: 3~5VDC
+- Chuẩn giao tiếp: I2C
+- Giá trị Gyroscopes trong khoảng: +/- 250 500 1000 2000 degree/sec
+- Giá trị Acceleration trong khoảng: +/- 2g, +/- 4g, +/- 8g, +/- 16g
+
+## **2. Chuẩn bị thiết bị**
+
+   :header-rows: 1
+
+   * - ![yolo uno](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/yolo_uno.png)
+
+     - ![mpu.1](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/mpu.1.jpg)
+    
+     - ![lcd 1602](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/lcd_1602.png)
+    
+   * - Mạch lập trình Yolo UNO
+     - Cảm biến MPU6050
+     - Màn hình LCD 1602
+   * - [Mua sản phẩm ](https://shop.ohstem.vn/san-pham/yolo-uno/)
+     - [Mua sản phẩm ](https://shop.ohstem.vn/san-pham/cam-bien-gia-toc-mpu6050/)
+     - [Mua sản phẩm ](https://shop.ohstem.vn/san-pham/man-hinh-lcd-1602/)
+    
+    
+## **3. Kết nối phần cứng**
+Kết nối cảm biến và màn hình LCD với **chân I2C trên Yolo UNO**.
+![mpu.3](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/mpu.3.webp)
+
+
+    Cảm biến góc MPU6050 kết nối với Yolo UNO thông qua giao thức I2C
+    
+## 4. Hướng dẫn lập trình
+1. Tải thư viện **MPU6050**, xem hướng dẫn tải thư viện [tại đây ](https://docs.ohstem.vn/en/latest/module/thu-vien-yolouno.html)
+![mpu.4](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/mpu.4.jpg)
+
+
+Các khối lệnh sau để làm việc với cảm biến:
+![mpu.5](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/mpu.5.jpg)
+
+
+**Lưu ý:** Cần khởi tạo trước và tiến hành tính toán (calib) 1 số mẫu trước để việc đo góc chính xác hơn.
+
+2. Chúng ta có thể hiển thị góc đo được so với ban đầu thông qua LCD bằng chương trình mẫu sau:
+![mpu.6](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/mpu.6.jpg)
+
+
+    [https://app.ohstem.vn/#!/share/yolouno/2fu3TC2GYvJAUPmBWh48GhlChr8](https://app.ohstem.vn/#!/share/yolouno/2fu3TC2GYvJAUPmBWh48GhlChr8)
+    
+    
+Gửi chương trình vào Yolo UNO và lắc nhẹ cảm biến. Quan sát kết quả trên LCD.

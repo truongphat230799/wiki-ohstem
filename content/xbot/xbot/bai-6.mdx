@@ -1,0 +1,113 @@
+---
+title: "10. Bài 6: Thử thách nâng cao"
+---
+
+# 10. Bài 6: Thử thách nâng cao
+
+**Mục tiêu:**
+
+Biết cách kết hợp các loại cảm biến để có thể lập trình cho robot hoạt động thông minh hơn và giải quyết được các bài toán phức tạp.
+
+
+## 1. Bản đồ sử dụng
+Bạn sẽ sử dụng bản đồ đi kèm với xBot trong bài học này.
+![xbot 165](/images/xbot/xbot/Images/xbot_165.png)
+
+
+Bạn cũng có thể sử dụng băng keo đen và giấy trắng để tự làm bản đồ theo ý mình.
+
+
+## 2. Bài toán dò đường kết hợp với né vật cản
+Bạn hãy đặt 1 vật cản ở vị trí bất kỳ trên vạch đen và nhiệm vụ của robot là vừa di chuyển theo vạch, vừa né vật cản.
+![xbot 166](/images/xbot/xbot/Images/xbot_166.png)
+
+
+Để giải quyết bài toán này thì chúng ta cần chia làm nhiều bài toán con và sử dụng khái niệm **Hàm** đã học để xử lý từng bài toán con.
+
+Trước tiên là bài toán né vật cản. Nếu đang di chuyển mà gặp vật cản, robot cần phải:
+
+1. Dừng lại và phát ra âm thanh cảnh báo
+
+2. Đi vòng qua một bên
+
+3. Quay về lại vạch đen ban đầu
+
+**Dừng lại và phát ra âm thanh cảnh báo**
+
+Chúng ta cần tạo một hàm riêng cho nhiệm vụ là dừng lại và phát âm thanh cảnh báo.
+![xbot 167](/images/xbot/xbot/Images/xbot_167.png)
+
+
+**Đi vòng qua vật cản**
+
+Để đi vòng qua vật cản thì cần rẽ phải, đi thẳng, rẽ trái, đi thẳng cho đến khi gặp vạch đen thì rẽ phải.
+![xbot 168](/images/xbot/xbot/Images/xbot_168.png)
+
+
+**Chú ý**: *Bạn cần phải tinh chỉnh thời gian cho phù hợp với tình trạng của robot và kích thước của vật cản.*
+
+**Đi theo vạch đen**
+
+Hàm để robot đi theo vạch đen sẽ giống ở phần 6-5.
+![xbot 169](/images/xbot/xbot/Images/xbot_169.png)
+
+
+**Đưa các hàm vào chương trình**
+
+Sau khi ghép lại thì chương trình cuối cùng sẽ như sau:
+![xbot 170](/images/xbot/xbot/Images/xbot_170.png)
+
+
+## 3. Bài toán tìm và đẩy ngã chai nước
+Đây là một bài thi đấu khá phổ biến trong các cuộc thi robot. Các robot sẽ hoạt động bên trong vòng tròn giới hạn bởi vạch đen và có đặt một vài đồ vật dạng hình trụ hoặc những chai nước.
+![xbot 171](/images/xbot/xbot/Images/xbot_171.png)
+
+
+Nhiệm vụ của xBot là tìm và đẩy ngã chai nước mà không ra ngoài vùng bao quanh bởi vạch đen.
+
+Ở bài toán này, chúng ta sẽ xử lý từng bài toán nhỏ của chương trình để giải quyết vấn đề:
+
+1. Dừng trước vạch đen, sau đó lùi lại và rẽ hướng khác
+
+2. Phát hiện chai nước và đẩy ngã
+
+**Dừng trước vạch đen**
+
+Để tránh đi ra khỏi vòng tròn, robot cần phát hiện ra vạch đen sau đó dừng lại.
+![xbot 172](/images/xbot/xbot/Images/xbot_172.png)
+
+
+**Lùi lại và rẽ hướng khác**
+
+Thay vì dừng hẳn, chúng ta để robot lùi lại và rẽ sang phải.
+![xbot 173](/images/xbot/xbot/Images/xbot_173.png)
+
+
+Sơ đồ hoạt động như sau:
+![xbot 174](/images/xbot/xbot/Images/xbot_174.png)
+
+
+**Tìm chai nước và đẩy ngã**
+
+Chúng ta sẽ cho robot liên tục xoay sang phải cho đến khi cảm biến khoảng cách phát hiện chai nước (khoảng cách < 30cm). Sau đó, robot tiến tới và đẩy ngã chai nước.
+![xbot 175](/images/xbot/xbot/Images/xbot_175.png)
+
+
+Sơ đồ hoạt động như sau:
+![xbot 176](/images/xbot/xbot/Images/xbot_176.png)
+
+
+*Lưu ý: Tùy vào độ rộng của bản đồ, bạn cần chỉnh khoảng cách để xBot có thể phát hiện chai nước sao cho phù hợp (Cảm biến đo được khoảng cách tối đa là 2 mét)*
+
+**Báo hiệu**
+
+Để sinh động hơn, hãy thử cho robot vừa xoay vừa phát ra âm thanh. Khi đó ta cần dùng khối lệnh sau:
+![xbot 177](/images/xbot/xbot/Images/xbot_177.png)
+
+
+Khối lệnh này có ý nghĩa là liên tục phát ra âm thanh trong lúc chưa phát hiện được cột nào (khoảng cách > 30cm). Khi đó robot vẫn đang xoay liên tục do khối lệnh trước đó.
+![xbot 178](/images/xbot/xbot/Images/xbot_178.png)
+
+
+Sơ đồ hoạt động như sau:
+![xbot 179](/images/xbot/xbot/Images/xbot_179.png)

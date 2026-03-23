@@ -1,0 +1,57 @@
+---
+title: "9. Bài 6: Đèn cổng thông minh"
+---
+
+# 9. Bài 6: Đèn cổng thông minh
+
+## Mục tiêu
+Chúng ta hãy cùng lập trình một chiếc đèn cổng thông minh, có thể bật tắt tự động dựa vào ánh sáng và khi phát hiện có người:
+
+- Khi trời tối (độ sáng < 30%) và phát hiện có người ở trước nhà thì đèn tự bật
+
+- Tắt đèn khi trời sáng hoặc không còn phát hiện người nữa
+
+## Thiết bị cần dùng
+- Cảm biến ánh sáng
+![homebit 65](/images/yolobit_v2/homebit/Images/homebit_65.png)
+
+
+- Đèn 4 LED RGB
+![homebit 66](/images/yolobit_v2/homebit/Images/homebit_66.png)
+
+
+-Cảm biến chuyển động PIR
+![homebit 54](/images/yolobit_v2/homebit/Images/homebit_54.png)
+
+
+## Kết nối
+- Kết nối cảm biến ánh sáng vào cổng P0
+
+- Kết nối đèn 4 LED RGB vào cổng P14
+
+- Kết nối cảm biến chuyển động PIR vào cổng P16
+![homebit 67](/images/yolobit_v2/homebit/Images/homebit_67.png)
+
+
+## Giới thiệu khối lệnh
+![homebit 68](/images/yolobit_v2/homebit/Images/homebit_68.png)
+![homebit 69](/images/yolobit_v2/homebit/Images/homebit_69.png)
+![homebit 70](/images/yolobit_v2/homebit/Images/homebit_70.png)
+
+
+## Viết chương trình
+1. Kéo **khối lệnh toán tử** VÀ vào **khối lệnh điều kiện**
+![homebit 71](/images/yolobit_v2/homebit/Images/homebit_71.png)
+
+
+2. Đặt điều kiện: khi trời tối (độ sáng < 30) và cảm biến PIR phát hiện có người
+![homebit 72](/images/yolobit_v2/homebit/Images/homebit_72.png)
+
+
+3. Bật và tắt đèn LED RGB tùy theo từng trường hợp
+![homebit 73](/images/yolobit_v2/homebit/Images/homebit_73.png)
+
+
+## Chương trình mẫu
+- Đèn cổng thông minh: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2CvpiJvC0IDlQJzzfjrMegMBtRX)
+![homebit 74](/images/yolobit_v2/homebit/Images/homebit_74.png)

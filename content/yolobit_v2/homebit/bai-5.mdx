@@ -1,0 +1,54 @@
+---
+title: "8. Bài 5: Cảnh báo trộm"
+---
+
+# 8. Bài 5: Cảnh báo trộm
+
+## Mục tiêu
+Một ngôi nhà thông minh thì không thể thiếu tính năng cảnh báo trộm. Trong bài học này, chúng ta sẽ cùng lập trình một Smart Home có thể tự động phát ra âm thanh cảnh báo khi có người lạ xuất hiện trước nhà.
+Bạn có thể dùng remote để bật, tắt chế độ cảnh báo này.
+
+## Thiết bị cần dùng
+- Remote điều khiển
+![homebit 23](/images/yolobit_v2/homebit/Images/homebit_23.png)
+
+
+- Cảm biến chuyển động PIR
+![homebit 54](/images/yolobit_v2/homebit/Images/homebit_54.png)
+
+
+## Kết nối
+- Kết nối cảm biến chuyển động PIR vào cổng P16
+![homebit 55](/images/yolobit_v2/homebit/Images/homebit_55.png)
+
+
+## Giới thiệu khối lệnh
+![homebit 56](/images/yolobit_v2/homebit/Images/homebit_56.png)
+![homebit 57](/images/yolobit_v2/homebit/Images/homebit_57.png)
+![homebit 58](/images/yolobit_v2/homebit/Images/homebit_58.png)
+
+
+## Viết chương trình
+1. Tạo một biến mới tên **cảnh báo** và cho giá trị ban đầu của biến cảnh báo là Sai (đồng nghĩa với chế độ cảnh báo đang tắt)
+![homebit 59](/images/yolobit_v2/homebit/Images/homebit_59.png)
+
+
+2. Khi nút E trên remote được nhấn, chế độ cảnh báo được bật (biến cảnh báo chuyển sang giá trị đúng)
+![homebit 60](/images/yolobit_v2/homebit/Images/homebit_60.png)
+
+
+3. Tiếp theo, Yolo:Bit hiện hình ảnh báo hiệu và xóa tín hiệu đã thu được từ remote.
+![homebit 61](/images/yolobit_v2/homebit/Images/homebit_61.png)
+
+
+4. Khi nút F trên remote được nhấn, tắt chế độ cảnh báo (đổi giá trị của biến cảnh báo thành Sai) và tắt toàn bộ đèn LED, đồng thời xóa tín hiệu từ remote:
+![homebit 62](/images/yolobit_v2/homebit/Images/homebit_62.png)
+
+
+5. Khi chế độ cảnh báo đang bật (cảnh báo = Đúng) và cảm biến PIR phát hiện có người, Yolo:Bit sẽ phát âm thanh cảnh báo
+![homebit 63](/images/yolobit_v2/homebit/Images/homebit_63.png)
+
+
+## Chương trình mẫu
+- Cảnh báo trộm: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2CvnzA92HG5Q7ibi3BF2BIeSbAs)
+![homebit 64](/images/yolobit_v2/homebit/Images/homebit_64.png)

@@ -1,0 +1,583 @@
+/* ========================================
+   OhStem AI Chat Widget - Premium Styles
+   ======================================== */
+
+/* --- Floating Action Button --- */
+.askai-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+    box-shadow:
+        0 4px 15px rgba(99, 102, 241, 0.4),
+        0 2px 6px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: askai-pulse 2s infinite;
+}
+
+.askai-fab:hover {
+    transform: scale(1.1);
+    box-shadow:
+        0 6px 25px rgba(99, 102, 241, 0.5),
+        0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.askai-fab--open {
+    animation: none;
+    transform: rotate(0deg);
+    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.askai-fab--open:hover {
+    transform: scale(1.1);
+}
+
+.askai-fab__icon {
+    font-size: 24px;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+.askai-fab--open .askai-fab__icon {
+    font-size: 18px;
+}
+
+@keyframes askai-pulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 4px 15px rgba(99, 102, 241, 0.4),
+            0 0 0 0 rgba(99, 102, 241, 0.3);
+    }
+
+    50% {
+        box-shadow:
+            0 4px 15px rgba(99, 102, 241, 0.4),
+            0 0 0 12px rgba(99, 102, 241, 0);
+    }
+}
+
+/* --- Chat Panel --- */
+.askai-panel {
+    position: fixed;
+    bottom: 96px;
+    right: 24px;
+    z-index: 9998;
+    width: 400px;
+    max-width: calc(100vw - 48px);
+    height: 560px;
+    max-height: calc(100vh - 140px);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    /* Hidden by default */
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.askai-panel--open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+}
+
+/* --- Header --- */
+.askai-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(6, 182, 212, 0.1));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.askai-panel__title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.askai-panel__logo {
+    font-size: 28px;
+    line-height: 1;
+}
+
+.askai-panel__title h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #f9fafb;
+    letter-spacing: -0.01em;
+}
+
+.askai-panel__title p {
+    margin: 2px 0 0;
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+.askai-panel__clear {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 6px;
+    border-radius: 8px;
+    transition: background 0.2s;
+    opacity: 0.6;
+}
+
+.askai-panel__clear:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.08);
+    opacity: 1;
+}
+
+.askai-panel__clear:disabled {
+    opacity: 0.2;
+    cursor: default;
+}
+
+/* --- Messages Area --- */
+.askai-panel__messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.askai-panel__messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+.askai-panel__messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.askai-panel__messages::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+/* --- Welcome Screen --- */
+.askai-panel__welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 32px 16px;
+    gap: 8px;
+}
+
+.askai-panel__welcome-icon {
+    font-size: 48px;
+    margin-bottom: 8px;
+    animation: askai-bounce 2s ease infinite;
+}
+
+@keyframes askai-bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.askai-panel__welcome h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #f9fafb;
+}
+
+.askai-panel__welcome p {
+    margin: 0;
+    font-size: 13px;
+    color: #9ca3af;
+    line-height: 1.5;
+    max-width: 280px;
+}
+
+.askai-panel__suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.askai-panel__suggestion {
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    color: #a5b4fc;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.askai-panel__suggestion:hover {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: rgba(99, 102, 241, 0.4);
+    color: #c7d2fe;
+    transform: translateY(-1px);
+}
+
+/* --- Message Bubbles --- */
+.askai-message {
+    display: flex;
+    gap: 10px;
+    animation: askai-fadeIn 0.3s ease;
+}
+
+@keyframes askai-fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.askai-message--user {
+    flex-direction: row-reverse;
+}
+
+.askai-message__avatar {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.askai-message--user .askai-message__avatar {
+    background: rgba(99, 102, 241, 0.15);
+}
+
+.askai-message__bubble {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #e5e7eb;
+    word-wrap: break-word;
+}
+
+.askai-message--user .askai-message__bubble {
+    background: linear-gradient(135deg, #6366f1, #7c3aed);
+    color: #fff;
+    border-bottom-right-radius: 4px;
+}
+
+.askai-message--ai .askai-message__bubble {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom-left-radius: 4px;
+}
+
+.askai-message--error .askai-message__bubble {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+}
+
+/* Markdown inside bubbles */
+.askai-message__bubble strong {
+    font-weight: 700;
+    color: #f9fafb;
+}
+
+.askai-message__bubble code {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: 'Fira Code', 'Cascadia Code', monospace;
+}
+
+.askai-message__bubble pre {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    padding: 10px 12px;
+    overflow-x: auto;
+    margin: 8px 0;
+}
+
+.askai-message__bubble pre code {
+    background: none;
+    padding: 0;
+    font-size: 12px;
+}
+
+.askai-message__bubble a {
+    color: #818cf8;
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(129, 140, 248, 0.4);
+    transition: color 0.2s;
+}
+
+.askai-message__bubble a:hover {
+    color: #a5b4fc;
+}
+
+/* --- Typing Indicator --- */
+.askai-typing {
+    display: flex;
+    gap: 4px;
+    padding: 4px 0;
+}
+
+.askai-typing span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #6b7280;
+    animation: askai-typing-dot 1.4s infinite;
+}
+
+.askai-typing span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.askai-typing span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes askai-typing-dot {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.4;
+    }
+
+    30% {
+        transform: translateY(-6px);
+        opacity: 1;
+    }
+}
+
+/* --- Input Area --- */
+.askai-panel__input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.askai-panel__input input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 10px 14px;
+    color: #f9fafb;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.askai-panel__input input::placeholder {
+    color: #6b7280;
+}
+
+.askai-panel__input input:focus {
+    border-color: rgba(99, 102, 241, 0.5);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.askai-panel__input button {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    transition: all 0.2s;
+}
+
+.askai-panel__input button:hover:not(:disabled) {
+    transform: scale(1.05);
+    box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
+}
+
+.askai-panel__input button:disabled {
+    opacity: 0.3;
+    cursor: default;
+    transform: none;
+}
+
+/* --- Responsive --- */
+@media (max-width: 480px) {
+    .askai-panel {
+        bottom: 80px;
+        right: 12px;
+        left: 12px;
+        width: auto;
+        max-width: none;
+        height: calc(100vh - 100px);
+        max-height: none;
+        border-radius: 16px;
+    }
+
+    .askai-fab {
+        bottom: 16px;
+        right: 16px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .askai-fab__icon {
+        font-size: 22px;
+    }
+}
+
+/* --- Light mode overrides
+     Nextra uses html[class~="light"] or similar --- */
+:root {
+    color-scheme: dark light;
+}
+
+html[class~="light"] .askai-panel,
+[data-theme="light"] .askai-panel {
+    background: rgba(255, 255, 255, 0.97);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.12),
+        0 0 0 1px rgba(0, 0, 0, 0.04) inset;
+}
+
+html[class~="light"] .askai-panel__header,
+[data-theme="light"] .askai-panel__header {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.06), rgba(6, 182, 212, 0.04));
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+html[class~="light"] .askai-panel__title h3,
+[data-theme="light"] .askai-panel__title h3 {
+    color: #111827;
+}
+
+html[class~="light"] .askai-panel__title p,
+[data-theme="light"] .askai-panel__title p {
+    color: #6b7280;
+}
+
+html[class~="light"] .askai-panel__welcome h4,
+[data-theme="light"] .askai-panel__welcome h4 {
+    color: #111827;
+}
+
+html[class~="light"] .askai-panel__welcome p,
+[data-theme="light"] .askai-panel__welcome p {
+    color: #6b7280;
+}
+
+html[class~="light"] .askai-message__bubble,
+[data-theme="light"] .askai-message__bubble {
+    color: #374151;
+}
+
+html[class~="light"] .askai-message--ai .askai-message__bubble,
+[data-theme="light"] .askai-message--ai .askai-message__bubble {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.06);
+}
+
+html[class~="light"] .askai-message__bubble strong,
+[data-theme="light"] .askai-message__bubble strong {
+    color: #111827;
+}
+
+html[class~="light"] .askai-message__bubble code,
+[data-theme="light"] .askai-message__bubble code {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+html[class~="light"] .askai-message__bubble pre,
+[data-theme="light"] .askai-message__bubble pre {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+html[class~="light"] .askai-panel__input,
+[data-theme="light"] .askai-panel__input {
+    background: rgba(0, 0, 0, 0.02);
+    border-top-color: rgba(0, 0, 0, 0.06);
+}
+
+html[class~="light"] .askai-panel__input input,
+[data-theme="light"] .askai-panel__input input {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.12);
+    color: #111827;
+}
+
+html[class~="light"] .askai-panel__input input::placeholder,
+[data-theme="light"] .askai-panel__input input::placeholder {
+    color: #9ca3af;
+}
+
+html[class~="light"] .askai-message__avatar,
+[data-theme="light"] .askai-message__avatar {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+html[class~="light"] .askai-panel__suggestion,
+[data-theme="light"] .askai-panel__suggestion {
+    background: rgba(99, 102, 241, 0.06);
+    border-color: rgba(99, 102, 241, 0.15);
+    color: #6366f1;
+}
+
+html[class~="light"] .askai-panel__suggestion:hover,
+[data-theme="light"] .askai-panel__suggestion:hover {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: rgba(99, 102, 241, 0.25);
+}

@@ -1,0 +1,130 @@
+---
+title: "4. Bài 2: Bãi đậu xe thông minh"
+---
+
+# 4. Bài 2: Bãi đậu xe thông minh
+
+## Mục tiêu
+Trong bài này, chúng ta sẽ cùng lập trình một bãi đậu xe thông minh có thể tự động mở thanh chắn để xe vào (nếu chỗ đậu xe còn trống). Nếu bãi xe đầy, đèn LED trên Yolo:Bit sẽ đổi thành màu đỏ để báo hiệu.
+
+## Kết nối
+- Cảm biến ánh sáng (P0)
+![bai 2.1](/images/yolobit_v2/citybit/images/bai_2.1.png)
+
+    |
+- Cảm biến khoảng cách (P10-P13)
+![bai 2.2](/images/yolobit_v2/citybit/images/bai_2.2.png)
+
+    |
+- Động cơ Servo (P4)
+![bai 2.3](/images/yolobit_v2/citybit/images/bai_2.3.png)
+
+    |
+**Kết nối**
+![bai 2.4](/images/yolobit_v2/citybit/images/bai_2.4.png)
+
+
+## Lắp ráp mô hình
+- Trước khi lắp ráp, bạn cần căn chỉnh Servo về góc 20 để hoạt động chính xác. Thực hiện như sau:
+
+    1. Kết nối Servo vào chân P4 trên mạch mở rộng đã gắn Yolo:Bit
+    
+    2. Kết nối Yolo:Bit với Ohstem App và tiến hành lập trình.
+    
+    3. Tạo chương trình như hình minh họa
+![bai 2.5](/images/yolobit_v2/citybit/images/bai_2.5.png)
+
+    |
+    4.  Nhấn nút chạy chương trình
+    
+    5. Ngắt kết nối Servo với nguồn điện (tránh vừa cắm điện vừa gắn làm quay Servo gây hư hại thiết bị)
+    
+- Tiến hành lắp ráp:
+![bai 2.6](/images/yolobit_v2/citybit/images/bai_2.6.png)
+
+    |
+![bai 2.7](/images/yolobit_v2/citybit/images/bai_2.7.png)
+
+    |
+![bai 2.8](/images/yolobit_v2/citybit/images/bai_2.8.png)
+
+    |
+    Đặt cảm biến ánh sáng lên vị trí bãi đỗ nằm trên bản đồ như hình minh họa
+![bai 2.9](/images/yolobit_v2/citybit/images/bai_2.9.png)
+
+    |
+    
+## Giới thiệu khối lệnh
+![bai 2.10](/images/yolobit_v2/citybit/images/bai_2.10.png)
+
+    |
+![bai 2.11](/images/yolobit_v2/citybit/images/bai_2.11.png)
+
+    |
+![bai 2.12](/images/yolobit_v2/citybit/images/bai_2.12.png)
+
+    |
+![bai 2.13](/images/yolobit_v2/citybit/images/bai_2.13.png)
+
+    |
+    
+## Giới thiệu về biến
+- Để thay đổi độ sáng của đèn LED tương ứng với điều khiển từ remote, chúng ta cần sử dụng đến biến. Có thể hiểu, biến như một chiếc hộp, nơi chứa giá trị mà ta cần sử dụng.
+
+- Mỗi hộp chỉ có thể chứa duy nhất một giá trị (chữ, số, chuỗi, dữ liệu) tại một thời điểm. Trong trường hợp này, biến sẽ chứa giá  trị số, đại diện cho mức độ sáng của đèn.
+![bai 2.14](/images/yolobit_v2/citybit/images/bai_2.14.png)
+
+    |
+    
+**Cách tạo và sử dụng biến**
+
+    1. Bạn cần vào mục Biến và chọn Tạo biến. Sau đó, điền tên cho biến mới để tạo.
+![bai 2.15](/images/yolobit_v2/citybit/images/bai_2.15.png)
+
+    |
+    2. Khi tạo biến thành công, trong mục Biến sẽ xuất hiện những khối lệnh liên quan để làm việc với biến.
+![bai 2.16](/images/yolobit_v2/citybit/images/bai_2.16.png)
+
+    |
+    
+## Viết chương trình
+1. Tạo một biến mới tên **“Bãi xe hết chỗ”** và gán giá trị sai vào biến (đồng nghĩa với bãi xe vẫn còn chỗ trống):
+![bai 2.26](/images/yolobit_v2/citybit/images/bai_2.26.png)
+
+    |
+2. Khởi tạo cảm biến khoảng cách P10/P13 và quay Servo đến góc 20 (để đóng thanh chắn):
+![bai 2.17](/images/yolobit_v2/citybit/images/bai_2.17.png)
+
+    |
+3. Tạo điều kiện: nếu bãi xe còn trống (cảm biến ánh sáng không phát hiện xe, độ sáng > 40), gán giá trị sai cho biến bãi xe hết chỗ, đồng thời bật đèn LED màu xanh để báo hiệu
+![bai 2.18](/images/yolobit_v2/citybit/images/bai_2.18.png)
+
+    |
+4. Nếu không, gán giá trị đúng cho biến và đổi màu đèn LED thành màu đỏ
+![bai 2.19](/images/yolobit_v2/citybit/images/bai_2.19.png)
+
+    |
+5. Tạo thêm 1 điều kiện lồng ghép: nếu phát hiện có xe (khoảng cách đến xe < 5cm)
+![bai 2.20](/images/yolobit_v2/citybit/images/bai_2.20.png)
+
+    |
+6. Trong trường hợp bãi xe còn chỗ trống (biến bãi xe hết chỗ có giá trị sai): quay Servo đến góc 20 độ để mở thanh chắn, tạm dừng 500 mili giây:
+![bai 2.21](/images/yolobit_v2/citybit/images/bai_2.21.png)
+
+    |
+7. Phát bài nhạc POWER_UP để báo hiệu, chờ 3 giây để xe di chuyển vào và bắt đầu đóng thanh chắn (quay Servo đến góc 110 độ):
+![bai 2.22](/images/yolobit_v2/citybit/images/bai_2.22.png)
+
+    |
+8. Trong trường hợp bãi xe đã đầy chỗ (biến có giá trị đúng): Phát bài nhạc POWER_DOWN để báo hiệu và tạm dừng chương trình trong 5 giây để xe rời khỏi bãi đậu, tránh trường hợp phát nhạc liên tục
+![bai 2.23](/images/yolobit_v2/citybit/images/bai_2.23.png)
+
+    |
+9. Thêm tạm dừng 0.1 giây (100ms) vào cuối chương trình. Chương trình trong phần lặp lại mãi như sau:
+![bai 2.24](/images/yolobit_v2/citybit/images/bai_2.24.png)
+
+    |
+    
+## Chương trình mẫu
+- Bãi đậu xe thông minh: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2FkI29lwsiyT25UIkISuO551cJE)
+![bai 2.27](/images/yolobit_v2/citybit/images/bai_2.27.png)

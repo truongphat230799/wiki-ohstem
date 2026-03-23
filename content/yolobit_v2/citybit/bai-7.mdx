@@ -1,0 +1,77 @@
+---
+title: "9. Bài 7: Hệ thống theo dõi thời tiết và chất lượng không khí"
+---
+
+# 9. Bài 7: Hệ thống theo dõi thời tiết và chất lượng không khí
+
+## Mục tiêu
+- Ở thành phố, chất lượng không khí là mối quan tâm hàng đầu. Để đo lường và đưa ra giải pháp tương ứng, chúng ta hãy cùng lập trình một hệ thống để theo dõi chất lượng không khí và thời tiết nhé! Các giá trị này sẽ được hiển thị trên màn hình LCD.
+
+
+- Nếu chất lượng không khí xuống thấp, hệ thống sẽ báo động bằng màn hình LED 5 x 5 trên Yolo:Bit.
+
+
+## Kết nối
+- Cảm biến nhiệt độ độ ẩm DHT20 (I2C2)
+![bai 7.1](/images/yolobit_v2/citybit/images/bai_7.1.png)
+
+    |
+- Cảm biến chất lượng không khí MQ-135 (P0)
+![bai 7.2](/images/yolobit_v2/citybit/images/bai_7.2.png)
+
+
+**Lưu ý:** Cảm biến chất lượng không khí sẽ ấm lên khi được cấp điện, đây là đặc tính đốt nóng không khí của thiết bị.
+
+- Màn hình LCD OLED (I2C1)
+![bai 7.3](/images/yolobit_v2/citybit/images/bai_7.3.png)
+
+    |
+- **Kết nối**
+![bai 7.4](/images/yolobit_v2/citybit/images/bai_7.4.png)
+
+    |
+    
+    
+## Lắp ráp mô hình
+![bai 7.5](/images/yolobit_v2/citybit/images/bai_7.5.png)
+
+    |
+![bai 7.6](/images/yolobit_v2/citybit/images/bai_7.6.png)
+
+    |
+![bai 7.7](/images/yolobit_v2/citybit/images/bai_7.7.png)
+
+    |
+    
+## Giới thiệu khối lệnh
+![bai 7.8](/images/yolobit_v2/citybit/images/bai_7.8.png)
+
+    |
+    
+## Viết chương trình
+1. Reset bộ đếm thời gian và đặt điều kiện **nếu đọc bộ đếm thời gian > 3000 ms**.
+![bai 7.9](/images/yolobit_v2/citybit/images/bai_7.9.png)
+
+    |
+2. Khởi tạo màn hình LCD. Xóa màn hình LCD trước đó và in ra giá trị nhiệt độ, độ ẩm, chất lượng không khí (PPM) lên màn hình LCD tại vị trí 3 hàng khác nhau:
+![bai 7.10](/images/yolobit_v2/citybit/images/bai_7.10.png)
+
+    |
+3. Tạo điều kiện để báo động về chất lượng không khí: Nếu chất lượng không khí > 1000 (Đạt mức độ đáng báo động)
+![bai 7.11](/images/yolobit_v2/citybit/images/bai_7.11.png)
+
+    |
+4.  Nếu điều kiện đúng: Hiện đèn màu đỏ và thông báo “Khong khi: Xau” lên màn hình LCD
+
+    Nếu không: đổi màu đèn LED thành màu xanh và hiển thị dòng chữ “TKhong khi: Tot” lên màn hình LCD
+![bai 7.12](/images/yolobit_v2/citybit/images/bai_7.12.png)
+
+    |
+5. Reset bộ đếm thời gian ở cuối điều kiện chính
+![bai 7.13](/images/yolobit_v2/citybit/images/bai_7.13.png)
+
+    |
+    
+## Chương trình mẫu
+- Hệ thống theo dõi thời tiết và chất lượng không khí: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2BsZMk5w3M7jC7a3AXSgWQtA3iu)
+![bai 7.14](/images/yolobit_v2/citybit/images/bai_7.14.png)

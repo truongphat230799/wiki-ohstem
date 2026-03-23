@@ -1,0 +1,59 @@
+---
+title: "17. Bài 14: Chỉ huy từ xa"
+---
+
+# 17. Bài 14: Chỉ huy từ xa
+
+*Khi thực thi nhiệm vụ, Rover cần phải tuân theo hiệu lệnh của cấp trên, để hoàn thành các nhiệm vụ một cách tốt nhất. Bạn hãy chỉ huy và truyền đạt lại yêu cầu cho Rover nhé!*
+
+
+## Mục tiêu
+1. Làm quen với giao diện GamePad trên OhStem App
+2. Lập trình điều khiển Rover với giao diện GamePad
+
+
+## Điều khiển bằng GamePad
+Trên OhStem App đã tích hợp sẵn một GamePad ảo, bạn có thể sử dụng giao diện này để điều khiển Rover từ xa
+
+    1.  Chọn Menu Gamepad
+![bai 14.1](/images/robot_rover/rover/images/bai_14.1.png)
+
+
+
+    2. Giao diện Gamepad ảo
+![bai 14.2](/images/robot_rover/rover/images/bai_14.2.png)
+
+
+## Giới thiệu khối lệnh
+- Khối lệnh sử dụng Bluetooth:
+![bai 14.3](/images/robot_rover/rover/images/bai_14.3.png)
+
+
+- Khối lệnh đổi màu đèn LED:
+![bai 14.4](/images/robot_rover/rover/images/bai_14.4.png)
+
+
+## Viết chương trình
+1. Viết thuật toán
+![bai 14.5](/images/robot_rover/rover/images/bai_14.5.png)
+
+
+2. Bắt đầu, cho đèn LED hiển thị màu đỏ. Khi kết nối Bluetooth thành công, đèn LED chuyển sang màu xanh lá. Nếu bị ngắt kết nối, LED chuyển sang đỏ:
+![bai 14.6](/images/robot_rover/rover/images/bai_14.6.png)
+
+
+3. Tạo sự kiện khi nhận được chuỗi: Nếu chuỗi là nút ↑ được nhấn, Rover tiến tới với tốc độ 50
+![bai 14.7](/images/robot_rover/rover/images/bai_14.7.png)
+
+
+4. Tiếp tục, tạo thêm các điều kiện gộp tương ứng với các nút ↓ → ←
+![bai 14.8](/images/robot_rover/rover/images/bai_14.8.png)
+
+
+5. Khi tất cả các điều kiện không đúng, dừng di chuyển
+![bai 14.9](/images/robot_rover/rover/images/bai_14.9.png)
+
+
+## Chương trình mẫu
+- Chỉ huy từ xa: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2BeYnFfI3AtZaNJWfiKsVTP47iy)
+![bai 14.10](/images/robot_rover/rover/images/bai_14.10.png)

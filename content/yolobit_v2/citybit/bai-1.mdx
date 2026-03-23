@@ -1,0 +1,106 @@
+---
+title: "3. Bài 1: Đèn công cộng thông minh"
+---
+
+# 3. Bài 1: Đèn công cộng thông minh
+
+## Mục tiêu:
+Trong bài này, chúng ta sẽ cùng lập trình một chiếc đèn thông minh có thể tự sáng khi có người vào buổi tối. Các đèn này có thể gắn vào các khu vui chơi hoặc công viên tùy thích.
+
+
+## Kết nối
+- Cảm biến ánh sáng (P0)
+![bai 1.1.1](/images/yolobit_v2/citybit/images/bai_1.1.1.png)
+
+    |
+- Cảm biến chuyển động PIR (P1)
+![bai 1.1.2](/images/yolobit_v2/citybit/images/bai_1.1.2.png)
+
+    |
+- Module LED (P2)
+![bai 1.1.3](/images/yolobit_v2/citybit/images/bai_1.1.3.png)
+
+    |
+**Kết nối**
+![bai 1.2](/images/yolobit_v2/citybit/images/bai_1.2.png)
+
+
+## Lắp ráp
+**Lắp ráp khung cho mạch mở rộng**
+
+Đầu tiên, bạn cần lắp ráp một khung phù hợp với mạch mở rộng Yolo:Bit để sử dụng cho từng mô hình.
+
+Thực hiện như sau:
+![bai 1.3](/images/yolobit_v2/citybit/images/bai_1.3.png)
+
+    |
+![bai 1.3.1](/images/yolobit_v2/citybit/images/bai_1.3.1.png)
+
+    |
+**Lắp ráp mô hình**
+![bai 1.4](/images/yolobit_v2/citybit/images/bai_1.4.png)
+
+    |
+![bai 1.4.1](/images/yolobit_v2/citybit/images/bai_1.4.1.png)
+
+    |
+![bai 1.4.2](/images/yolobit_v2/citybit/images/bai_1.4.2.png)
+
+    |
+![bai 1.4.3](/images/yolobit_v2/citybit/images/bai_1.4.3.png)
+
+    |
+    
+## Giới thiệu khối lệnh
+![bai 1.6](/images/yolobit_v2/citybit/images/bai_1.6.png)
+
+    |
+    
+## Viết chương trình
+1. Kéo khối lệnh điều kiện vào phần **lặp lại mãi**
+![bai 1.7](/images/yolobit_v2/citybit/images/bai_1.7.png)
+
+    |
+2. Cho khối lệnh toán tử **VÀ** vào phần nếu
+![bai 1.8](/images/yolobit_v2/citybit/images/bai_1.8.png)
+
+    |
+3. Tạo điều kiện: nếu trời tối (độ sáng < 30) và phát hiện có người
+![bai 1.9](/images/yolobit_v2/citybit/images/bai_1.9.png)
+
+    |
+4. Bật đèn ở chân P2 trong 5 giây, sau đó tắt đèn
+![bai 1.10](/images/yolobit_v2/citybit/images/bai_1.10.png)
+
+    |
+    
+**Vấn đề xảy ra:** Thỉnh thoảng đèn vẫn không bật dù đang có người.
+
+**Nguyên nhân:** Cảm biến hồng ngoại PIR không hoạt động liên tục nên chúng sẽ không phát hiện người kịp thời. Khi có người, cảm biến sẽ bật và hoạt động trong vòng 2 giây rồi tắt. Đến khi tiếp tục phát hiện có người thì cảm biến PIR mới bật lại nên sẽ có độ trễ nhất định.
+
+**Giải pháp:** Sử dụng bộ đếm thời gian để đèn tự tắt nếu trong vòng 10 giây liên tục không có người xuất hiện
+
+
+**Giới thiệu khối lệnh**
+![bai 1.11](/images/yolobit_v2/citybit/images/bai_1.11.png)
+
+    |
+    
+**Sửa chương trình**
+
+1. Nếu trời tối và cảm biến phát hiện có người thì bật đèn LED
+![bai 1.12](/images/yolobit_v2/citybit/images/bai_1.12.png)
+
+    |
+2. Sau khi bật đèn, reset bộ đếm để đếm lại từ đầu
+![bai 1.13](/images/yolobit_v2/citybit/images/bai_1.13.png)
+
+    |
+3. Nếu đếm được 10 giây (trong vòng 10 giây liên tiếp không có người xuất hiện) thì tắt đèn LED
+![bai 1.14](/images/yolobit_v2/citybit/images/bai_1.14.png)
+
+    |
+    
+## Chương trình mẫu
+- Đèn công cộng thông minh: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2Bq3zhPeIeRzldwwWE52H9gdAfT)
+![bai 1.15](/images/yolobit_v2/citybit/images/bai_1.15.png)

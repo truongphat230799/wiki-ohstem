@@ -1,0 +1,31 @@
+{
+  "users": [
+    {
+      "id": "c655ef11-f369-465d-9f6e-803966aba8ee",
+      "username": "admin",
+      "passwordHash": "$2b$10$yIzqwgwFdV0VkSDROAuJweXSdPH9ccg1qHruJENXuo3I3ZtZIRZtG",
+      "displayName": "Admin",
+      "role": "level1",
+      "createdAt": "2026-03-17T06:31:03.791Z",
+      "lastLogin": "2026-03-23T03:31:13.681Z"
+    },
+    {
+      "id": "b86aa4e3-db61-48c0-850b-3fe75ff983a8",
+      "username": "editor1",
+      "passwordHash": "$2b$10$.7MNKPPChZ6zR8B7YBz3fOAIdU7.ggMsFMCBlxH4sE.szaUgiw8oq",
+      "displayName": "Editor 1",
+      "role": "level2",
+      "createdAt": "2026-03-17T06:32:05.022Z",
+      "lastLogin": null
+    },
+    {
+      "id": "c6efbe00-95f1-4478-b111-859539e22125",
+      "username": "phat",
+      "passwordHash": "$2b$10$8fIGnW5AR7PI/H6FqUZnre2BpQp0Q4xJGnJcMzH5JS/JIGw0l7zgu",
+      "displayName": "phat",
+      "role": "level2",
+      "createdAt": "2026-03-17T06:35:44.112Z",
+      "lastLogin": "2026-03-17T08:16:34.123Z"
+    }
+  ]
+}
