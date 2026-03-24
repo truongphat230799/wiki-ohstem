@@ -1,12 +1,12 @@
 export default {
   "index": { "display": "hidden" },
-  "dau-nang": "Đầu nâng ForkLift",
-  "dumptruck": "Bộ Dump Truck",
-  "gamepad-xbot": "Tay cầm điều khiển robot",
-  "gap-hai-bac": "Tay gắp 2 bậc",
-  "gripper": "Đầu gắp Gripper",
-  "inventor": "Inventor",
-  "nem-bong": "Bộ bắn bóng",
-  "xbot": "Xbot",
-  "xbot-motion-kit": "Mạch mở rộng Motion Kit"
+  "xbot": "XBOT",
+  "gamepad-xbot": "TAY CẦM ĐIỀU KHIỂN ROBOT",
+  "gap-hai-bac": "TAY GẮP 2 BẬC",
+  "xbot-motion-kit": "MẠCH MỞ RỘNG MOTION KIT",
+  "dau-nang": "ĐẦU NÂNG FORKLIFT",
+  "dumptruck": "BỘ DUMP TRUCK",
+  "gripper": "ĐẦU GẮP GRIPPER",
+  "inventor": "INVENTOR",
+  "nem-bong": "BỘ BẮN BÓNG"
 }

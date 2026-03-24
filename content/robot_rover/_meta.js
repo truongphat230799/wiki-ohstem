@@ -1,14 +1,14 @@
 export default {
   "index": { "display": "hidden" },
-  "camera_ai": "Camera AI",
-  "camera_ai_v2": "Camera AI V2",
-  "dau_nang": "Đầu nâng Robot Rover",
-  "gamepad": "Tay cầm điều khiển robot",
-  "gap_hai_bac": "Tay gắp 2 bậc",
-  "nem-bong": "Kit bắn bóng",
-  "rover": "Rover",
-  "rover-motion-kit": "Mạch mở rộng Motion Kit",
-  "rover_tank": "Kit xe tăng",
-  "servo_pack": "Servo Pack",
-  "tay_gap": "Tay gắp Robot Gripper"
+  "rover": "ROVER - KIT LẬP TRÌNH ROBOT ROVER",
+  "gamepad": "TAY CẦM ĐIỀU KHIỂN ROBOT",
+  "gap_hai_bac": "TAY GẮP 2 BẬC",
+  "rover-motion-kit": "MẠCH MỞ RỘNG MOTION KIT",
+  "nem-bong": "KIT BẮN BÓNG",
+  "camera_ai_v2": "CAMERA AI V2",
+  "camera_ai": "CAMERA AI",
+  "dau_nang": "ĐẦU NÂNG ROBOT ROVER",
+  "rover_tank": "KIT XE TĂNG",
+  "servo_pack": "SERVO PACK",
+  "tay_gap": "TAY GẮP ROBOT GRIPPER"
 }

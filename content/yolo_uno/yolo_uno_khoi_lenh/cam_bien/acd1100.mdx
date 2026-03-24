@@ -32,12 +32,12 @@ Cảm biến phù hợp cho các ứng dụng:
 
 ## Pinout của module
 
-    :widths: 10, 15, 30
-    
-    1, "VCC", "Nguồn 5V"
-    2, "GND", "Mass"
-    3, "TX", "UART TX (gửi dữ liệu)"
-    4, "RX", "UART RX (nhận cấu hình)"
+| STT | Chân | Chức năng |
+|:---:|:---|:---|
+| 1 | VCC | Nguồn 5V |
+| 2 | GND | Mass |
+| 3 | TX | UART TX (gửi dữ liệu) |
+| 4 | RX | UART RX (nhận cấu hình) |
     
 ## Kết nối
 Kết nối cảm biến ACD1100 vào Yolo UNO / ESP32:
@@ -45,6 +45,13 @@ Kết nối cảm biến ACD1100 vào Yolo UNO / ESP32:
 
 
 ## Lập trình trên OhStem App
+
+Để lập trình, bạn cần tải thư viện mở rộng **Smart City** từ liên kết sau:
+> `https://github.com/AITT-VN/yolouno_extension_smartcity.git`
+
+*(Xem hướng dẫn thêm thư viện mở rộng [tại đây](https://docs.ohstem.vn/en/latest/module/thu-vien-yolobit.html) hoặc dán đường link trên vào ô tìm kiếm thư viện mở rộng như hình dưới)*
+![minh họa tải thư viện](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/acd1100_04.png)
+
 Trên OhStem App, bạn chỉ cần sử dụng khối lệnh đọc CO₂ từ thư viện **Smart City** để nhận dữ liệu CO₂ từ cảm biến ACD1100.
 ![acd1100 03](/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/acd1100_03.png)
 

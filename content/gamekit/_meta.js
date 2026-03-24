@@ -1,4 +1,4 @@
 export default {
   "index": { "display": "hidden" },
-  "gamekit": "Gamekit"
+  "gamekit": "GAMEKIT - KIT LẬP TRÌNH GAME ĐƠN GIẢN"
 }

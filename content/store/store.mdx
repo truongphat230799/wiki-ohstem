@@ -2,7 +2,42 @@
 title: "Đi tới cửa hàng"
 ---
 
-# Đi tới cửa hàng
-![gio](/images/store/gio.png)
+<style>{`
+  .store-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    padding: 3rem 2rem;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+    color: #0f172a;
+    max-width: 420px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease-in-out;
+  }
+  .store-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+`}</style>
+
+<div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem', marginBottom: '3rem' }}>
+  <a 
+    href="https://shop.ohstem.vn" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="store-card"
+  >
+    <img src="/images/store/gio.png" alt="Shopping Cart" style={{ width: '220px', height: '220px', objectFit: 'contain', marginBottom: '1.5rem' }} />
+    <span style={{ fontSize: '1.6rem', fontWeight: 'bold', color: '#2563eb' }}>
+      Đến trang mua sắm
+    </span>
+    <span style={{ marginTop: '0.75rem', fontSize: '1rem', color: '#475569', textAlign: 'center', lineHeight: '1.5' }}>
+      Nhấn vào đây để xem và mua sắm các thiết bị, phụ kiện từ OhStem
+    </span>
+  </a>
+</div>
 
 

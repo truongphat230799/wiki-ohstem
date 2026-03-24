@@ -1,4 +1,4 @@
 export default {
   "index": { "display": "hidden" },
-  "store": "Đi tới cửa hàng"
+  "store": "ĐI TỚI CỬA HÀNG"
 }

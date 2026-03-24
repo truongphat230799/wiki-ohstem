@@ -1,4 +1,4 @@
 export default {
   "index": { "display": "hidden" },
-  "orc-bot": "Orc Bot"
+  "orc-bot": "ORC BOT - KIT LẬP TRÌNH ROBOT ORC"
 }

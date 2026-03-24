@@ -48,8 +48,9 @@ export default async function RootLayout({ children }) {
                     docsRepositoryBase="https://github.com/AITT-VN/wiki-app/tree/main/content"
                     footer={footer}
                     sidebar={{ defaultMenuCollapseLevel: 1 }}
-                    editLink="Chỉnh sửa trang này"
-                    feedback={{ content: 'Góp ý' }}
+                    editLink={null}
+                    feedback={{ content: null }}
+                    search={null}
                     toc={{ title: 'Mục lục' }}
                 >
                     {children}

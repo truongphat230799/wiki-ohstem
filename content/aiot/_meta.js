@@ -1,4 +1,4 @@
 export default {
   "index": { "display": "hidden" },
-  "lam_quen": "Làm Quen"
+  "lam_quen": "LÀM QUEN VỚI AIOT KIT"
 }

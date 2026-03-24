@@ -3,8 +3,9 @@ export default {
   "---": {
     "type": "separator"
   },
+  "store": "Store",
   "orc_bot": "Orc Bot",
-  "yolobit_v2": "Yolobit V2",
+  "yolobit_v2": "Yolobit",
   "stem_kit": "Stem Kit",
   "aiot": "Aiot",
   "yolo_uno": "Yolo Uno",
@@ -19,7 +20,11 @@ export default {
   "FaQs": "FaQs",
   "app": "App",
   "board": "Board",
-  "yolobit_v1": "Yolobit V1",
-  "tai_lieu_stem": "Tai Lieu Stem",
-  "store": "Store"
+  "yolobit_v1": { "display": "hidden" },
+  "tai_lieu_stem": "TÀI LIỆU STEM",
+  "---": {
+    "type": "separator"
+  },
+  "giaidau_orc": "GIẢI ĐẤU ORC",
+  "admin": { "display": "hidden" }
 }

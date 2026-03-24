@@ -2,9 +2,9 @@ export default {
   "index": {
     "display": "hidden"
   },
-  "cac_chu_de": "Cac Chu De",
+  "cac_chu_de": "CÁC CHỦ ĐỀ",
   "stem_kit": {
-    "title": "Các dự án STEM tiểu học",
+    "title": "CÁC DỰ ÁN STEM TIỂU HỌC",
     "display": "hidden"
   }
 }
