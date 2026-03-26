@@ -92,8 +92,7 @@ export default function LoginPage() {
             </div>
 
             <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-                body { margin: 0; font-family: 'Inter', sans-serif; }
+                body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
                 input:focus { outline: none; border-color: #6366f1 !important; box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
                 button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(99,102,241,0.3); }
             `}</style>
@@ -167,7 +166,7 @@ const styles = {
         border: '1.5px solid #e2e8f0',
         fontSize: '15px',
         transition: 'all 0.2s',
-        fontFamily: 'Inter, sans-serif',
+        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
     },
     button: {
         padding: '14px',
@@ -178,7 +177,7 @@ const styles = {
         fontSize: '16px',
         fontWeight: '600',
         transition: 'all 0.2s',
-        fontFamily: 'Inter, sans-serif',
+        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
         marginTop: '8px',
     },
 }

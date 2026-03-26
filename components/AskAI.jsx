@@ -25,24 +25,64 @@ export default function AskAI() {
         }
     }, [isOpen])
 
+    useEffect(() => {
+        if (!isOpen) return
+
+        const handleEscape = (event) => {
+            if (event.key === 'Escape') {
+                setIsOpen(false)
+            }
+        }
+
+        window.addEventListener('keydown', handleEscape)
+        return () => window.removeEventListener('keydown', handleEscape)
+    }, [isOpen])
+
+    const updateLastAiMessage = (content, isError = false) => {
+        setMessages((prev) => {
+            const updated = [...prev]
+
+            for (let i = updated.length - 1; i >= 0; i -= 1) {
+                if (updated[i].role === 'ai') {
+                    updated[i] = { role: 'ai', content, isError }
+                    return updated
+                }
+            }
+
+            return [...updated, { role: 'ai', content, isError }]
+        })
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         const q = question.trim()
         if (!q || isLoading) return
 
-        // Add user message
-        setMessages((prev) => [...prev, { role: 'user', content: q }])
+        const requestHistory = messages.filter(
+            (msg) => typeof msg?.content === 'string' && msg.content.trim()
+        )
+
+        setMessages((prev) => [
+            ...prev,
+            { role: 'user', content: q },
+            { role: 'ai', content: '' },
+        ])
         setQuestion('')
         setIsLoading(true)
 
-        // Add placeholder for AI response
-        setMessages((prev) => [...prev, { role: 'ai', content: '' }])
+        let fullText = ''
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), 45000)
 
         try {
             const res = await fetch('/api/ai/ask', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ question: q }),
+                signal: controller.signal,
+                body: JSON.stringify({
+                    question: q,
+                    history: requestHistory,
+                }),
             })
 
             if (!res.ok) {
@@ -50,10 +90,12 @@ export default function AskAI() {
                 throw new Error(errData.error || `Lỗi ${res.status}`)
             }
 
-            // Stream the response
+            if (!res.body) {
+                throw new Error('AI không trả về dữ liệu.')
+            }
+
             const reader = res.body.getReader()
             const decoder = new TextDecoder()
-            let fullText = ''
 
             while (true) {
                 const { done, value } = await reader.read()
@@ -61,29 +103,30 @@ export default function AskAI() {
 
                 const chunk = decoder.decode(value, { stream: true })
                 fullText += chunk
+                updateLastAiMessage(fullText)
+            }
 
-                setMessages((prev) => {
-                    const updated = [...prev]
-                    updated[updated.length - 1] = { role: 'ai', content: fullText }
-                    return updated
-                })
+            if (!fullText.trim()) {
+                throw new Error('MiniMax không trả về nội dung hiển thị.')
             }
         } catch (err) {
-            setMessages((prev) => {
-                const updated = [...prev]
-                updated[updated.length - 1] = {
-                    role: 'ai',
-                    content: `⚠️ ${err.message || 'Đã xảy ra lỗi. Vui lòng thử lại.'}`,
-                    isError: true,
-                }
-                return updated
-            })
+            const fallbackMessage =
+                err?.name === 'AbortError'
+                    ? 'AI phản hồi quá lâu. Vui lòng thử lại.'
+                    : err.message || 'Đã xảy ra lỗi. Vui lòng thử lại.'
+            const content = fullText.trim()
+                ? `${fullText}\n\n⚠️ ${fallbackMessage}`
+                : `⚠️ ${fallbackMessage}`
+
+            updateLastAiMessage(content, !fullText.trim())
         } finally {
+            clearTimeout(timeoutId)
             setIsLoading(false)
         }
     }
 
     const handleClear = () => {
+        if (isLoading) return
         setMessages([])
         setQuestion('')
     }
@@ -91,32 +134,54 @@ export default function AskAI() {
     const renderMarkdown = (text) => {
         if (!text) return null
 
-        // Simple markdown rendering
+        const htmlEscapes = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+        }
+
         let html = text
-            // Code blocks
+            .replace(/[&<>"']/g, (char) => htmlEscapes[char])
             .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code class="language-$1">$2</code></pre>')
-            // Inline code
             .replace(/`([^`]+)`/g, '<code>$1</code>')
-            // Bold
             .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-            // Italic
             .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-            // Links
             .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
-            // Line breaks
             .replace(/\n/g, '<br/>')
 
         return <span dangerouslySetInnerHTML={{ __html: html }} />
     }
 
+    const panelStyle = {
+        opacity: isOpen ? 1 : 0,
+        visibility: isOpen ? 'visible' : 'hidden',
+        transform: isOpen ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.95)',
+        pointerEvents: isOpen ? 'auto' : 'none',
+    }
+
     return (
         <>
+            {isOpen && (
+                <div
+                    className="askai-backdrop"
+                    onClick={() => setIsOpen(false)}
+                    aria-hidden="true"
+                />
+            )}
             {/* Floating Action Button */}
             <button
+                type="button"
                 className={`askai-fab ${isOpen ? 'askai-fab--open' : ''}`}
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={(event) => {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    setIsOpen((open) => !open)
+                }}
                 aria-label={isOpen ? 'Đóng trợ lý AI' : 'Hỏi trợ lý AI'}
                 title="Hỏi AI"
+                aria-expanded={isOpen}
             >
                 <span className="askai-fab__icon">
                     {isOpen ? '✕' : '💬'}
@@ -124,21 +189,26 @@ export default function AskAI() {
             </button>
 
             {/* Chat Panel */}
-            <div className={`askai-panel ${isOpen ? 'askai-panel--open' : ''}`}>
+            <div
+                className={`askai-panel ${isOpen ? 'askai-panel--open' : ''}`}
+                style={panelStyle}
+                onClick={(event) => event.stopPropagation()}
+            >
                 {/* Header */}
                 <div className="askai-panel__header">
                     <div className="askai-panel__title">
-                        <span className="askai-panel__logo"><img src="/images/logoohstem.png" alt="OhStem" style={{height: '28px'}} /></span>
+                        <span className="askai-panel__logo"><img src="/images/logoohstem.png" alt="OhStem" style={{ height: '28px' }} /></span>
                         <div>
                             <h3>OhStem AI Assistant</h3>
                             <p>Hỏi bất kỳ điều gì về OhStem</p>
                         </div>
                     </div>
                     <button
+                        type="button"
                         className="askai-panel__clear"
                         onClick={handleClear}
                         title="Xóa lịch sử chat"
-                        disabled={messages.length === 0}
+                        disabled={messages.length === 0 || isLoading}
                     >
                         🗑️
                     </button>
@@ -148,7 +218,7 @@ export default function AskAI() {
                 <div className="askai-panel__messages">
                     {messages.length === 0 && (
                         <div className="askai-panel__welcome">
-                            <div className="askai-panel__welcome-icon"><img src="/images/logoohstem.png" alt="OhStem" style={{height: '48px'}} /></div>
+                            <div className="askai-panel__welcome-icon"><img src="/images/logoohstem.png" alt="OhStem" style={{ height: '48px' }} /></div>
                             <h4>Xin chào!</h4>
                             <p>
                                 Tôi là trợ lý AI của OhStem. Hãy hỏi tôi bất kỳ câu hỏi nào
@@ -161,6 +231,7 @@ export default function AskAI() {
                                     'Bắt đầu từ đâu?',
                                 ].map((s) => (
                                     <button
+                                        type="button"
                                         key={s}
                                         className="askai-panel__suggestion"
                                         onClick={() => {
@@ -182,7 +253,7 @@ export default function AskAI() {
                                 }`}
                         >
                             <div className="askai-message__avatar">
-                                {msg.role === 'user' ? '👤' : <img src="/images/avt_ai_chat.png" alt="AI" style={{height: '20px', borderRadius: '50%'}} />}
+                                {msg.role === 'user' ? '👤' : <img src="/images/avt_ai_chat.png" alt="AI" style={{ height: '20px', borderRadius: '50%' }} />}
                             </div>
                             <div className="askai-message__bubble">
                                 {msg.role === 'ai' && !msg.content && isLoading ? (

@@ -1,12 +1,11 @@
 # 🤖 OhStem Wiki Hub
 
-Hệ thống Wiki thông minh cho OhStem Education, xây dựng trên **Nextra 4** + **Gemini 1.5 Flash AI**.
+Hệ thống Wiki thông minh cho OhStem Education, xây dựng trên **Nextra 4** + **MiniMax AI**.
 
 ## Tính năng
 
 - 📘 **Wiki tĩnh**: Render nhanh từ file Markdown/MDX, SEO tối ưu
 - 🤖 **Trợ lý AI**: Chatbot tích hợp, trả lời dựa trên nội dung wiki
-- 🔍 **Tìm kiếm**: Pagefind search engine (full-text, offline)
 - 🌗 **Dark/Light mode**: Tự động theo hệ thống
 - 📱 **Responsive**: Hiển thị tốt trên mọi thiết bị
 - ☁️ **Serverless**: Deploy trên Vercel, không cần server
@@ -23,7 +22,7 @@ npm install
 
 # Tạo file .env.local
 cp .env.example .env.local
-# Sửa GEMINI_API_KEY trong .env.local
+# Sửa MINIMAX_API_KEY trong .env.local
 
 # Chạy dev server
 npm run dev
@@ -81,14 +80,14 @@ wiki-app/
 ```bash
 curl -X POST https://wiki.ohstem.vn/api/ai/ask \
   -H "Content-Type: application/json" \
-  -d '{"question": "Yolo:Bit là gì?", "apiKey": "YOUR_GEMINI_KEY"}'
+  -d '{"question": "Yolo:Bit là gì?"}'
 ```
 
 ## Deploy lên Vercel
 
 1. Push code lên GitHub
 2. Import project trên [Vercel](https://vercel.com)
-3. Thêm environment variable `GEMINI_API_KEY`
+3. Thêm environment variable `MINIMAX_API_KEY`
 4. Deploy!
 
 ## License

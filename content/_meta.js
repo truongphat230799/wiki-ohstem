@@ -25,6 +25,6 @@ export default {
   "---": {
     "type": "separator"
   },
-  "giaidau_orc": "GIẢI ĐẤU ORC",
+  "giaidau_orc": "OPEN ROBOTICS CHALLENGE (ORC)",
   "admin": { "display": "hidden" }
 }

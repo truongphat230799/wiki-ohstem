@@ -2,12 +2,11 @@
   "name": "ohstem-wiki",
   "version": "1.0.0",
   "private": true,
-  "description": "OhStem Wiki Hub - Nextra 4 + Gemini AI Q&A",
+  "description": "OhStem Wiki Hub - Nextra 4 + MiniMax AI Q&A",
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start",
-    "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind"
+    "start": "next start"
   },
   "dependencies": {
     "@babylonjs/core": "^8.55.3",
@@ -20,7 +19,6 @@
     "next": "^15.1.0",
     "nextra": "^4.0.0",
     "nextra-theme-docs": "^4.0.0",
-    "pagefind": "^1.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   }

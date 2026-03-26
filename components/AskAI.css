@@ -7,7 +7,7 @@
     position: fixed;
     bottom: 24px;
     right: 24px;
-    z-index: 9999;
+    z-index: 2147483647;
     width: 56px;
     height: 56px;
     border-radius: 50%;
@@ -52,6 +52,13 @@
     font-size: 18px;
 }
 
+.askai-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483645;
+    background: transparent;
+}
+
 @keyframes askai-pulse {
 
     0%,
@@ -73,7 +80,7 @@
     position: fixed;
     bottom: 96px;
     right: 24px;
-    z-index: 9998;
+    z-index: 2147483646;
     width: 400px;
     max-width: calc(100vw - 48px);
     height: 560px;
@@ -91,6 +98,7 @@
         0 0 0 1px rgba(255, 255, 255, 0.05) inset;
     /* Hidden by default */
     opacity: 0;
+    visibility: hidden;
     transform: translateY(20px) scale(0.95);
     pointer-events: none;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -98,6 +106,7 @@
 
 .askai-panel--open {
     opacity: 1;
+    visibility: visible;
     transform: translateY(0) scale(1);
     pointer-events: all;
 }

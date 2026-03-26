@@ -10,4 +10,12 @@ export default withNextra({
   outputFileTracingExcludes: {
     '*': ['public/**/*'],
   },
+  webpack: (config, { dev }) => {
+    if (dev) {
+      // Avoid noisy filesystem-cache serialization warnings during local development.
+      config.cache = { type: 'memory' }
+    }
+
+    return config
+  },
 })
