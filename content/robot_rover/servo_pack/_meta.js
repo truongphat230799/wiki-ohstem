@@ -1,4 +1,4 @@
-export default {
+﻿export default {
   "index": { "display": "hidden" },
   "gioi_thieu": "1. Giới thiệu Rover - Servo Pack",
   "robot_meo_do_duong": "2. Bài 1: Robot Mèo dò đường",
@@ -7,3 +7,4 @@ export default {
   "robot_xe_ui": "5. Bài 4: Robot xe ủi",
   "robot_truc_thang": "6. Bài 5: Robot trực thăng"
 }
+

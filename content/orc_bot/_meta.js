@@ -1,4 +1,9 @@
 export default {
   "index": { "display": "hidden" },
-  "orc-bot": "ORC BOT - KIT LẬP TRÌNH ROBOT ORC"
+  "robot-orc-k2": "Robot ORC K2",
+  "robot-orc-k3": "Robot ORC K3",
+  "orc-bot": {
+    "title": "KIT ROBOT GIÁO DỤC ORC",
+    "display": "hidden"
+  }
 }

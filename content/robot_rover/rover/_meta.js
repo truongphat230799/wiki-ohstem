@@ -1,4 +1,4 @@
-export default {
+﻿export default {
   "index": { "display": "hidden" },
   "gioi-thieu-rover": "1. Giới thiệu về robot Rover",
   "lap-rap": "2. Hướng dẫn lắp ráp",
@@ -20,6 +20,6 @@ export default {
   "bai-15": "18. Bài 15: Giao tiếp cùng đồng đội",
   "bai-16": "19. Bài 16: Lập trình AI - Điều khiển bằng giọng nói",
   "bai-17": "20. Bài 17: Lập trình AI - Điều khiển bằng cử chỉ",
-  "bai-18": "21. Bài 18: Điều khiển và giám sát robot qua IoT",
-  "che-do-mac-dinh": "Che Do Mac Dinh"
+  "bai-18": "21. Bài 18: Điều khiển và giám sát robot qua IoT"
 }
+

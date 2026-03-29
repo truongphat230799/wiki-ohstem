@@ -1,92 +1,82 @@
----
+﻿---
 title: "Tay gắp 2 bậc"
 ---
 
 # Tay gắp 2 bậc
 
 ## 1. Giới thiệu
-Tay gắp 2 bậc là một phụ kiện mở rộng, được thiết kế để hỗ trợ cả hai tính năng gắp và nâng vật, giúp bạn dễ dàng điều khiển, lập trình robot hoàn thành các nhiệm vụ đặt ra dễ dàng hơn.
 
-Sản phẩm sử dụng 2 động cơ Servo 180 độ. Bạn có thể gắn tay gắp này lên **robot Rover, robot xBot hoặc các sản phẩm robot khác do OhStem cung cấp**.
+Tay gắp 2 bậc là một phụ kiện mở rộng giúp robot vừa có thể gắp vật, vừa có thể nâng hạ để thực hiện các nhiệm vụ linh hoạt hơn. Phụ kiện này phù hợp cho các bài học thực hành, các bài toán gắp thả vật và nhiều ứng dụng sáng tạo khác.
+
+Sản phẩm sử dụng 2 động cơ servo 180 độ và có thể gắn lên **robot Rover, robot xBot** hoặc các mẫu robot khác trong hệ sinh thái OhStem.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/f70IHFEc5rU" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
 
-
 ## 2. Link sản phẩm
+
 ![gio](/images/robot_rover/images/gio.png)
 
-
 ## 3. Thông số kỹ thuật
-- Chất liệu: Khung tay gắp 2 bậc làm từ nhựa có độ bền cao, chống gãy vỡ tốt
-- Sản phẩm sử dụng 2 động cơ Servo 180 độ
+
+- Khung tay gắp 2 bậc được làm từ nhựa bền, chắc chắn và chống gãy vỡ tốt
+- Sử dụng 2 động cơ Servo 180 độ
 
 ## 4. Hướng dẫn kết nối
-Trên tay gắp 2 bậc được sử dụng 2 động cơ servo MG90S, loại động cơ này giúp cho lực kéo khỏe và có độ bền cao.
 
-Thứ tự và chức năng của servo trên tay gắp 2 bậc như sau:
+Tay gắp 2 bậc sử dụng 2 động cơ servo MG90S. Đây là loại động cơ có lực kéo tốt và độ bền cao, phù hợp cho các cơ cấu gắp và nâng hạ.
+
+Thứ tự và chức năng của hai servo như sau:
 ![hai bac 1](/images/robot_rover/images/hai_bac_1.png)
 
+Kết nối với Robot Rover:
 
-**Kết nối hai servo này vào Robot Rover như sau:**
-
-- Servo 1 - Đóng/ Mở - Kết nối vào chân S1
-- Servo 2 - Nâng/ Hạ - Kết nối vào chân S2
+- Servo 1: Đóng/Mở tay gắp, kết nối vào chân `S1`
+- Servo 2: Nâng/Hạ tay gắp, kết nối vào chân `S2`
 ![hai bac 2](/images/robot_rover/images/hai_bac_2.png)
 
-
-Hãy lưu ý khi cắm dây, bạn cần cắm chân màu vàng của động cơ vào chân màu vàng trên robot. Lúc đó, chân màu xám của động cơ sẽ kết nối được với nguồn âm của robot (chân màu đen).
-
+Khi cắm dây, hãy chú ý cắm đúng chiều. Chân màu vàng của động cơ cần đi vào chân màu vàng trên robot; chân màu xám sẽ tương ứng với nguồn âm.
 
 ## 5. Hướng dẫn sử dụng
-Để điều khiển được tay gắp, bạn sẽ cần thực hiện các bước như sau:
 
-1. Tải thư viện Rover cho Yolo:Bit. Xem hướng dẫn tải thư viện [tại đây ](https://docs.ohstem.vn/en/latest/robot_rover/rover/cai-dat-thu-vien.html).
+Để điều khiển tay gắp bằng giao diện điều khiển có sẵn, bạn thực hiện như sau:
 
-2. Trên giao diện lập trình thiết bị Yolo:Bit, chọn vào **Gamepad**:
+1. Tải thư viện Rover cho Yolo:Bit. Xem hướng dẫn [tại đây](https://docs.ohstem.vn/en/latest/robot_rover/rover/cai-dat-thu-vien.html).
+2. Trên giao diện lập trình thiết bị Yolo:Bit, chọn vào **Gamepad**.
 ![hai bac 3](/images/robot_rover/images/hai_bac_3.png)
+3. Kết nối Bluetooth đến robot, sau đó dùng các nút sau để điều khiển:
 
+- Nút `A`: Mở tay gắp
+- Nút `D`: Đóng tay gắp
+- Nút `B`: Nâng lên
+- Nút `C`: Hạ xuống
 
-3. Giao diện sẽ hiện ra như hình bên dưới, bạn cần kết nối Bluetooth đến robot của mình và nhấn các nút sau để điều khiển tay gắp:
-
-    - Nút A: Mở tay gắp
-    - Nút D: Đóng tay gắp
-    - Nút B: Nâng lên
-    - Nút C: Hạ xuống
 ![hai bac 4](/images/robot_rover/images/hai_bac_4.png)
 
-
 ## 6. Hướng dẫn lập trình
-Động cơ servo có thể thực hiện được lệnh xoay cánh tay động cơ đến vị trí được lập trình sẵn (từ 0 đến 180 độ) một cách tức thời hoặc theo một tốc độ cho trước.
+
+Động cơ servo cho phép xoay cánh tay đến một góc xác định từ `0` đến `180` độ ngay lập tức hoặc theo tốc độ đặt trước.
 ![tay gap 2](/images/robot_rover/images/tay_gap_2.png)
 
+Khi quan sát trực diện từ phía trục quay, chiều xoay ngược chiều kim đồng hồ được tính từ góc `0` đến `180` độ.
 
-Chiều xoay của động cơ servo là hướng khi chúng ta quan sát trực diện với mặt trục xoay. Theo quay ước, chiều xoay từ phải sang trái tức ngược chiều kim đồng hồ của động cơ servo sẽ tính từ góc 0 độ đến 180 độ.
-
-**Các góc đóng - mở, nâng - hạ của tay gắp như sau:**
+Các góc đóng/mở và nâng/hạ của tay gắp như sau:
 ![hai bac 5](/images/robot_rover/images/hai_bac_5.png)
 
-
-**6.1 Giới thiệu khối lệnh**
-+++++++
+### 6.1 Giới thiệu khối lệnh
 
 Trong thư viện **Rover**, sử dụng khối lệnh sau để điều khiển servo của tay gắp:
 ![tay gap 3](/images/robot_rover/images/tay_gap_3.png)
 
+Khối lệnh này dùng để điều khiển động cơ servo 180 độ quay tới góc mong muốn trong khoảng `0 - 180`.
 
-    Điều khiển động cơ servo 180 độ quay tới 1 góc nào đó từ 0-180.
-    
-> **Ghi chú:** Trên Rover, có 2 cổng kết nối để điều khiển servo S1 và S2. Khi lập trình bạn cần chọn đúng cổng đã kết nối!
+> **Ghi chú:** Trên Rover có 2 cổng điều khiển servo là `S1` và `S2`. Khi lập trình, bạn cần chọn đúng cổng đã kết nối.
 
+### 6.2 Viết chương trình
 
-**6.2 Viết chương trình**
-+++++++++++
+**Yêu cầu:** Lập trình robot mở/đóng, nâng/hạ tay gắp sau mỗi 2 giây và lặp lại liên tục.
 
-**Yêu cầu:** Lập trình robot mở - đóng, nâng - hạ  tay gắp sau mỗi 2 giây. Lặp lại liên tục
-
-Chương trình sẽ được thực hiện như sau:
+Chương trình minh họa như sau:
 ![hai bac 6](/images/robot_rover/images/hai_bac_6.png)
 
+**Chương trình mẫu:** [Tại đây](https://app.ohstem.vn/#!/share/yolobit/2QuMPwAUBzZk42CMBEirDIzSMsp)
 
-**Chương trình mẫu:**
-
-Bạn có thể chương trình [tại đây ](https://app.ohstem.vn/#!/share/yolobit/2QuMPwAUBzZk42CMBEirDIzSMsp).

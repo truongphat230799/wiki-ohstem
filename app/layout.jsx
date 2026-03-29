@@ -10,7 +10,9 @@ export const metadata = {
         'Tài liệu hướng dẫn sử dụng và lập trình các thiết bị OhStem Education',
     metadataBase: new URL('https://wiki.ohstem.vn'),
     icons: {
-        icon: '/images/logoohstem.png',
+        icon: '/images/avt_ai_chat.png',
+        shortcut: '/images/avt_ai_chat.png',
+        apple: '/images/avt_ai_chat.png',
     },
 }
 

@@ -1,4 +1,4 @@
-export default {
+﻿export default {
   "index": { "display": "hidden" },
   "rover": "ROVER - KIT LẬP TRÌNH ROBOT ROVER",
   "gamepad": "TAY CẦM ĐIỀU KHIỂN ROBOT",
@@ -12,3 +12,4 @@ export default {
   "servo_pack": "SERVO PACK",
   "tay_gap": "TAY GẮP ROBOT GRIPPER"
 }
+

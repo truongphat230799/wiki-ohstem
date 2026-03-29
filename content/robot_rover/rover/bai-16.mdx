@@ -1,4 +1,4 @@
----
+﻿---
 title: "19. Bài 16: Lập trình AI - Điều khiển bằng giọng nói"
 ---
 
@@ -48,17 +48,14 @@ title: "19. Bài 16: Lập trình AI - Điều khiển bằng giọng nói"
 ## Nhận dạng giọng nói và in kết quả ra màn hình:
 ![bai 16.10](/images/robot_rover/rover/images/bai_16.10.png)
 
-    |
     - Tại giao diện **Lập trình AI**. Xây dựng chương trình hiển thị kết quả giọng nói.
 ![bai 16.11](/images/robot_rover/rover/images/bai_16.11.png)
 
 
         - Câu lệnh **đổi màu hình nền** sang màu trắng, có tác dụng xóa xóa kết quả nhận dạng trước đó, để việc hiển thị kết quả tiếp theo không bị che mất.
-        |
         - Chạy chương trình và quan sát kết quả:
 ![bai 16](/images/robot_rover/rover/images/bai_16.png)
 
-    |
     
 ## Điều khiển robot bằng giọng nói
 **Phần 1: Gửi lệnh cho Robot**
@@ -70,13 +67,11 @@ title: "19. Bài 16: Lập trình AI - Điều khiển bằng giọng nói"
 
 
         - Khi bắt được từ lệnh đi thẳng, chúng ta sẽ gửi một **mã lệnh** tới mạch Yolo:Bit đang kết nối, là số 1 cho đơn giản. Câu lệnh để bắt từ khóa (**kết quả có chứa**) nằm trong nhóm **GIỌNG NÓI**. Câu lệnh gửi **1 tới thiết bị đang kết nối** nằm trong nhóm **GIAO TIẾP**.
-    |
     2. Hoàn thiện chương trình nhận dạng giọng nói
     
         - Tiếp tục nhân bản toàn bộ câu lệnh ở bước trên, và ghép nó vào vị trí thích hợp để hoàn thiện chương trình như sau:
 ![bai 16.13](/images/robot_rover/rover/images/bai_16.13.png)
 
-    |
     
 **Phần 2: Robot nhận lệnh**
 
@@ -85,31 +80,24 @@ title: "19. Bài 16: Lập trình AI - Điều khiển bằng giọng nói"
     1. Chuyển sang giao diện **Lập trình thiết bị**
 ![bai 16.14](/images/robot_rover/rover/images/bai_16.14.png)
 
-    |
     2. Bắt đầu với một vài hiệu ứng trước khi vào khối lặp lại mãi mãi, như sau:
 ![bai 16.15](/images/robot_rover/rover/images/bai_16.15.png)
 
-    |
     3. Khai báo biến **Lệnh AI** để đọc và lưu lại lệnh được gửi tới robot.
 ![bai 16.16](/images/robot_rover/rover/images/bai_16.16.png)
 
-    |
     4. Đọc lệnh AI từ cửa sổ nhập lệnh. Liên tục đọc lệnh do chương trình AI gửi tới ở cửa sổ nhập lệnh
 ![bai 16.17](/images/robot_rover/rover/images/bai_16.17.png)
 
-    |
     5. Xây dựng phép so sánh chuỗi
 ![bai 16.18](/images/robot_rover/rover/images/bai_16.18.png)
 
-    |
     6. Nhân bản câu lệnh so sánh chuỗi và ghép nối lại chương trình để có được cấu trúc chương trình như sau:
 ![bai 16.19](/images/robot_rover/rover/images/bai_16.19.png)
 
-    |
     7. Hoàn thiện chương trình bằng ghép nối cái câu lệnh di chuyển tương ứng.
 ![bai 16.20](/images/robot_rover/rover/images/bai_16.20.png)
 
-    |
     
 ## Lưu chương trình vào Yolo:Bit
 Sau khi biên soạn chương trình xong, chương trình cần được lưu cố định vào Yolo:Bit. Điều này sẽ rất cần thiết cho việc kết nối ổn định giữa xBot và chương trình AI về sau.
@@ -117,7 +105,6 @@ Sau khi biên soạn chương trình xong, chương trình cần được lưu c
 1. Lưu chương trình vào Yolo:Bit Rover
 ![bai 16.21](/images/robot_rover/rover/images/bai_16.21.png)
 
-    |
 2. Reset lại Yolo:Bit
 
 3. Mở chương trình AI, kết nối với Yolo:Bit Rover
@@ -128,3 +115,4 @@ Sau khi biên soạn chương trình xong, chương trình cần được lưu c
 ## Chương trình mẫu
 - Điều khiển robot bằng giọng nói: [Tại đây ](https://app.ohstem.vn/#!/share/yolobit/2BepIuCggBc71rsRElGOHpOq0DI)
 ![bai 16.22](/images/robot_rover/rover/images/bai_16.22.png)
+
