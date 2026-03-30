@@ -5,3 +5,47 @@
   --ohstem-primary-light: #818cf8;
   --ohstem-accent: #06b6d4;
 }
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/*
+  Fallback responsive rules for browsers/webviews that don't fully support
+  media query range syntax used by Tailwind v4 in Nextra styles.
+*/
+@media screen and (max-width: 767.98px) {
+  .nextra-sidebar,
+  .nextra-toc {
+    display: none !important;
+  }
+
+  .nextra-mobile-nav {
+    display: none !important;
+    transform: translate3d(0, -100%, 0) !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  html.x\:max-md\:overflow-hidden .nextra-mobile-nav {
+    display: flex !important;
+    position: fixed !important;
+    inset: 0 !important;
+    top: var(--nextra-navbar-height) !important;
+    z-index: 20 !important;
+    background: rgb(var(--nextra-bg, 255 255 255)) !important;
+    padding-top: 0 !important;
+    overflow-y: auto !important;
+    transform: translate3d(0, 0, 0) !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .nextra-mobile-nav {
+    display: none !important;
+  }
+}

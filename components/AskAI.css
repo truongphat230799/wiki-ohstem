@@ -125,6 +125,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    min-width: 0;
 }
 
 .askai-panel__logo {
@@ -138,12 +139,14 @@
     font-weight: 700;
     color: #f9fafb;
     letter-spacing: -0.01em;
+    overflow-wrap: anywhere;
 }
 
 .askai-panel__title p {
     margin: 2px 0 0;
     font-size: 12px;
     color: #9ca3af;
+    overflow-wrap: anywhere;
 }
 
 .askai-panel__clear {
@@ -418,6 +421,7 @@
 
 .askai-panel__input input {
     flex: 1;
+    min-width: 0;
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
@@ -464,20 +468,43 @@
 }
 
 /* --- Responsive --- */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .askai-panel {
-        bottom: 80px;
         right: 12px;
         left: 12px;
         width: auto;
         max-width: none;
-        height: calc(100vh - 100px);
+        bottom: calc(76px + env(safe-area-inset-bottom));
+        height: min(68dvh, 620px);
+    }
+
+    .askai-panel__header {
+        padding: 14px 16px;
+    }
+
+    .askai-panel__title {
+        gap: 10px;
+    }
+
+    .askai-panel__messages {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .askai-panel {
+        bottom: calc(72px + env(safe-area-inset-bottom));
+        right: 12px;
+        left: 12px;
+        width: auto;
+        max-width: none;
+        height: min(72dvh, 560px);
         max-height: none;
         border-radius: 16px;
     }
 
     .askai-fab {
-        bottom: 16px;
+        bottom: calc(12px + env(safe-area-inset-bottom));
         right: 16px;
         width: 50px;
         height: 50px;
