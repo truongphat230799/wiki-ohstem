@@ -33,6 +33,7 @@ export default {
   "dong-dien-ina219": "30. Cảm biến dòng điện INA219",
   "rfid": "31. Module RFID NFC 13.56MHz RC522 I2C",
   "pcf_rtc_8563": "32. Module thời gian thực RTC PCF8563 (Real-Time Clock)",
-  "yolobit_ir_blaster": "34. Module IR Blaster (Hồng ngoại phát tín hiệu)",
-  "veml6040": "35. Module cảm biến màu VEML6040"
+  "yolobit_ir_blaster": "33. Module IR Blaster (Hồng ngoại phát tín hiệu)",
+  "veml6040": "34. Module cảm biến màu VEML6040",
+  "bmp280_yolobit": "35. Module cảm biến môi trường BMP280"
 }

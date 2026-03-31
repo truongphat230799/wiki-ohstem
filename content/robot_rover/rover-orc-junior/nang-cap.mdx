@@ -1,0 +1,64 @@
+---
+title: "3. Nâng cấp mở rộng"
+---
+
+# 3. Nâng cấp mở rộng
+
+Sau khi hoàn thành cấu hình cơ bản, **Rover ORC Junior** có thể mở rộng thêm cơ cấu bằng **Motion Kit** cho **Yolo:Bit**. Cách này phù hợp khi bạn muốn gắn thêm động cơ DC hoặc servo cho các nhiệm vụ thi đấu.
+
+## 1. Mở rộng động cơ
+
+### Kết nối
+
+- Kết nối **Motion Kit** vào cổng `I2C` trên Rover.
+- Cắm động cơ DC cần mở rộng vào cổng `M1` trên Motion Kit.
+- Cấp nguồn cho Motion Kit trước khi chạy thử cơ cấu.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <img src="/images/robot_rover/images/motion-kit.3.png" alt="Kết nối Motion Kit với Rover và động cơ DC mở rộng" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+</div>
+
+### Lập trình đơn giản
+
+- Truy cập [app.ohstem.vn](https://app.ohstem.vn/), chọn thiết bị **Yolo:Bit**.
+- Vào mục **Mở rộng** và cài thư viện **Motion Kit** bằng link:
+  `https://github.com/AITT-VN/yolobit_extension_motion_kit.git`
+- Sau khi cài xong, các khối lệnh điều khiển động cơ và servo của Motion Kit sẽ xuất hiện.
+- Có thể dùng chương trình mẫu bên dưới để kiểm tra nhanh động cơ mở rộng.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <img src="/images/robot_rover/images/motion-kit.4.png" alt="Tải thư viện Motion Kit cho Yolo:Bit" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+  <img src="/images/robot_rover/images/motion-kit.5.png" alt="Khối lệnh Motion Kit sau khi cài thư viện" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+</div>
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <img src="/images/robot_rover/images/motion-kit.6.png" alt="Chương trình mẫu kiểm tra động cơ và servo trên Motion Kit" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+</div>
+
+- Code mẫu kiểm tra Motion Kit: [Mở trên OhStem App](https://app.ohstem.vn/#!/share/yolobit/2nAKUw7EB6fGpnf5r7rfvBX4LaR)
+
+## 2. Mở rộng servo
+
+### Kết nối
+
+- Cắm servo vào một trong các cổng `S1`, `S2`, `S3` hoặc `S4` trên Motion Kit.
+- Motion Kit vẫn kết nối với Rover qua cổng `I2C`.
+- Nên thử từng servo một để kiểm tra chiều quay và góc quay trước khi lắp lên cơ cấu thật.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <img src="/images/robot_rover/images/motion-kit.3.png" alt="Kết nối servo mở rộng với Motion Kit trên Rover" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+</div>
+
+### Lập trình đơn giản
+
+- Nếu đã cài thư viện **Motion Kit** ở phần trên, bạn có thể dùng luôn cho phần mở rộng servo.
+- Chương trình mẫu kiểm tra Motion Kit cũng đồng thời điều khiển được các cổng servo mở rộng.
+- Khi nhấn nút `A`, các servo có thể quay tới một góc đặt trước; khi nhấn nút `B`, servo quay về vị trí ban đầu.
+- Khi cần kết hợp Rover với cơ cấu mở rộng trong thi đấu, bạn có thể tham khảo chương trình điều khiển bằng Gamepad bên dưới.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <img src="/images/robot_rover/images/motion-kit.7.png" alt="Chương trình kết hợp Rover với Motion Kit để điều khiển cơ cấu mở rộng" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+</div>
+
+- Code mẫu kết hợp Rover với Motion Kit: [Mở trên OhStem App](https://app.ohstem.vn/#!/share/yolobit/2n8sxBbVkdPzc1mnY9iua5mtOkw)
+- Tài liệu chi tiết Motion Kit: [Xem tại đây](/robot_rover/rover-motion-kit)

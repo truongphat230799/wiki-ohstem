@@ -8,5 +8,7 @@ export default {
   "loa-phat-nhac": "6. Làm việc với loa phát nhạc",
   "cam-bien-tich-hop": "7. Các cảm biến tích hợp",
   "chan-cam": "8. Chân cắm mở rộng",
-  "dong-co-servo": "9. Động cơ Servo"
+  "dong-co-servo": "9. Động cơ Servo",
+  "thu-vien-yolobit": "10. Cài đặt thư viện cho Yolo:Bit",
+  "cai-dat-arduino": "11. Cài đặt Arduino và Yolo:Bit"
 }

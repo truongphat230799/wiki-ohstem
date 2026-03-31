@@ -1,87 +1,109 @@
 ---
-title: "3. Chương trình đầu tiên"
+title: "3. Hướng dẫn lập trình"
 ---
 
-# 3. Chương trình đầu tiên
+# 3. Hướng dẫn lập trình
 
-Trong phần này, bạn sẽ tìm hiểu về cách làm việc với mạch ORC Control Hub bằng phần mềm lập trình OhStem App, sau đó ứng dụng vào viết các chương trình cơ bản đầu tiên:
+Phần này hướng dẫn quy trình lập trình cho Robot ORC K3 trên OhStem App, từ chuẩn bị phần mềm đến nạp chương trình mẫu và điều khiển bằng Gamepad.
 
-- Bật tắt đèn LED trên mạch ORC Control Hub.
-- Bật tắt đèn LED bằng nút nhấn trên mạch.
+## 1. Chuẩn bị phần mềm
 
-## 1. Cập nhật firmware
-Phần mềm bên trong ORC Control Hub (firmware) được OhStem nâng cấp và cập nhật thường xuyên. Do đó, khi mới dùng lần đầu, bạn nên cập nhật để đảm bảo thiết bị đang chạy firmware mới nhất, giúp chạy ổn định hơn.
+- Truy cập [app.ohstem.vn](https://app.ohstem.vn/) và chọn thiết bị **Yolo UNO**.
+- Chọn chế độ **Lập trình**.
+- Kết nối `ORC Control Hub` với laptop qua cáp USB.
+- Nhấn biểu tượng kết nối và chọn cổng có tên gần giống **Espressif CDC Device (COMxx)**.
+- Vào mục **Mở rộng** để tải thư viện **ROBOTICS**.
 
-- **Bước 1:** Truy cập vào link [https://fw.ohstem.vn/](https://fw.ohstem.vn/):
-![3.1](/images/orc_bot/orc-bot/images/3.1.png)
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-laptrinh.PNG" alt="Chọn thiết bị Yolo UNO và vào chế độ lập trình cho ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Bước 1-2: Chọn Yolo UNO và vào chế độ Lập trình.</figcaption>
+  </figure>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-laptrinh2.PNG" alt="Kết nối ORC Control Hub với OhStem App" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Bước 3-4: Kết nối Control Hub với laptop và chọn cổng Espressif CDC Device.</figcaption>
+  </figure>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-laptrinh3.PNG" alt="Tải thư viện ROBOTICS cho ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Bước 5: Tải thư viện ROBOTICS trong mục Mở rộng.</figcaption>
+  </figure>
+</div>
 
+## 2. Nạp chương trình mẫu
 
-- **Bước 2:** Kết nối mạch ORC Control Hub với laptop bằng dây USB Type C:
-![fw orc hub](/images/orc_bot/orc-bot/images/fw-orc-hub.jpg)
+- Quét mã QR hoặc mở đường link hiển thị trong ảnh để lấy chương trình mẫu.
+- Chọn **Import project** để nạp chương trình vào giao diện lập trình.
+- Kiểm tra lại các khối lệnh trước khi gửi xuống thiết bị.
 
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-laptrinh4.PNG" alt="Nạp chương trình mẫu cho ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Quét QR hoặc mở link trong ảnh, sau đó chọn Import project.</figcaption>
+  </figure>
+</div>
 
-- **Bước 3:** **Nhấn và giữ nút Boot** trên ORC Control Hub, **trong lúc đó nhấn nút Reset và thả ra sau 1 giây**, **sau đó mới thả nút Boot** để thiết bị vào trạng thái sẵn sàng cập nhật firmware:
-![orc hub boot](/images/orc_bot/orc-bot/images/orc-hub-boot.gif)
+## 3. Giải thích nhanh chương trình mẫu
 
+- Chương trình mẫu đã khai báo các động cơ bánh xe, servo tay gắp và cơ cấu cuộn bóng.
+- Đèn LED `D13` chớp định kỳ để báo chương trình đang chạy.
+- `L1 / L2` dùng để điều khiển `servo1`.
+- `R1 / R2` dùng để điều khiển `servo2`.
+- Một số nút nhấn giữ cho phép chỉnh tinh vị trí đầu gắp.
+- Nút `Boot` trên bộ điều khiển có thể kích hoạt chuỗi chạy tự động ngắn để kiểm tra robot.
 
-- **Bước 4:** Chọn firmware cần cập nhật là **Yolo UNO v1.x**, chọn cổng kết nối có tên là **USB/JTAG serial…** và nhấn **Cập nhật**.
-![3.4](/images/orc_bot/orc-bot/images/3.4.png)
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-laptrinh5.PNG" alt="Giải thích chương trình mẫu phần điều khiển gamepad của ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Phần 1: Khai báo robot và gán các nút Gamepad cho tay gắp, cơ cấu cuộn bóng.</figcaption>
+  </figure>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-laptrinh6.PNG" alt="Giải thích chương trình mẫu phần tự động của ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Phần 2: Chỉnh tinh đầu gắp và kích hoạt chuỗi chạy tự động bằng nút Boot.</figcaption>
+  </figure>
+</div>
 
+## 4. Lưu chương trình vào Flash và chạy thử
 
-    Firmware sẽ được cập nhật liên tục, do đó bạn hãy chọn bản cập nhất mới nhất, ví dụ trong hình là v1.1
-    
-- **Bước 5:** Chọn **Install** để tiếp tục cập nhật firmware
-![3.5](/images/orc_bot/orc-bot/images/3.5.png)
+- Nhấn **Lưu project vào thiết bị** để ghi chương trình vào bộ nhớ Flash.
+- Sau khi lưu thành công, tắt và bật lại công tắc nguồn để robot chạy chương trình đã lưu.
+- Nếu chỉ muốn chạy thử nhanh, có thể nhấn nút **Play** mà không cần lưu vào Flash.
+- Có thể nhấn **Stop** để dừng chương trình đang chạy.
 
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-luucode.PNG" alt="Lưu chương trình vào Flash cho ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Lưu chương trình vào Flash, hoặc chạy thử nhanh bằng nút Play.</figcaption>
+  </figure>
+</div>
 
-- **Bước 6:** Chờ khoảng 2 phút để cập nhật. Màn hình hiển thị cập nhật thành công như hình:
-![3.6](/images/orc_bot/orc-bot/images/3.6.png)
+## 5. Kết nối robot với Gamepad
 
+- Nhấn nút `P` trên Gamepad để khởi động.
+- Đưa Gamepad lại gần robot để ghép nối.
+- Khi kết nối thành công, module `Gamepad Receiver` trên robot sẽ sáng đèn xanh lá.
 
-- **Bước 7:** Nhấn nút Reset và thoát khỏi trang web cập nhật firmware và tiến hành lập trình.
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-ketnoitaycam.PNG" alt="Kết nối Gamepad với ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Nhấn nút P, đưa tay cầm lại gần robot và chờ đèn receiver sáng xanh.</figcaption>
+  </figure>
+</div>
 
-## 2. Kết nối ORC Control Hub với OhStem App
-- **Bước 1:** Truy cập vào link ](https://app.ohstem.vn/):
-![3.7](/images/orc_bot/orc-bot/images/3.7.png)
+## 6. Gợi ý kiểm tra khi chạy thử
 
+- Nếu robot đi ngược chiều, hãy kiểm tra lại thứ tự các cổng cắm động cơ.
+- Nếu robot không di chuyển, hãy kiểm tra chiều lắp bánh Mecanum và thử nâng robot lên để xem bánh có quay hay không.
+- Nếu không điều khiển được bằng Gamepad, hãy kiểm tra lại kết nối receiver và xác nhận chương trình đã thực sự chạy.
 
-- **Bước 2:** Chọn thiết bị lập trình là Yolo UNO
-![3.8](/images/orc_bot/orc-bot/images/3.8.png)
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-chuy1.PNG" alt="Các lỗi thường gặp khi chạy ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Các lỗi thường gặp khi robot đi ngược chiều, không di chuyển hoặc không nhận Gamepad.</figcaption>
+  </figure>
+</div>
 
+## 7. Tham khảo thêm
 
-- **Bước 3:** Chọn vào **Lập trình**:
-![3.9](/images/orc_bot/orc-bot/images/3.9.png)
+- Nếu bạn cần hướng dẫn chi tiết hơn về ORC Control Hub và các bài tập nền tảng, có thể xem tại:
+  [Làm quen với Control Hub](/orc_bot/lam-quen-control-hub/chuong-trinh-dau-tien)
 
-
-- **Bước 4:**
-
-    + Kết nối ORC Control Hub vào máy tính và phần mềm lập trình
-    + Kết nối dây USB type C với Máy tính và ORC Control Hub.
-![app orc hub](/images/orc_bot/orc-bot/images/app-orc-hub.jpg)
-
-
-    + Chọn icon kết nối có dây/ Bluetooth → chọn cổng COM/ thiết bị có tên gần giống là **Espressif CDC Device (COMxx)** → nhấn nút Kết nối. (Số thứ tự của cổng COM có thể là khác nhau trên mỗi máy tính.)
-![3.11](/images/orc_bot/orc-bot/images/3.11.png)
-
-
-    + Khi kết nối thành công biểu tượng USB sẽ sáng đèn màu xanh:
-![3.12](/images/orc_bot/orc-bot/images/3.12.png)
-
-
-## 3. Chương trình 1: Nháy đèn LED trên mạch
-Trong bài này, chúng ta sẽ viết chương trình đầu tiên, lập trình cho ORC Control Hub bật tắt đèn LED màu trên board sau mỗi giây.
-
-- **Giới thiệu khối lệnh lập trình:**
-![3.13](/images/orc_bot/orc-bot/images/3.13.png)
-
-
-Câu lệnh dùng để thay đổi màu đèn led RGB trên board, màu đen dùng để tắt đèn.
-
-- **Chương trình lập trình:**
-![3.14](/images/orc_bot/orc-bot/images/3.14.png)
-
-
-- **Link chương trình mẫu:**
-
-Bật tắt đèn LED trên board: [Xem code mẫu tại đây ](https://app.ohstem.vn/#!/share/yolouno/2aLcEMEIMJYYvq47M7660i2djBN) hoặc quét mã QR bên dưới:
-![3.15](/images/orc_bot/orc-bot/images/3.15.png)

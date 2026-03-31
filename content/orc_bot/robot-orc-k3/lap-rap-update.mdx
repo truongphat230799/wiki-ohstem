@@ -4,17 +4,117 @@ title: "2. Hướng dẫn lắp ráp"
 
 # 2. Hướng dẫn lắp ráp
 
-Phần lắp ráp của robot ORC được chia thành 3 phần:
+Trang này tổng hợp lộ trình lắp ráp Robot ORC K3 theo các cụm cơ khí chính và sơ đồ nối dây cơ bản.
 
-- Lắp ráp khung xe
-- Lắp ráp cánh tay và đầu gắp
-- Lắp ráp cơ cấu cuộn bóng
+## Tài liệu lắp ráp
 
-+ **Xem Tài liệu hướng dẫn lắp ráp ORC K3:**
-![tai lieu](/images/orc_bot/orc-bot/images/tai-lieu.png)
+- **Tài liệu hướng dẫn ORC K3:** [Xem tài liệu](https://drive.google.com/file/d/11o0WCseX-S77P-JwtQ6hPO678blxWFES/view)
 
+## 1. Lắp khung sàn robot
 
-+ **Xem Tài liệu hướng dẫn lắp ráp ORC K2:**
-![tai lieu](/images/orc_bot/orc-bot/images/tai-lieu.png)
+- Ghép các thanh beam để tạo khung đáy cho ORC K3.
+- Dùng bu-lông `M4-10` và đai ốc `M4` để cố định các thanh ngang.
+- Kiểm tra hai cạnh khung song song trước khi lắp tiếp động cơ và bánh xe.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-lapkhung.PNG" alt="Bắt đầu lắp khung sàn ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Bước 2: 2x Đai ốc M4, 2x Bu-lông M4-10.</figcaption>
+  </figure>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-lapkhung2.PNG" alt="Lắp thanh ngang cho khung sàn ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Bước 3: 4x Đai ốc M4, 4x Bu-lông M4-10.</figcaption>
+  </figure>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-lapkhung3.PNG" alt="Hoàn thiện khung sàn ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Bước 5: 2x Đai ốc M4, 2x Bu-lông M4-10.</figcaption>
+  </figure>
+</div>
+
+## 2. Lắp động cơ và bánh Mecanum
+
+- Lắp **2 động cơ DC 12V** và **2 động cơ DC 12V encoder** lên khung.
+- Gắn **4 trục bánh xe** rồi lắp 4 bánh Mecanum vào đúng vị trí.
+- **Lưu ý:** chiều của các con lăn trên 4 bánh phải tạo thành hình chữ X khi nhìn từ trên xuống.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-lapdongco1.PNG" alt="Lắp động cơ DC cho ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Bước 6: 2x Bu-lông M3-6, 2x Động cơ DC 12V.</figcaption>
+  </figure>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-lapdongco2.PNG" alt="Lắp động cơ encoder cho ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Bước 7: 2x Bu-lông M3-6, 2x Động cơ DC 12V Encoder.</figcaption>
+  </figure>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-lapdongco3.PNG" alt="Lắp trục bánh xe cho ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Bước 9: 4x Trục bánh xe, siết chặt bu-lông trước khi lắp bánh.</figcaption>
+  </figure>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-lapbanhxe.PNG" alt="Lắp bánh Mecanum cho ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Bước 10: 4x Bu-lông M3-25 để cố định 4 bánh Mecanum.</figcaption>
+  </figure>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-lapbanhxe2.PNG" alt="Lưu ý chiều lắp bánh Mecanum ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Lưu ý: Chiều các con lăn trên 4 bánh được lắp theo hình chữ X.</figcaption>
+  </figure>
+</div>
+
+## 3. Lắp ORC Control Hub và Gamepad Receiver
+
+- Gắn `ORC Control Hub` lên mặt sàn bằng các trụ nhựa.
+- Gắn `Gamepad Receiver` lên vị trí trên khung để tiện kết nối và quan sát đèn báo.
+- Kiểm tra khoảng hở dây trước khi nối điện và cấp nguồn.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-lap-controlhub1.PNG" alt="Lắp ORC Control Hub lên khung ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Bước 11: 4x Trụ nhựa D5-5, 4x Bu-lông M4-16.</figcaption>
+  </figure>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-lap-controlhub2.PNG" alt="Lắp Gamepad Receiver cho ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Bước 12: 2x Đai ốc chống tháo M4, 2x Bu-lông M4-16 để gắn Gamepad Receiver.</figcaption>
+  </figure>
+</div>
+
+## 4. Lắp cánh tay và đầu gắp
+
+- Lắp cụm cánh tay và đầu gắp theo cụm riêng trước khi gắn lên thân robot.
+- Khi gắn lên thân robot, kiểm tra lại hành trình nâng hạ và góc mở của đầu gắp.
+- Siết chặt các đai ốc chống tháo ở vị trí chịu lực của cụm cánh tay.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-taygapnang.PNG" alt="Lắp cánh tay và đầu gắp cho ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Bước 1: 4x Đai ốc chống tháo M4, 4x Bu-lông M4-10. Lưu ý siết chặt đai ốc chống tháo.</figcaption>
+  </figure>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-taygapnang2.PNG" alt="Gắn cánh tay lên thân robot ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Bước 2: 4x Đai ốc M4, 4x Bu-lông M4-10 để cố định cụm cánh tay lên khung.</figcaption>
+  </figure>
+</div>
+
+## 5. Sơ đồ nối dây với ORC Control Hub
+
+- **Động cơ trái:** `M1`
+- **Động cơ phải:** `M2`
+- **Encoder trái:** `E1`
+- **Encoder phải:** `E2`
+- **Gamepad Receiver:** `I2C`
+- **Nguồn pin:** `12V`
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-noiday1.PNG" alt="Sơ đồ nối dây ORC K3" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Sơ đồ nối dây động cơ bánh xe, pin 12V và module Gamepad Receiver.</figcaption>
+  </figure>
+</div>
+
+## 6. Kiểm tra trước khi cấp nguồn
+
+- Kiểm tra lại chiều lắp của 4 bánh Mecanum.
+- Siết chặt bu-lông ở khung, trục bánh, cụm cánh tay và giá đỡ mạch.
+- Đảm bảo dây động cơ, dây encoder, dây nguồn và dây I2C được cắm đúng cổng.
+- Thử chuyển động tay bằng tay để chắc chắn cơ cấu không bị kẹt.
 
 

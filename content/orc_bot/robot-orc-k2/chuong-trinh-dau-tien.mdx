@@ -1,87 +1,85 @@
 ---
-title: "3. Chương trình đầu tiên"
+title: "3. Hướng dẫn lập trình"
 ---
 
-# 3. Chương trình đầu tiên
+# 3. Hướng dẫn lập trình
 
-Trong phần này, bạn sẽ tìm hiểu về cách làm việc với mạch ORC Control Hub bằng phần mềm lập trình OhStem App, sau đó ứng dụng vào viết các chương trình cơ bản đầu tiên:
+Phần này hướng dẫn quy trình lập trình cho Robot ORC K2 Starter Kit (2025 - 2026), từ chuẩn bị phần mềm đến nạp chương trình và vận hành bằng Gamepad.
 
-- Bật tắt đèn LED trên mạch ORC Control Hub.
-- Bật tắt đèn LED bằng nút nhấn trên mạch.
+## 1. Chuẩn bị phần mềm
 
-## 1. Cập nhật firmware
-Phần mềm bên trong ORC Control Hub (firmware) được OhStem nâng cấp và cập nhật thường xuyên. Do đó, khi mới dùng lần đầu, bạn nên cập nhật để đảm bảo thiết bị đang chạy firmware mới nhất, giúp chạy ổn định hơn.
+- Truy cập [app.ohstem.vn](https://app.ohstem.vn/) và chọn thiết bị **Yolo UNO**.
+- Vào chế độ **Lập trình**.
+- Kết nối `ORC Control Hub` với máy tính qua cáp USB.
+- Chọn đúng cổng kết nối có tên gần giống **Espressif CDC Device**.
+- Vào mục **Mở rộng**, tìm và cài thư viện **ROBOTICS**.
 
-- **Bước 1:** Truy cập vào link [https://fw.ohstem.vn/](https://fw.ohstem.vn/):
-![3.1](/images/orc_bot/orc-bot/images/3.1.png)
+## 2. Thiết lập mã nguồn
 
+- Cấu hình robot với các thông số cơ bản:
+  - đường kính bánh xe `60 mm`
+  - tỉ số truyền `1:34`
+  - encoder `350 ppr`
+- Thiết lập giới hạn góc cho servo `S1` và `S2` để tránh kẹt cơ cấu đẩy trong quá trình vận hành.
+- Kiểm tra lại cổng kết nối trước khi nạp chương trình:
+  - bánh xe trái: `M1 / E1`
+  - bánh xe phải: `M2 / E2`
+  - cơ cấu nâng hạ: `M4`
+  - cơ cấu cuộn bóng: `M3`
+  - servo càng đẩy: `S1`, `S2`
+  - Gamepad Receiver: `I2C 3`
 
-- **Bước 2:** Kết nối mạch ORC Control Hub với laptop bằng dây USB Type C:
-![fw orc hub](/images/orc_bot/orc-bot/images/fw-orc-hub.jpg)
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <img src="/images/orc_bot/orc-bot/images/k2-codemau.PNG" alt="Code mẫu cho robot ORC K2 dùng động cơ xanh - đen" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+</div>
 
+## 3. Chương trình mẫu cho robot ORC K2
 
-- **Bước 3:** **Nhấn và giữ nút Boot** trên ORC Control Hub, **trong lúc đó nhấn nút Reset và thả ra sau 1 giây**, **sau đó mới thả nút Boot** để thiết bị vào trạng thái sẵn sàng cập nhật firmware:
-![orc hub boot](/images/orc_bot/orc-bot/images/orc-hub-boot.gif)
+- Chương trình mẫu dưới đây áp dụng cho **ORC K2 dùng động cơ xanh - đen**.
+- Link code mẫu: [Mở chương trình trên OhStem App](https://app.ohstem.vn/#!/share/yolouno/39QLg7xpyGRzYLoyzveIwYoJ2KL)
+- Cấu hình mẫu sử dụng đúng sơ đồ nối dây:
+  - bánh trái: `M1 / E1`
+  - bánh phải: `M2 / E2`
+  - cơ cấu cuộn bóng: `M3`
+  - cơ cấu nâng hạ: `M4`
+  - servo càng đẩy: `S1`, `S2`
+  - Gamepad Receiver: `I2C 3`
+- Khi chạy thử:
+  - joystick dùng để điều khiển di chuyển robot
+  - `L1 / L2` dùng để nâng hoặc hạ cơ cấu
+  - `R1 / R2` dùng để mở hoặc gập càng đẩy
+- Nếu bạn đang dùng phiên bản động cơ `GA25`, cần kiểm tra lại chiều quay, tốc độ và tham số động cơ trước khi dùng chương trình này.
 
+## 4. Nạp chương trình và xác nhận hoạt động
 
-- **Bước 4:** Chọn firmware cần cập nhật là **Yolo UNO v1.x**, chọn cổng kết nối có tên là **USB/JTAG serial…** và nhấn **Cập nhật**.
-![3.4](/images/orc_bot/orc-bot/images/3.4.png)
+- Nhấn biểu tượng **Lưu project vào thiết bị** để ghi chương trình vào bộ nhớ Flash của Control Hub.
+- Sau khi nạp thành công, đèn LED tại chân `D13` sẽ chớp tắt định kỳ.
+- Nếu chương trình không chạy đúng, hãy kiểm tra lại cổng kết nối và tham số cấu hình robot.
 
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <img src="/images/orc_bot/orc-bot/images/orc-luucode.PNG" alt="Lưu chương trình vào bộ nhớ Flash cho ORC K2" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+</div>
 
-    Firmware sẽ được cập nhật liên tục, do đó bạn hãy chọn bản cập nhất mới nhất, ví dụ trong hình là v1.1
-    
-- **Bước 5:** Chọn **Install** để tiếp tục cập nhật firmware
-![3.5](/images/orc_bot/orc-bot/images/3.5.png)
+## 5. Điều khiển robot bằng Gamepad
 
+- Nhấn nút `P` để khởi động tay cầm.
+- `L1 / L2`: nâng hoặc hạ cơ cấu.
+- `R1 / R2`: mở hoặc gập càng đẩy.
+- Joystick: điều khiển robot di chuyển.
 
-- **Bước 6:** Chờ khoảng 2 phút để cập nhật. Màn hình hiển thị cập nhật thành công như hình:
-![3.6](/images/orc_bot/orc-bot/images/3.6.png)
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <img src="/images/orc_bot/orc-bot/images/k2-ketnoigamepad.PNG" alt="Kết nối gamepad với ORC K2" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+  <img src="/images/orc_bot/orc-bot/images/chucnangtaygame.PNG" alt="Chức năng các nút tay cầm cho ORC K2" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+</div>
 
+## 6. Gợi ý kiểm tra khi chạy thử
 
-- **Bước 7:** Nhấn nút Reset và thoát khỏi trang web cập nhật firmware và tiến hành lập trình.
+- Nếu robot di chuyển không đúng hướng, hãy kiểm tra lại chiều lắp bánh Mecanum và mapping động cơ.
+- Nếu cơ cấu đẩy bị kẹt, hãy giảm giới hạn góc của servo `S1` và `S2`.
+- Nếu Gamepad không nhận, hãy kiểm tra lại dây kết nối `I2C 3` và nguồn cấp cho mạch.
+- Nên thử robot ở trạng thái không tải trước khi đưa vào vận hành với bóng hoặc vật thể thật.
 
-## 2. Kết nối ORC Control Hub với OhStem App
-- **Bước 1:** Truy cập vào link ](https://app.ohstem.vn/):
-![3.7](/images/orc_bot/orc-bot/images/3.7.png)
+## 7. Tham khảo thêm
 
-
-- **Bước 2:** Chọn thiết bị lập trình là Yolo UNO
-![3.8](/images/orc_bot/orc-bot/images/3.8.png)
-
-
-- **Bước 3:** Chọn vào **Lập trình**:
-![3.9](/images/orc_bot/orc-bot/images/3.9.png)
-
-
-- **Bước 4:**
-
-    + Kết nối ORC Control Hub vào máy tính và phần mềm lập trình
-    + Kết nối dây USB type C với Máy tính và ORC Control Hub.
-![app orc hub](/images/orc_bot/orc-bot/images/app-orc-hub.jpg)
-
-
-    + Chọn icon kết nối có dây/ Bluetooth → chọn cổng COM/ thiết bị có tên gần giống là **Espressif CDC Device (COMxx)** → nhấn nút Kết nối. (Số thứ tự của cổng COM có thể là khác nhau trên mỗi máy tính.)
-![3.11](/images/orc_bot/orc-bot/images/3.11.png)
-
-
-    + Khi kết nối thành công biểu tượng USB sẽ sáng đèn màu xanh:
-![3.12](/images/orc_bot/orc-bot/images/3.12.png)
-
-
-## 3. Chương trình 1: Nháy đèn LED trên mạch
-Trong bài này, chúng ta sẽ viết chương trình đầu tiên, lập trình cho ORC Control Hub bật tắt đèn LED màu trên board sau mỗi giây.
-
-- **Giới thiệu khối lệnh lập trình:**
-![3.13](/images/orc_bot/orc-bot/images/3.13.png)
-
-
-Câu lệnh dùng để thay đổi màu đèn led RGB trên board, màu đen dùng để tắt đèn.
-
-- **Chương trình lập trình:**
-![3.14](/images/orc_bot/orc-bot/images/3.14.png)
-
-
-- **Link chương trình mẫu:**
-
-Bật tắt đèn LED trên board: [Xem code mẫu tại đây ](https://app.ohstem.vn/#!/share/yolouno/2aLcEMEIMJYYvq47M7660i2djBN) hoặc quét mã QR bên dưới:
-![3.15](/images/orc_bot/orc-bot/images/3.15.png)
+- Nếu bạn cần hướng dẫn chi tiết hơn về cập nhật firmware, kết nối phần mềm hoặc các bài tập nền tảng với ORC Control Hub, có thể xem tại:
+  [Làm quen với Control Hub](/orc_bot/lam-quen-control-hub/chuong-trinh-dau-tien)

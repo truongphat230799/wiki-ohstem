@@ -1,0 +1,40 @@
+---
+title: "4. Mở rộng động cơ DC"
+---
+
+# 4. Mở rộng động cơ DC
+
+## **1. Giới thiệu**
+
+Yolo UNO có thể điều khiển thêm động cơ DC khi kết hợp với **mạch điều khiển động cơ** giao tiếp `I2C`. Cách mở rộng này phù hợp cho các cơ cấu quay, bánh xe phụ, băng tải nhỏ hoặc các mô hình robot đơn giản cần thêm từ `1` đến `4` động cơ DC.
+
+## **2. Kết nối phần cứng**
+
+- Kết nối mạch điều khiển động cơ vào cổng `I2C` trên Yolo UNO.
+- Cắm động cơ DC vào cổng `M1` trên mạch điều khiển động cơ.
+- Cấp nguồn ngoài `12V` cho mạch điều khiển động cơ.
+- Kiểm tra đúng cực nguồn trước khi bật mạch.
+
+![Mở rộng động cơ DC với Yolo UNO](/images/yolo_uno/yolo_uno_khoi_lenh/dong_co/images/dongcoDC.PNG)
+
+## **3. Hướng dẫn lập trình**
+
+### **3.1. Tải thư viện**
+
+- Truy cập [app.ohstem.vn](https://app.ohstem.vn/) và chọn thiết bị **Yolo UNO**.
+- Vào mục **Mở rộng**.
+- Dán đường dẫn sau để tải thư viện `Motors Driver V1`:
+  [https://github.com/AITT-VN/yolobit_extension_motor_driver.git](https://github.com/AITT-VN/yolobit_extension_motor_driver.git)
+- Sau khi cài xong, các khối lệnh điều khiển động cơ sẽ xuất hiện.
+
+![Tải thư viện Motors Driver V1](/images/yolo_uno/yolo_uno_khoi_lenh/dong_co/images/dong-co-buoc.4.png)
+
+![Các khối lệnh điều khiển động cơ](/images/yolo_uno/yolo_uno_khoi_lenh/dong_co/images/dong-co-buoc.5.jpg)
+
+### **3.2. Chương trình mẫu**
+
+Chương trình mẫu đơn giản nhất là cho động cơ ở cổng `M1` quay thuận trong `2` giây, sau đó quay ngược trong `2` giây và lặp lại.
+
+![Chương trình mẫu điều khiển động cơ DC](/images/yolo_uno/yolo_uno_khoi_lenh/dong_co/images/dongcoDC2.PNG)
+
+> **Ghi chú:** Tốc độ dương làm động cơ quay theo một chiều, tốc độ âm làm động cơ quay ngược lại. Nếu động cơ quay ngược với mong muốn, bạn chỉ cần đổi dấu của tốc độ. Bạn cũng có thể đổi `M1` thành `M2`, `M3` hoặc `M4` nếu muốn điều khiển cổng khác.

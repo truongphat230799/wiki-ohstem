@@ -1,0 +1,82 @@
+---
+title: "2. Hướng dẫn lập trình"
+---
+
+# 2. Hướng dẫn lập trình
+
+Phần này hướng dẫn quy trình lập trình cho **Rover ORC Junior** theo đúng các bước minh họa trong tài liệu: vào OhStem App, kết nối robot, tải thư viện, mở chương trình mẫu và lưu chương trình vào robot.
+
+- Tài liệu tổng hợp: [Rover ORC Junior 2025 - 2026](https://tai-lieu-ohstem-robocon-orc.my.canva.site/junior-2026)
+
+## 1. Truy cập OhStem App
+
+- Truy cập [app.ohstem.vn](https://app.ohstem.vn/).
+- Chọn thiết bị lập trình **Yolo:Bit**.
+- Trong giao diện của Yolo:Bit, chọn chế độ **Lập trình**.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <img src="/images/robot_rover/images/orc-rover1.PNG" alt="Truy cập OhStem App và chọn thiết bị Yolo:Bit" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+  <img src="/images/robot_rover/images/orc-rover2.PNG" alt="Chọn chế độ lập trình trong giao diện Yolo:Bit" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+</div>
+
+## 2. Kết nối Rover với máy tính
+
+- Kết nối **Yolo:Bit** trên Rover với máy tính bằng cáp USB.
+- Trong thanh công cụ, chọn biểu tượng **kết nối USB**.
+- Chọn đúng cổng có tên gần giống **Espressif CDC Device (COMxx)** rồi nhấn **Connect**.
+- Khi kết nối thành công, biểu tượng USB sẽ sáng màu xanh.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <img src="/images/robot_rover/images/orc-rover3.PNG" alt="Kết nối Rover ORC Junior với máy tính bằng cáp USB" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+  <img src="/images/robot_rover/images/orc-rover4.PNG" alt="Chọn cổng Espressif CDC Device để kết nối USB với Rover" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+</div>
+
+- Nếu cần kết nối không dây, bạn có thể dùng **Bluetooth** và chọn đúng tên của Yolo:Bit trước khi ghép nối.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <img src="/images/robot_rover/images/orc-rover4-ble.PNG" alt="Ghép nối Bluetooth với đúng tên Yolo:Bit trên Rover ORC Junior" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+</div>
+
+## 3. Tải các thư viện cần dùng
+
+- Vào mục **Mở rộng**.
+- Tìm và cài thư viện **Rover**.
+- Tiếp tục tải thêm thư viện **ROBOCON** và **Motion Kit** để dùng cho robot thi đấu và các cơ cấu mở rộng.
+- Sau khi cài xong, danh mục khối lệnh sẽ xuất hiện các nhóm **ROBOCON**, **ROVER** và **MOTION KIT**.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <img src="/images/robot_rover/images/orc-rover5.PNG" alt="Vào mục Mở rộng và tải thư viện Rover cho Rover ORC Junior" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+  <img src="/images/robot_rover/images/orc-rover6.PNG" alt="Tải thêm thư viện ROBOCON và Motion Kit cho Rover ORC Junior" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+  <img src="/images/robot_rover/images/orc-rover7.PNG" alt="Các nhóm khối lệnh ROBOCON, ROVER và MOTION KIT sau khi cài xong" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+</div>
+
+## 4. Mở chương trình mẫu
+
+- Link code mẫu: [Mở chương trình Rover ORC Junior trên OhStem App](https://app.ohstem.vn/#!/share/yolobit/39cPU2FX5x1wkOadlo9zZwBmwZS)
+- Chương trình mẫu đã có sẵn các thiết lập cơ bản cho robot như:
+  - bật chế độ điều khiển bằng gamepad
+  - đặt tốc độ mặc định
+  - giới hạn góc servo `S1` và `S2`
+  - thiết lập hiệu ứng LED khởi động
+- Nếu bạn có file project riêng lưu trong máy, có thể dùng chức năng **Import Project** để nạp vào OhStem App.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <img src="/images/robot_rover/images/orc-rover8.PNG" alt="Import Project và xem chương trình mẫu Rover ORC Junior" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+</div>
+
+## 5. Lưu chương trình vào robot
+
+- Sau khi kiểm tra xong chương trình, mở menu công cụ và chọn **Lưu project vào thiết bị**.
+- Khi lưu thành công, chương trình sẽ được ghi vào bộ nhớ Flash của robot.
+- Tắt nguồn rồi bật lại robot để chương trình tự chạy khi khởi động.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <img src="/images/robot_rover/images/orc-rover9.PNG" alt="Chọn Lưu project vào thiết bị trong OhStem App" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+  <img src="/images/robot_rover/images/orc-rover10.PNG" alt="Tắt mở nguồn robot sau khi lưu chương trình vào bộ nhớ Flash" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+</div>
+
+## 6. Chạy thử nhanh
+
+- Nếu chỉ muốn thử nhanh mà chưa lưu vào bộ nhớ, bạn có thể nhấn nút **Chạy chương trình** trực tiếp trên OhStem App.
+- Khi cần dừng, nhấn **Dừng chương trình**.
+- Nếu robot chưa phản hồi đúng, hãy kiểm tra lại cáp USB, thư viện đã cài và trạng thái kết nối.

@@ -1,6 +1,7 @@
 ﻿export default {
   "index": { "display": "hidden" },
   "rover": "ROVER - KIT LẬP TRÌNH ROBOT ROVER",
+  "rover-orc-junior": "ROVER ORC JUNIOR",
   "gamepad": "TAY CẦM ĐIỀU KHIỂN ROBOT",
   "gap_hai_bac": "TAY GẮP 2 BẬC",
   "rover-motion-kit": "MẠCH MỞ RỘNG MOTION KIT",
