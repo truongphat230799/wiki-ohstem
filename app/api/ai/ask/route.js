@@ -1,42 +1,44 @@
+import { GoogleGenAI, createPartFromBase64 } from '@google/genai'
 import { searchWikiContext } from '../../../../lib/wiki-context.js'
+import {
+    createAiChatEntry,
+    sendAiChatEntryToSheet,
+} from '../../../../lib/ai-chat-sheet.js'
+import { classifyAiChatQuestion } from '../../../../lib/ai-chat-classify.js'
 
 const MINIMAX_API_URL = 'https://api.minimax.io/v1/text/chatcompletion_v2'
 const DEFAULT_MINIMAX_MODEL = process.env.MINIMAX_MODEL?.trim() || 'MiniMax-M2.5'
-const MINIMAX_TIMEOUT_MS = parseTimeoutMs(process.env.MINIMAX_TIMEOUT_MS, 40000)
-const THINKING_BLOCK_RE = /<think>[\s\S]*?(<\/think>|$)/g
+const DEFAULT_GEMINI_MODEL = process.env.GEMINI_MODEL?.trim() || 'gemini-2.5-flash'
+const AI_TIMEOUT_MS = parseTimeoutMs(process.env.MINIMAX_TIMEOUT_MS, 40000)
+const THINKING_BLOCK_RE = /<think>[\s\S]*?(<\/think>|$)/gi
 const TOOL_BLOCK_RE = /<tool_code>[\s\S]*?(<\/tool_code>|$)/gi
 const TOOL_TAG_RE = /<\/?(tool_code|tool|param)\b[^>]*>/gi
-const TOOL_MARKUP_RE = /<\/?(tool_code|tool|param)\b/i
 const MARKDOWN_LINK_RE = /\[([^\]\n]+)\]\(([^)\s]+)\)/g
-const LINK_ONLY_PROMPT = `Neu can dua link thi chi duoc dung dung URL co trong DANH SACH LINK HOP LE.
+const MARKDOWN_IMAGE_RE = /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]+)")?\)/g
+const HEADING_RE = /^#{1,6}\s+(.+)$/
+
+const LINK_ONLY_PROMPT = `Neu can dua link thi chi duoc dung URL co trong DANH SACH LINK HOP LE.
 Tuyet doi khong tu tao, khong sua, khong rut gon URL.
 Neu wiki khong co link phu hop thi noi ro la chua thay link tuong ung trong tai lieu.`
 
-const TOOL_RETRY_PROMPT = `Bạn không có quyền dùng tool, function calling, XML tags, hay truy cập Internet.
-Tuyệt đối không trả về các tag như <tool_code>, <tool>, <param> hoặc JSON/XML để gọi công cụ.
-Hãy trả lời trực tiếp cho người dùng bằng tiếng Việt dựa trên nội dung wiki đã được cung cấp.`
+const TOOL_RETRY_PROMPT = `Ban khong co quyen dung tool, function calling, XML tags, hay truy cap Internet.
+Tuyet doi khong tra ve cac tag nhu <tool_code>, <tool>, <param> hoac JSON/XML de goi cong cu.
+Hay tra loi truc tiep cho nguoi dung bang tieng Viet dua tren noi dung wiki da duoc cung cap.`
 
-const SYSTEM_PROMPT = `Bạn là trợ lý AI thông minh của OhStem Education.
+const SYSTEM_PROMPT = `Bạn là trợ lý AI của OhStem Education.
 
 NHIỆM VỤ:
-- Trả lời câu hỏi dựa trên nội dung tài liệu Wiki được cung cấp.
-- Nếu người dùng hỏi về một đối tượng cụ thể, chỉ trả lời đúng đối tượng đó.
-- Nếu câu hỏi là câu hỏi nối tiếp trong cùng cuộc trò chuyện, hãy giữ mạch trả lời liền với ngữ cảnh trước đó.
-- Nếu câu hỏi về cuộc thi robot/Robotics dành cho các đối tượng học sinh thì trả lời dựa trên nội dung cuộc thi Open Robotics Challenges (ORC), tùy từng lứa tuổi mà tư vấn cho đúng bảng thi.
-- Nếu câu hỏi nằm ngoài phạm vi tài liệu, hãy nói rõ rằng bạn không có thông tin và gợi ý người dùng liên hệ support@ohstem.vn.
+- Trả lời bằng tiếng Việt, ngắn gọn, dễ hiểu.
+- Ưu tiên trả lời dựa trên nội dung wiki đã được cung cấp.
+- Giữ đúng ngữ cảnh hội thoại trước đó nếu câu hỏi là câu nối tiếp.
+- Nếu người dùng hỏi ngoài phạm vi tài liệu, nói rõ là chưa có đủ thông tin và gợi ý liên hệ support@ohstem.vn.
+- Nếu người dùng gửi kèm hình ảnh, hãy mô tả ngắn những gì bạn nhìn thấy và kết hợp với tài liệu wiki để hỗ trợ.
 
 QUY TẮC:
-1. Trả lời bằng tiếng Việt, ngắn gọn, dễ hiểu.
-2. Giữ chủ thể xuyên suốt theo lịch sử hội thoại; các câu như "nó", "cái đó", "vậy còn..." phải bám đúng đối tượng đang nói tới.
-3. Khi câu hỏi là dạng "X là gì?", "giới thiệu X", "cách dùng X", chỉ mô tả X; không mở rộng sang sản phẩm, bảng thi, robot, module, hay chủ đề khác nếu người dùng không hỏi.
-4. Ưu tiên dùng nguồn khớp nhất. Chỉ dùng thêm nguồn khác nếu nguồn chính không đủ để trả lời trực tiếp.
-5. Sử dụng markdown formatting (bold, list, code block) cho câu trả lời đẹp.
-6. Khi trích dẫn thông tin, đính kèm link nguồn dạng: [Tên trang](URL).
-7. Nếu câu hỏi liên quan đến code, cung cấp ví dụ code cụ thể.
-8. Với câu hỏi định nghĩa/giới thiệu, trả lời theo dạng: 1 câu mô tả ngắn + tối đa 3 đến 5 ý chính.
-9. Bỏ các phần phụ như hotline, FAQ, liên hệ, lời mời hỏi thêm, hoặc thông tin ngoài trọng tâm nếu người dùng chưa hỏi.
-10. Giữ giọng văn thân thiện, hỗ trợ, phù hợp với học sinh.
-11. Bạn không có tool hay function calling. Không được trả về XML/HTML/JSON dạng gọi công cụ như <tool_code>, <tool>, <param>; hãy luôn trả lời trực tiếp bằng văn bản cho người dùng.`
+1. Không bịa link, chỉ dùng link có trong danh sách link hợp lệ.
+2. Không trả về XML/JSON/tool call.
+3. Khi phù hợp, có thể dùng markdown đơn giản như danh sách hoặc in đậm.
+4. Nếu không chắc về nội dung trong ảnh, phải nói rõ đó là suy luận từ hình ảnh.`
 
 function parseTimeoutMs(rawValue, fallbackValue) {
     const parsed = Number.parseInt(rawValue ?? '', 10)
@@ -60,16 +62,9 @@ function extractMiniMaxContent(payload) {
     )
 }
 
-function stripThinkingBlocks(text = '') {
-    return text.replace(THINKING_BLOCK_RE, '').trim()
-}
-
-function containsToolMarkup(text = '') {
-    return TOOL_MARKUP_RE.test(text)
-}
-
-function stripToolMarkup(text = '') {
+function stripAiArtifacts(text = '') {
     return text
+        .replace(THINKING_BLOCK_RE, '')
         .replace(TOOL_BLOCK_RE, '')
         .replace(TOOL_TAG_RE, '')
         .trim()
@@ -140,15 +135,13 @@ function buildLinkCatalog(pages = []) {
     const deduped = new Map()
 
     pages.forEach((page) => {
-        const pageEntry = {
+        deduped.set(`${page.title}::${page.path}`, {
             label: page.title,
             url: page.path,
             pageTitle: page.title,
             pageUrl: page.path,
             type: 'page',
-        }
-
-        deduped.set(`${pageEntry.label}::${pageEntry.url}`, pageEntry)
+        })
 
         extractMarkdownLinks(page.content).forEach((link) => {
             const entry = {
@@ -179,10 +172,373 @@ function buildAllowedLinksBlock(linkCatalog = []) {
         .join('\n')
 }
 
+function cleanImageText(text = '') {
+    return text
+        .replace(/[*_`>#]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim()
+}
+
+function truncateInlineText(text = '', limit = 140) {
+    if (!text || text.length <= limit) {
+        return text
+    }
+
+    return `${text.slice(0, limit).trim()}...`
+}
+
+function looksGenericImageLabel(text = '') {
+    const normalized = normalizeLookupText(text)
+
+    if (!normalized) return true
+    if (/^\d+(?:\s+\d+)*$/.test(normalized)) return true
+
+    return [
+        'image',
+        'img',
+        'hinh',
+        'anh',
+        'photo',
+        'screenshot',
+    ].includes(normalized)
+}
+
+function buildVisualQuestionProfile(question = '') {
+    const normalized = normalizeLookupText(question)
+    const hasExplicitImageRequest =
+        /\bhinh\b|\banh\b|\bminh hoa\b|\bshow\b|\bxem hinh\b|\bgui hinh\b/.test(
+            normalized
+        )
+    const wantsConnectionVisual =
+        /\bket noi\b|\bnoi day\b|\bso do\b|\bcach cam\b|\bcam day\b|\bcam vao\b/.test(
+            normalized
+        )
+    const wantsAssemblyVisual =
+        /\bcach lap\b|\blap rap\b|\blap dat\b|\bcau tao\b/.test(normalized)
+    const wantsCodeVisual =
+        /\bcode mau\b|\bchuong trinh mau\b|\bblock\b|\bkhoi lenh\b/.test(
+            normalized
+        )
+    const wantsUiVisual =
+        /\bgiao dien\b|\bman hinh\b|\bmenu\b|\bnut nao\b|\bchon muc nao\b/.test(
+            normalized
+        )
+
+    return {
+        normalized,
+        hasExplicitImageRequest,
+        wantsConnectionVisual,
+        wantsAssemblyVisual,
+        wantsCodeVisual,
+        wantsUiVisual,
+        wantsVisualAnswer:
+            hasExplicitImageRequest ||
+            wantsConnectionVisual ||
+            wantsAssemblyVisual ||
+            wantsCodeVisual ||
+            wantsUiVisual,
+    }
+}
+
+function questionWantsVisualAnswer(question = '') {
+    return buildVisualQuestionProfile(question).wantsVisualAnswer
+}
+
+function extractHtmlImageAttributes(tag = '') {
+    const srcMatch = tag.match(/\bsrc=["']([^"']+)["']/i)
+    const altMatch = tag.match(/\balt=["']([^"']*)["']/i)
+    const titleMatch = tag.match(/\btitle=["']([^"']*)["']/i)
+
+    return {
+        src: srcMatch?.[1]?.trim() || '',
+        alt: altMatch?.[1]?.trim() || '',
+        title: titleMatch?.[1]?.trim() || '',
+    }
+}
+
+function createImageCandidate({
+    src = '',
+    alt = '',
+    title = '',
+    sectionTitle = '',
+    contextText = '',
+    page = {},
+    pageIndex = 0,
+}) {
+    const cleanSrc = src.trim()
+    if (!cleanSrc) return null
+
+    const cleanAlt = cleanImageText(alt)
+    const cleanTitle = cleanImageText(title)
+    const cleanSectionTitle = cleanImageText(sectionTitle)
+    const cleanContextText = cleanImageText(contextText)
+    const fallbackCaption = [cleanSectionTitle, cleanContextText, page.title]
+        .filter(Boolean)
+        .find((value) => !looksGenericImageLabel(value))
+
+    const caption = !looksGenericImageLabel(cleanAlt)
+        ? cleanAlt
+        : !looksGenericImageLabel(cleanTitle)
+          ? cleanTitle
+          : fallbackCaption || page.title || 'Hinh minh hoa'
+
+    return {
+        src: cleanSrc,
+        alt: truncateInlineText(!looksGenericImageLabel(cleanAlt) ? cleanAlt : caption, 120),
+        caption: truncateInlineText(caption, 140),
+        sectionTitle: truncateInlineText(cleanSectionTitle, 120),
+        contextText: truncateInlineText(cleanContextText, 140),
+        pageTitle: truncateInlineText(page.title || '', 100),
+        pageUrl: page.path || '',
+        pageIndex,
+    }
+}
+
+function extractImageCandidatesFromPage(page = {}, pageIndex = 0) {
+    const lines = String(page.content || '').split(/\r?\n/)
+    const candidates = []
+    let currentHeading = page.title || ''
+    let previousText = ''
+
+    lines.forEach((line) => {
+        const trimmed = line.trim()
+        if (!trimmed) {
+            return
+        }
+
+        const headingMatch = trimmed.match(HEADING_RE)
+        if (headingMatch) {
+            currentHeading = cleanImageText(headingMatch[1])
+            previousText = currentHeading
+            return
+        }
+
+        for (const match of trimmed.matchAll(
+            new RegExp(MARKDOWN_IMAGE_RE.source, MARKDOWN_IMAGE_RE.flags)
+        )) {
+            const candidate = createImageCandidate({
+                src: match[2],
+                alt: match[1],
+                title: match[3] || '',
+                sectionTitle: currentHeading,
+                contextText: previousText,
+                page,
+                pageIndex,
+            })
+
+            if (candidate) {
+                candidates.push(candidate)
+            }
+        }
+
+        for (const match of trimmed.matchAll(/<img\b[^>]*>/gi)) {
+            const attributes = extractHtmlImageAttributes(match[0])
+            const candidate = createImageCandidate({
+                ...attributes,
+                sectionTitle: currentHeading,
+                contextText: previousText,
+                page,
+                pageIndex,
+            })
+
+            if (candidate) {
+                candidates.push(candidate)
+            }
+        }
+
+        if (!/!\[[^\]]*\]\([^)]+\)/.test(trimmed) && !/<img\b/i.test(trimmed)) {
+            previousText = cleanImageText(trimmed)
+        }
+    })
+
+    return candidates
+}
+
+function evaluateImageCandidate(candidate = {}, question = '') {
+    const profile = buildVisualQuestionProfile(question)
+    const questionTokens = new Set(getLookupTokens(question))
+    const haystack = normalizeLookupText(
+        [
+            candidate.caption,
+            candidate.alt,
+            candidate.sectionTitle,
+            candidate.contextText,
+            candidate.pageTitle,
+            candidate.pageUrl,
+        ].join(' ')
+    )
+    const hasSpecificCaption = !looksGenericImageLabel(candidate.caption)
+    let tokenOverlapCount = 0
+
+    questionTokens.forEach((token) => {
+        if (haystack.includes(token)) {
+            tokenOverlapCount += 1
+        }
+    })
+
+    const matchesConnectionVisual =
+        profile.wantsConnectionVisual &&
+        /\bket noi\b|\bnoi day\b|\bso do\b|\bcam\b|\bday\b/.test(haystack)
+    const matchesAssemblyVisual =
+        profile.wantsAssemblyVisual &&
+        /\blap rap\b|\blap\b|\bkhung\b|\bco cau\b/.test(haystack)
+    const matchesCodeVisual =
+        profile.wantsCodeVisual &&
+        /\bcode\b|\bchuong trinh\b|\bblock\b|\bkhoi lenh\b/.test(haystack)
+    const matchesUiVisual =
+        profile.wantsUiVisual &&
+        /\bgiao dien\b|\bman hinh\b|\bmenu\b|\bthu vien\b|\bket noi\b/.test(
+            haystack
+        )
+    const themeMatchCount = [
+        matchesConnectionVisual,
+        matchesAssemblyVisual,
+        matchesCodeVisual,
+        matchesUiVisual,
+    ].filter(Boolean).length
+
+    let score = candidate.pageIndex === 0 ? 10 : Math.max(2, 6 - candidate.pageIndex * 2)
+    score += tokenOverlapCount * 5
+    score += themeMatchCount * 10
+
+    if (hasSpecificCaption) {
+        score += 2
+    }
+
+    const isStrongMatch =
+        score >= (profile.hasExplicitImageRequest ? 16 : 22) &&
+        (tokenOverlapCount >= 2 ||
+            themeMatchCount >= 1 ||
+            (profile.hasExplicitImageRequest &&
+                tokenOverlapCount >= 1 &&
+                hasSpecificCaption))
+
+    return {
+        score,
+        tokenOverlapCount,
+        themeMatchCount,
+        isStrongMatch,
+    }
+}
+
+function getResponseImages({
+    questionText = '',
+    relevantPages = [],
+    limit = 2,
+}) {
+    if (!questionWantsVisualAnswer(questionText)) {
+        return []
+    }
+
+    const deduped = new Map()
+    const primaryPageUrl = relevantPages[0]?.path || ''
+
+    relevantPages.forEach((page, pageIndex) => {
+        extractImageCandidatesFromPage(page, pageIndex).forEach((candidate) => {
+            const key = candidate.src
+            if (!deduped.has(key)) {
+                deduped.set(key, candidate)
+            }
+        })
+    })
+
+    return [...deduped.values()]
+        .map((candidate) => ({
+            ...candidate,
+            ...evaluateImageCandidate(candidate, questionText),
+        }))
+        .filter(
+            (candidate) =>
+                candidate.isStrongMatch &&
+                (candidate.pageUrl === primaryPageUrl || candidate.score >= 24)
+        )
+        .sort((left, right) => right.score - left.score)
+        .slice(0, limit)
+        .map(({ src, alt, caption, pageTitle, pageUrl }) => ({
+            src,
+            alt,
+            caption,
+            pageTitle,
+            pageUrl,
+        }))
+}
+
+function encodeHeaderPayload(value) {
+    if (!value) return ''
+
+    try {
+        return encodeURIComponent(JSON.stringify(value))
+    } catch {
+        return ''
+    }
+}
+
 function getLookupTokens(text = '') {
     return normalizeLookupText(text)
         .split(/\s+/)
         .filter((token) => token.length > 1)
+}
+
+function buildQuestionLinkIntent(question = '') {
+    const normalized = normalizeLookupText(question)
+    const wantsLink = /\blink\b|\burl\b|\bduong dan\b/.test(normalized)
+    const wantsGuide = /\bhuong dan\b|\btai lieu\b|\bmanual\b/.test(normalized)
+    const wantsRules = /\bthe le\b|\bquy dinh\b/.test(normalized)
+    const wantsRegister = /\bdang ky\b/.test(normalized)
+    const wantsHandbook = /\bso tay\b/.test(normalized)
+    const wantsArena = /\bfile in\b|\bsa ban\b/.test(normalized)
+    const wantsResourceLink =
+        wantsLink ||
+        /\bpdf\b|\bvideo\b|\bcanva\b|\byoutube\b|\bdrive\b/.test(normalized) ||
+        /\bduong link\b|\bduong dan\b|\blink tai lieu\b|\blink video\b/.test(normalized) ||
+        (/\btai lieu\b|\bmanual\b/.test(normalized) && /\bxem\b|\bgui\b|\bcho\b|\bmo\b/.test(normalized))
+
+    return {
+        normalized,
+        wantsLink,
+        wantsGuide,
+        wantsRules,
+        wantsRegister,
+        wantsHandbook,
+        wantsArena,
+        wantsResourceLink,
+    }
+}
+
+function scoreCatalogLinkForQuestion(link, intent) {
+    let score = 0
+
+    if (intent.wantsGuide && link.type === 'guide') score += 10
+    if (intent.wantsRules && link.type === 'rules') score += 10
+    if (intent.wantsRegister && link.type === 'register') score += 10
+    if (intent.wantsHandbook && link.type === 'handbook') score += 10
+    if (intent.wantsArena && link.type === 'arena') score += 10
+    if (intent.wantsLink && link.type !== 'page') score += 2
+
+    const questionTokens = new Set(getLookupTokens(intent.normalized))
+
+    getLookupTokens(link.label).forEach((token) => {
+        if (questionTokens.has(token)) score += 2
+    })
+
+    getLookupTokens(link.pageTitle).forEach((token) => {
+        if (questionTokens.has(token)) score += 1
+    })
+
+    return score
+}
+
+function getRelevantCatalogLinks(question, linkCatalog = [], limit = 3) {
+    const intent = buildQuestionLinkIntent(question)
+
+    return linkCatalog
+        .map((link) => ({
+            ...link,
+            questionScore: scoreCatalogLinkForQuestion(link, intent),
+        }))
+        .filter((link) => link.questionScore > 0)
+        .sort((a, b) => b.questionScore - a.questionScore)
+        .slice(0, limit)
 }
 
 function scoreLabelMatch(label = '', candidateLabel = '') {
@@ -216,60 +572,6 @@ function scoreLabelMatch(label = '', candidateLabel = '') {
     })
 
     return score
-}
-
-function buildQuestionLinkIntent(question = '') {
-    const normalized = normalizeQuestionText(question)
-
-    return {
-        normalized,
-        wantsLink: /\blink\b|\burl\b|\bduong dan\b/.test(normalized),
-        wantsGuide: /\bhuong dan\b|\btai lieu\b|\bmanual\b/.test(normalized),
-        wantsRules: /\bthe le\b|\bquy dinh\b/.test(normalized),
-        wantsRegister: /\bdang ky\b/.test(normalized),
-        wantsHandbook: /\bso tay\b/.test(normalized),
-        wantsArena: /\bfile in\b|\bsa ban\b/.test(normalized),
-    }
-}
-
-function scoreCatalogLinkForQuestion(link, intent) {
-    let score = 0
-
-    if (!link) return score
-
-    if (intent.wantsGuide && link.type === 'guide') score += 10
-    if (intent.wantsRules && link.type === 'rules') score += 10
-    if (intent.wantsRegister && link.type === 'register') score += 10
-    if (intent.wantsHandbook && link.type === 'handbook') score += 10
-    if (intent.wantsArena && link.type === 'arena') score += 10
-    if (intent.wantsLink && link.type !== 'page') score += 2
-
-    const questionTokens = new Set(getLookupTokens(intent.normalized))
-    const labelTokens = getLookupTokens(link.label)
-    const pageTokens = getLookupTokens(link.pageTitle)
-
-    labelTokens.forEach((token) => {
-        if (questionTokens.has(token)) score += 2
-    })
-
-    pageTokens.forEach((token) => {
-        if (questionTokens.has(token)) score += 1
-    })
-
-    return score
-}
-
-function getRelevantCatalogLinks(question, linkCatalog = [], limit = 3) {
-    const intent = buildQuestionLinkIntent(question)
-
-    return linkCatalog
-        .map((link) => ({
-            ...link,
-            questionScore: scoreCatalogLinkForQuestion(link, intent),
-        }))
-        .filter((link) => link.questionScore > 0)
-        .sort((a, b) => b.questionScore - a.questionScore)
-        .slice(0, limit)
 }
 
 function findBestLinkByLabel(label, linkCatalog = []) {
@@ -329,8 +631,7 @@ function ensureRelevantLinks(text = '', question = '', linkCatalog = []) {
     const intent = buildQuestionLinkIntent(question)
 
     if (
-        !intent.wantsLink &&
-        !intent.wantsGuide &&
+        !intent.wantsResourceLink &&
         !intent.wantsRules &&
         !intent.wantsRegister &&
         !intent.wantsHandbook &&
@@ -343,7 +644,7 @@ function ensureRelevantLinks(text = '', question = '', linkCatalog = []) {
         return text.trim()
     }
 
-    const relevantLinks = getRelevantCatalogLinks(question, linkCatalog, 3)
+    const relevantLinks = getRelevantCatalogLinks(question, linkCatalog, 2)
     if (!relevantLinks.length) {
         return text.trim()
     }
@@ -355,98 +656,10 @@ function ensureRelevantLinks(text = '', question = '', linkCatalog = []) {
     return `${text.trim()}\n\nLink dung trong wiki:\n${linkLines.join('\n')}`.trim()
 }
 
-function normalizeQuestionText(text = '') {
-    return text
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/đ/g, 'd')
-        .replace(/[\u0300-\u036f]/g, '')
-        .trim()
-}
-
-function isDefinitionQuestion(question = '') {
-    return /(la gi|gioi thieu|cho biet|thong tin ve)/i.test(
-        normalizeQuestionText(question)
-    )
-}
-
-function isContextDependentQuestion(question = '') {
-    const normalized = normalizeQuestionText(question)
-
-    return (
-        /(^(no|nha?u?|cai do|cai nay|thu nay|thu do|vay con|the con|con no|them nua|ro hon|chi tiet hon)\b)/i.test(normalized) ||
-        /(\b(no|cai do|cai nay|thu nay|thu do|vay con|the con)\b)/i.test(normalized) ||
-        /^(dung de lam gi|cach dung|lap trinh sao|lap trinh the nao|hoat dong ra sao|co gi dac biet)$/i.test(normalized)
-    )
-}
-
-function trimDefinitionAnswer(text = '') {
-    const blockedSections = [
-        /^##+\s+thông tin liên hệ/i,
-        /^##+\s+liên hệ/i,
-        /^##+\s+các câu hỏi thường gặp/i,
-        /^##+\s+faq/i,
-    ]
-    const followUpPatterns = [
-        /^Bạn cần thêm thông tin/i,
-        /^Bạn có muốn tìm hiểu thêm/i,
-        /^Bạn có câu hỏi cụ thể nào/i,
-        /^Nếu bạn cần thêm/i,
-        /^Nếu bạn muốn/i,
-    ]
-
-    const lines = text.split('\n')
-    const filteredLines = []
-    let skipSection = false
-
-    for (const line of lines) {
-        const trimmedLine = line.trim()
-        const isHeading = /^#+\s+/.test(trimmedLine)
-
-        if (blockedSections.some((pattern) => pattern.test(trimmedLine))) {
-            skipSection = true
-            continue
-        }
-
-        if (skipSection && isHeading) {
-            skipSection = false
-        }
-
-        if (!skipSection) {
-            filteredLines.push(line)
-        }
-    }
-
-    while (filteredLines.length > 0) {
-        const lastLine = filteredLines[filteredLines.length - 1].trim()
-
-        if (!lastLine || lastLine === '---') {
-            filteredLines.pop()
-            continue
-        }
-
-        if (followUpPatterns.some((pattern) => pattern.test(lastLine))) {
-            filteredLines.pop()
-            continue
-        }
-
-        break
-    }
-
-    return filteredLines.join('\n').replace(/\n{3,}/g, '\n\n').trim()
-}
-
 function formatAiText(rawText = '', questionText = '', linkCatalog = []) {
-    let text = stripThinkingBlocks(rawText)
-    text = stripToolMarkup(text)
-
-    if (isDefinitionQuestion(questionText)) {
-        text = trimDefinitionAnswer(text)
-    }
-
+    let text = stripAiArtifacts(rawText)
     text = sanitizeAnswerLinks(text, questionText, linkCatalog)
     text = ensureRelevantLinks(text, questionText, linkCatalog)
-
     return text.trim()
 }
 
@@ -462,34 +675,32 @@ function normalizeHistory(history) {
         }))
 }
 
+function normalizeQuestionText(text = '') {
+    return text
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/\u0111/g, 'd')
+        .replace(/[\u0300-\u036f]/g, '')
+        .trim()
+}
+
+function isContextDependentQuestion(question = '') {
+    const normalized = normalizeQuestionText(question)
+
+    return (
+        /^(no|cai do|cai nay|vay con|the con|them nua|chi tiet hon)\b/.test(normalized) ||
+        /\b(no|cai do|cai nay|vay con|the con)\b/.test(normalized)
+    )
+}
+
 function buildSearchQuery(questionText, history) {
-    const normalizedQuestion = normalizeQuestionText(questionText)
     const userHistory = history.filter((msg) => msg.role === 'user')
 
-    if (!userHistory.length) {
+    if (!userHistory.length || !isContextDependentQuestion(questionText)) {
         return questionText
     }
 
-    if (!isContextDependentQuestion(questionText)) {
-        return questionText
-    }
-
-    const recentTopics = userHistory
-        .slice(-2)
-        .map((msg) => msg.content)
-        .filter(Boolean)
-
-    if (!recentTopics.length) {
-        return questionText
-    }
-
-    const mergedQuery = [...recentTopics, questionText].join('\n')
-
-    if (normalizedQuestion.length >= 20) {
-        return mergedQuery
-    }
-
-    return mergedQuery
+    return [...userHistory.slice(-2).map((msg) => msg.content), questionText].join('\n')
 }
 
 function createTimeoutController(timeoutMs) {
@@ -508,6 +719,7 @@ function addSystemReminder(messages, reminder) {
     if (!reminder) return messages
 
     const [firstMessage, ...remainingMessages] = messages
+
     if (firstMessage?.role !== 'system') {
         return [{ role: 'system', content: reminder }, ...messages]
     }
@@ -517,6 +729,47 @@ function addSystemReminder(messages, reminder) {
         { role: 'system', content: reminder },
         ...remainingMessages,
     ]
+}
+
+function normalizeImagePayload(image) {
+    if (!image || typeof image !== 'object') return null
+
+    const data = typeof image.data === 'string' ? image.data.trim() : ''
+    const mimeType = typeof image.mimeType === 'string' ? image.mimeType.trim() : ''
+    const name = typeof image.name === 'string' ? image.name.trim() : ''
+
+    if (!data || !mimeType) {
+        return null
+    }
+
+    return { data, mimeType, name }
+}
+
+function buildConversationTranscript(messages = []) {
+    return messages
+        .map((message) => {
+            const speaker = message.role === 'assistant' ? 'AI' : 'Người dùng'
+            return `${speaker}: ${message.content}`
+        })
+        .join('\n')
+}
+
+async function withTimeout(promiseFactory, timeoutMs, timeoutMessage) {
+    let timeoutId
+
+    try {
+        return await Promise.race([
+            promiseFactory(),
+            new Promise((_, reject) => {
+                timeoutId = setTimeout(
+                    () => reject(new Error(timeoutMessage)),
+                    timeoutMs
+                )
+            }),
+        ])
+    } finally {
+        clearTimeout(timeoutId)
+    }
 }
 
 async function requestMiniMax({ minimaxApiKey, messages, signal }) {
@@ -564,23 +817,185 @@ async function requestMiniMax({ minimaxApiKey, messages, signal }) {
     return data
 }
 
+async function requestGeminiVision({
+    geminiApiKey,
+    questionText,
+    image,
+    lastMessages,
+    wikiContext,
+    allowedLinksBlock,
+}) {
+    if (false) return withTimeout(
+        () =>
+            requestMiniMaxVision({
+                minimaxApiKey: geminiApiKey,
+                questionText,
+                image,
+                lastMessages,
+                wikiContext,
+                allowedLinksBlock,
+            }),
+        AI_TIMEOUT_MS,
+        `MiniMax pháº£n há»“i quÃ¡ lÃ¢u (${Math.round(AI_TIMEOUT_MS / 1000)} giÃ¢y).`
+    )
+
+    const ai = new GoogleGenAI({ apiKey: geminiApiKey })
+    const historyText = buildConversationTranscript(lastMessages)
+    const prompt = `${SYSTEM_PROMPT}
+
+${TOOL_RETRY_PROMPT}
+
+${LINK_ONLY_PROMPT}
+
+--- DANH SACH LINK HOP LE ---
+${allowedLinksBlock}
+--- HET DANH SACH LINK HOP LE ---
+
+--- LICH SU HOI THOAI ---
+${historyText || 'Chua co lich su hoi thoai truoc do.'}
+--- HET LICH SU HOI THOAI ---
+
+--- NOI DUNG WIKI LIEN QUAN ---
+${wikiContext || 'Khong tim thay tai lieu wiki lien quan truc tiep.'}
+--- HET NOI DUNG WIKI ---
+
+--- YEU CAU HIEN TAI ---
+${questionText}
+
+Hinh anh dinh kem la mot phan cua yeu cau. Neu can, hay mo ta ngan gon dieu ban nhin thay trong anh va lien he voi noi dung wiki. Neu khong chac chan, hay noi ro do la suy luan tu hinh anh.`
+
+    const response = await withTimeout(
+        () =>
+            ai.models.generateContent({
+                model: DEFAULT_GEMINI_MODEL,
+                contents: [
+                    {
+                        role: 'user',
+                        parts: [
+                            { text: prompt },
+                            createPartFromBase64(image.data, image.mimeType),
+                        ],
+                    },
+                ],
+            }),
+        AI_TIMEOUT_MS,
+        `Gemini phản hồi quá lâu (${Math.round(AI_TIMEOUT_MS / 1000)} giây).`
+    )
+
+    return response?.text || ''
+}
+
+async function requestMiniMaxVision({
+    minimaxApiKey,
+    questionText,
+    image,
+    lastMessages,
+    wikiContext,
+    allowedLinksBlock,
+}) {
+    const historyText = buildConversationTranscript(lastMessages)
+    const prompt = `${SYSTEM_PROMPT}
+
+${TOOL_RETRY_PROMPT}
+
+${LINK_ONLY_PROMPT}
+
+--- DANH SACH LINK HOP LE ---
+${allowedLinksBlock}
+--- HET DANH SACH LINK HOP LE ---
+
+--- LICH SU HOI THOAI ---
+${historyText || 'Chua co lich su hoi thoai truoc do.'}
+--- HET LICH SU HOI THOAI ---
+
+--- NOI DUNG WIKI LIEN QUAN ---
+${wikiContext || 'Khong tim thay tai lieu wiki lien quan truc tiep.'}
+--- HET NOI DUNG WIKI ---
+
+--- YEU CAU HIEN TAI ---
+${questionText}
+
+Hinh anh dinh kem la mot phan cua yeu cau. Neu can, hay mo ta ngan gon dieu ban nhin thay trong anh va lien he voi noi dung wiki. Neu khong chac chan, hay noi ro do la suy luan tu hinh anh.
+
+Thong tin anh tai len:
+- ten tep: ${image.name || 'uploaded-image'}
+- dinh dang: ${image.mimeType}
+
+Anh duoc gui kem trong du lieu base64 sau day:
+[Image base64:${image.data}]`
+
+    const response = await fetch(MINIMAX_CHAT_COMPLETIONS_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${minimaxApiKey}`,
+        },
+        body: JSON.stringify({
+            model: DEFAULT_MINIMAX_VISION_MODEL,
+            messages: [
+                {
+                    role: 'system',
+                    content:
+                        'You are a helpful Vietnamese assistant for OhStem Education. Analyze the uploaded image from the provided base64 content, then answer briefly in Vietnamese based on the wiki context and user question.',
+                },
+                {
+                    role: 'user',
+                    content: prompt,
+                },
+            ],
+            stream: false,
+            temperature: 0.3,
+            max_completion_tokens: 2048,
+        }),
+    })
+
+    if (!response.ok) {
+        const errorText = await response.text()
+        let errorJson = null
+
+        try {
+            errorJson = JSON.parse(errorText)
+        } catch {}
+
+        throw new Error(
+            getMiniMaxErrorMessage(
+                errorJson,
+                errorText || `MiniMax Vision API Error: ${response.status}`
+            )
+        )
+    }
+
+    const data = await response.json().catch(() => null)
+    if (!data || !data.choices?.length) {
+        throw new Error('MiniMax khong tra ve du lieu hop le cho yeu cau hinh anh.')
+    }
+
+    return extractMiniMaxContent(data)
+}
+
 export async function POST(request) {
     try {
-        const { question, history = [] } = await request.json()
-        const questionText = typeof question === 'string' ? question.trim() : ''
+        const {
+            question,
+            history = [],
+            image,
+            sessionId,
+            pagePath = '',
+            pageTitle = '',
+        } = await request.json()
+
+        const rawQuestionText = typeof question === 'string' ? question.trim() : ''
+        const imagePayload = normalizeImagePayload(image)
+        const questionText =
+            rawQuestionText ||
+            (imagePayload
+                ? 'Hãy phân tích hình ảnh này và hỗ trợ tôi dựa trên tài liệu wiki.'
+                : '')
 
         if (!questionText) {
             return Response.json(
-                { error: 'Vui lòng nhập câu hỏi.' },
+                { error: 'Vui lòng nhập câu hỏi hoặc gửi kèm hình ảnh.' },
                 { status: 400 }
-            )
-        }
-
-        const minimaxApiKey = process.env.MINIMAX_API_KEY?.trim()
-        if (!minimaxApiKey) {
-            return Response.json(
-                { error: 'Chưa cấu hình MINIMAX_API_KEY. Vui lòng liên hệ quản trị viên.' },
-                { status: 500 }
             )
         }
 
@@ -590,73 +1005,170 @@ export async function POST(request) {
         const wikiContext = buildContextStringFromPages(relevantPages)
         const linkCatalog = buildLinkCatalog(relevantPages)
         const allowedLinksBlock = buildAllowedLinksBlock(linkCatalog)
-
         const systemContent = `${SYSTEM_PROMPT}\n\n${TOOL_RETRY_PROMPT}\n\n${LINK_ONLY_PROMPT}\n\n--- DANH SACH LINK HOP LE ---\n${allowedLinksBlock}\n--- HET DANH SACH LINK HOP LE ---\n\n--- NOI DUNG WIKI LIEN QUAN ---\n${wikiContext || 'Khong tim thay tai lieu wiki lien quan truc tiep.'}\n--- HET NOI DUNG WIKI ---`
+        const requestSessionId =
+            typeof sessionId === 'string' && sessionId.trim()
+                ? sessionId.trim()
+                : globalThis.crypto?.randomUUID?.() ||
+                  `${Date.now()}-${Math.random().toString(36).slice(2)}`
 
-        const messages = [
-            {
-                role: 'system',
-                content: `${SYSTEM_PROMPT}\n\n${TOOL_RETRY_PROMPT}\n\n--- NỘI DUNG WIKI LIÊN QUAN ---\n${wikiContext || 'Không tìm thấy tài liệu wiki liên quan trực tiếp.'}\n--- HẾT NỘI DUNG WIKI ---`,
-            },
-            ...lastMessages,
-            { role: 'user', content: questionText },
-        ]
-        messages[0].content = systemContent
+        let text = ''
+        let provider = 'minimax'
+        const responseImages = getResponseImages({
+            questionText,
+            relevantPages,
+        })
+        const classification = classifyAiChatQuestion({
+            question: questionText,
+            pagePath,
+            pageTitle,
+            relevantPages,
+        })
+        const minimaxApiKey = process.env.MINIMAX_API_KEY?.trim()
 
-        const { signal, cleanup } = createTimeoutController(MINIMAX_TIMEOUT_MS)
+        if (!imagePayload && !minimaxApiKey) {
+            return Response.json(
+                { error: 'Chua cau hinh MINIMAX_API_KEY. Vui long lien he quan tri vien.' },
+                { status: 500 }
+            )
+        }
 
-        try {
-            const data = await requestMiniMax({
-                minimaxApiKey,
-                messages,
-                signal,
+        if (false && !minimaxApiKey) {
+            return Response.json(
+                { error: 'ChÆ°a cáº¥u hÃ¬nh MINIMAX_API_KEY. Vui lÃ²ng liÃªn há»‡ quáº£n trá»‹ viÃªn.' },
+                { status: 500 }
+            )
+        }
+
+        if (imagePayload) {
+            const geminiApiKey = process.env.GEMINI_API_KEY?.trim()
+
+            if (!geminiApiKey) {
+                return Response.json(
+                    { error: 'Chưa cấu hình GEMINI_API_KEY cho tính năng hỏi bằng hình ảnh.' },
+                    { status: 500 }
+                )
+            }
+
+            const rawText = await requestGeminiVision({
+                geminiApiKey,
+                questionText,
+                image: imagePayload,
+                lastMessages,
+                wikiContext,
+                allowedLinksBlock,
             })
 
-            const rawText = extractMiniMaxContent(data)
-            let text = formatAiText(rawText, questionText, linkCatalog)
+            text = formatAiText(rawText, questionText, linkCatalog)
+            provider = 'gemini'
+        } else {
+            const minimaxApiKey = process.env.MINIMAX_API_KEY?.trim()
 
-            if (containsToolMarkup(rawText) || !text) {
-                const retryData = await requestMiniMax({
+            if (!minimaxApiKey) {
+                return Response.json(
+                    { error: 'Chưa cấu hình MINIMAX_API_KEY. Vui lòng liên hệ quản trị viên.' },
+                    { status: 500 }
+                )
+            }
+
+            const messages = [
+                { role: 'system', content: systemContent },
+                ...lastMessages,
+                { role: 'user', content: questionText },
+            ]
+            const { signal, cleanup } = createTimeoutController(AI_TIMEOUT_MS)
+
+            try {
+                const data = await requestMiniMax({
                     minimaxApiKey,
-                    messages: addSystemReminder(
-                        addSystemReminder(messages, LINK_ONLY_PROMPT),
-                        TOOL_RETRY_PROMPT
-                    ),
+                    messages,
                     signal,
                 })
-                const retriedText = formatAiText(
-                    extractMiniMaxContent(retryData),
-                    questionText,
-                    linkCatalog
-                )
 
-                if (retriedText) {
-                    text = retriedText
+                const rawText = extractMiniMaxContent(data)
+                text = formatAiText(rawText, questionText, linkCatalog)
+
+                if ((rawText && rawText.match(TOOL_BLOCK_RE)) || !text) {
+                    const retryData = await requestMiniMax({
+                        minimaxApiKey,
+                        messages: addSystemReminder(
+                            addSystemReminder(messages, LINK_ONLY_PROMPT),
+                            TOOL_RETRY_PROMPT
+                        ),
+                        signal,
+                    })
+
+                    const retriedText = formatAiText(
+                        extractMiniMaxContent(retryData),
+                        questionText,
+                        linkCatalog
+                    )
+
+                    if (retriedText) {
+                        text = retriedText
+                    }
                 }
-            }
+            } catch (error) {
+                if (error?.name === 'AbortError') {
+                    throw new Error(
+                        `MiniMax phản hồi quá lâu (${Math.round(AI_TIMEOUT_MS / 1000)} giây).`
+                    )
+                }
 
-            if (!text) {
-                throw new Error('MiniMax không trả về nội dung hiển thị.')
+                throw error
+            } finally {
+                cleanup()
             }
-
-            return new Response(text, {
-                headers: {
-                    'Content-Type': 'text/plain; charset=utf-8',
-                    'Cache-Control': 'no-cache, no-store',
-                    'X-AI-Provider': 'minimax',
-                },
-            })
-        } catch (error) {
-            if (error?.name === 'AbortError') {
-                throw new Error(
-                    `MiniMax phản hồi quá lâu (${Math.round(MINIMAX_TIMEOUT_MS / 1000)} giây).`
-                )
-            }
-
-            throw error
-        } finally {
-            cleanup()
         }
+
+        if (!text) {
+            throw new Error('AI không trả về nội dung hiển thị.')
+        }
+
+        const entry = createAiChatEntry({
+            sessionId: requestSessionId,
+            question: questionText,
+            answer: text,
+            pagePath,
+            pageTitle,
+            hasImage: Boolean(imagePayload),
+            imageName: imagePayload?.name || '',
+            imageMimeType: imagePayload?.mimeType || '',
+            historyLength: lastMessages.length,
+            provider,
+            ...classification,
+        })
+
+        const sheetSyncResult = await sendAiChatEntryToSheet(entry)
+
+        const encodedResponseImages = encodeHeaderPayload(responseImages)
+        const encodedClassification = encodeHeaderPayload(classification)
+        const responseHeaders = {
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Cache-Control': 'no-cache, no-store',
+            'X-AI-Provider': provider,
+            'X-Chat-Message-Id': entry.id,
+            'X-Chat-Session-Id': entry.sessionId,
+            'X-Chat-Sheet-Sync': sheetSyncResult?.ok ? 'ok' : 'error',
+        }
+
+        if (!sheetSyncResult?.ok && sheetSyncResult?.error) {
+            responseHeaders['X-Chat-Sheet-Error'] = encodeURIComponent(
+                sheetSyncResult.error
+            )
+        }
+
+        if (encodedResponseImages) {
+            responseHeaders['X-Chat-Response-Images'] = encodedResponseImages
+        }
+
+        if (encodedClassification) {
+            responseHeaders['X-Chat-Classification'] = encodedClassification
+        }
+
+        return new Response(text, {
+            headers: responseHeaders,
+        })
     } catch (error) {
         console.error('AI API Error:', error.message || error)
         return Response.json(

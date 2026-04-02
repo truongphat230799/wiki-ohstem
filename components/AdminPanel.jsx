@@ -249,6 +249,15 @@ export default function AdminPanel() {
                             <span className="admin-stat__label">Đang hiện</span>
                         </div>
                     </div>
+                    <button
+                        className="admin-btn-primary"
+                        style={{ background: 'linear-gradient(135deg, #0f766e, #0ea5e9)' }}
+                        onClick={() => {
+                            window.location.href = '/admin/ai-chat'
+                        }}
+                    >
+                        ðŸ¤– AI Chat
+                    </button>
                     <button className="admin-btn-primary" onClick={() => setShowCreate(true)}>
                         ➕ Thêm bài mới
                     </button>
