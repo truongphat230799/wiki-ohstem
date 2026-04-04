@@ -29,16 +29,25 @@ const SYSTEM_PROMPT = `Bạn là trợ lý AI của OhStem Education.
 
 NHIỆM VỤ:
 - Trả lời bằng tiếng Việt, ngắn gọn, dễ hiểu.
-- Ưu tiên trả lời dựa trên nội dung wiki đã được cung cấp.
+- Ưu tiên trả lời dựa trên nội dung wiki đã được cung cấp bên dưới. Đọc kỹ toàn bộ nội dung wiki trước khi trả lời.
 - Giữ đúng ngữ cảnh hội thoại trước đó nếu câu hỏi là câu nối tiếp.
-- Nếu người dùng hỏi ngoài phạm vi tài liệu, nói rõ là chưa có đủ thông tin và gợi ý liên hệ support@ohstem.vn.
+- Nếu nội dung wiki có liên quan đến câu hỏi (dù chỉ một phần), hãy trích dẫn và trả lời dựa trên đó. Đính kèm link trang wiki tương ứng để người dùng đọc thêm.
+- CHỈ KHI nội dung wiki THỰC SỰ không chứa bất kỳ thông tin nào liên quan, mới nói rằng chưa có đủ thông tin và gợi ý liên hệ support@ohstem.vn.
 - Nếu người dùng gửi kèm hình ảnh, hãy mô tả ngắn những gì bạn nhìn thấy và kết hợp với tài liệu wiki để hỗ trợ.
+
+HÌNH ẢNH MINH HỌA:
+- Trong nội dung wiki có chứa các đường dẫn hình ảnh dạng ![mô tả](/images/...).
+- Khi hướng dẫn từng bước, hãy CHÈN hình ảnh minh họa NGAY TẠI BƯỚC đó bằng cú pháp: ![mô tả](đường dẫn hình)
+- Ví dụ: Khi hướng dẫn kết nối phần cứng, chèn ![Sơ đồ kết nối](/images/yolo_uno/.../ket_noi.png) ngay sau đoạn mô tả.
+- Chỉ chèn hình có trong nội dung wiki, KHÔNG bịa link hình.
+- Ưu tiên chèn 1-3 hình quan trọng nhất (sơ đồ kết nối, chương trình mẫu).
 
 QUY TẮC:
 1. Không bịa link, chỉ dùng link có trong danh sách link hợp lệ.
 2. Không trả về XML/JSON/tool call.
 3. Khi phù hợp, có thể dùng markdown đơn giản như danh sách hoặc in đậm.
-4. Nếu không chắc về nội dung trong ảnh, phải nói rõ đó là suy luận từ hình ảnh.`
+4. Nếu không chắc về nội dung trong ảnh, phải nói rõ đó là suy luận từ hình ảnh.
+5. TUYỆT ĐỐI KHÔNG nói "không tìm thấy hướng dẫn" hoặc "chưa có tài liệu" khi phần NOI DUNG WIKI LIEN QUAN bên dưới có chứa thông tin liên quan đến câu hỏi.`
 
 function parseTimeoutMs(rawValue, fallbackValue) {
     const parsed = Number.parseInt(rawValue ?? '', 10)
@@ -397,7 +406,8 @@ function evaluateImageCandidate(candidate = {}, question = '') {
         matchesUiVisual,
     ].filter(Boolean).length
 
-    let score = candidate.pageIndex === 0 ? 10 : Math.max(2, 6 - candidate.pageIndex * 2)
+    // Primary page images get much higher base score to prevent cross-page image pollution
+    let score = candidate.pageIndex === 0 ? 20 : Math.max(0, 4 - candidate.pageIndex * 2)
     score += tokenOverlapCount * 5
     score += themeMatchCount * 10
 
@@ -426,14 +436,14 @@ function getResponseImages({
     relevantPages = [],
     limit = 2,
 }) {
-    if (!questionWantsVisualAnswer(questionText)) {
-        return []
-    }
-
+    const wantsVisual = questionWantsVisualAnswer(questionText)
     const deduped = new Map()
     const primaryPageUrl = relevantPages[0]?.path || ''
 
-    relevantPages.forEach((page, pageIndex) => {
+    // Always extract image candidates from at least the primary page
+    const pagesToScan = wantsVisual ? relevantPages : relevantPages.slice(0, 1)
+
+    pagesToScan.forEach((page, pageIndex) => {
         extractImageCandidatesFromPage(page, pageIndex).forEach((candidate) => {
             const key = candidate.src
             if (!deduped.has(key)) {
@@ -442,25 +452,49 @@ function getResponseImages({
         })
     })
 
-    return [...deduped.values()]
+    if (deduped.size === 0) return []
+
+    const scored = [...deduped.values()]
         .map((candidate) => ({
             ...candidate,
             ...evaluateImageCandidate(candidate, questionText),
         }))
-        .filter(
-            (candidate) =>
-                candidate.isStrongMatch &&
-                (candidate.pageUrl === primaryPageUrl || candidate.score >= 24)
-        )
+
+    if (wantsVisual) {
+        // User explicitly wants images — use stricter matching but show results
+        return scored
+            .filter(
+                (candidate) =>
+                    candidate.isStrongMatch &&
+                    (candidate.pageUrl === primaryPageUrl || candidate.score >= 35)
+            )
+            .sort((left, right) => right.score - left.score)
+            .slice(0, limit)
+            .map(({ src, alt, caption, pageTitle, pageUrl }) => ({
+                src, alt, caption, pageTitle, pageUrl,
+            }))
+    }
+
+    // Auto-attach mode: only from primary page, relaxed threshold
+    // Pick images that have meaningful keyword overlap with the question
+    const autoImages = scored
+        .filter((candidate) => {
+            // Only primary page images
+            if (candidate.pageUrl !== primaryPageUrl) return false
+            // Must have at least 1 keyword overlap
+            if (candidate.tokenOverlapCount < 1) return false
+            // Must have a specific caption (not generic "hinh 1" etc.)
+            if (looksGenericImageLabel(candidate.caption) && candidate.tokenOverlapCount < 2) return false
+            // Reasonable score threshold for auto-attach
+            return candidate.score >= 18
+        })
         .sort((left, right) => right.score - left.score)
         .slice(0, limit)
         .map(({ src, alt, caption, pageTitle, pageUrl }) => ({
-            src,
-            alt,
-            caption,
-            pageTitle,
-            pageUrl,
+            src, alt, caption, pageTitle, pageUrl,
         }))
+
+    return autoImages
 }
 
 function encodeHeaderPayload(value) {
@@ -684,6 +718,133 @@ function normalizeQuestionText(text = '') {
         .trim()
 }
 
+const SPECIFIC_PRODUCT_CATEGORIES = new Set([
+    'rover',
+    'rover_orc_junior',
+    'orc_k2',
+    'orc_k3',
+    'yolo_uno',
+    'yolobit',
+    'ohstem_app',
+])
+
+const DEVICE_OR_SUPPORT_TAGS = new Set([
+    'motion_kit',
+    'servo',
+    'dong_co',
+    'encoder',
+    'gamepad',
+    'control_hub',
+    'cam_bien',
+    'cam_bien_goc',
+    'do_line',
+    'sieu_am',
+    'bluetooth',
+    'usb',
+    'i2c',
+    'receiver',
+    'button',
+    'module',
+    'mecanum',
+    'ga25',
+    'ket_noi',
+    'mo_rong',
+    'loi',
+])
+
+function hasSpecificProductCategory(productCategory = '') {
+    return SPECIFIC_PRODUCT_CATEGORIES.has(productCategory)
+}
+
+function splitClassificationTags(tagText = '') {
+    return String(tagText)
+        .split(',')
+        .map((tag) => tag.trim())
+        .filter(Boolean)
+}
+
+function classifyQuestionWithHistoryContext({
+    questionText = '',
+    lastMessages = [],
+    pagePath = '',
+    pageTitle = '',
+} = {}) {
+    const directClassification = classifyAiChatQuestion({
+        question: questionText,
+        pagePath,
+        pageTitle,
+        relevantPages: [],
+    })
+
+    if (hasSpecificProductCategory(directClassification.productCategory)) {
+        return directClassification
+    }
+
+    const recentUserMessages = lastMessages
+        .filter((message) => message.role === 'user')
+        .slice(-2)
+        .map((message) => message.content.trim())
+        .filter(Boolean)
+
+    if (!recentUserMessages.length) {
+        return directClassification
+    }
+
+    const historyAwareClassification = classifyAiChatQuestion({
+        question: [...recentUserMessages, questionText].join('\n'),
+        pagePath,
+        pageTitle,
+        relevantPages: [],
+    })
+
+    return hasSpecificProductCategory(historyAwareClassification.productCategory)
+        ? historyAwareClassification
+        : directClassification
+}
+
+function shouldAskForProductClarification({
+    questionText = '',
+    imagePayload = null,
+    classification = null,
+} = {}) {
+    if (!classification || hasSpecificProductCategory(classification.productCategory)) {
+        return false
+    }
+
+    const normalizedQuestion = normalizeQuestionText(questionText)
+    const tags = new Set(splitClassificationTags(classification.classificationTags))
+    const isErrorQuestion =
+        classification.topicCategory === 'loi_su_co' ||
+        /\bloi\b|\bbao loi\b|\btruc trac\b|\bsu co\b|\bkhong chay\b|\bkhong ket noi\b|\bkhong nap duoc\b/.test(
+            normalizedQuestion
+        )
+    const isDeviceQuestion =
+        [...DEVICE_OR_SUPPORT_TAGS].some((tag) => tags.has(tag)) ||
+        /\bthiet bi\b|\bdong co\b|\bservo\b|\bcam bien\b|\bgamepad\b|\btay cam\b|\breceiver\b|\bencoder\b|\bhub\b|\bcontrol hub\b|\bmodule\b|\bmach\b|\bmotion kit\b|\bdo line\b|\bline\b|\bi2c\b|\busb\b|\bbluetooth\b/.test(
+            normalizedQuestion
+        )
+
+    return isErrorQuestion || isDeviceQuestion || Boolean(imagePayload)
+}
+
+function buildProductClarificationText(classification = null) {
+    const tags = new Set(splitClassificationTags(classification?.classificationTags))
+
+    if (tags.has('orc_family') || tags.has('control_hub') || tags.has('gamepad')) {
+        return 'Để mình khoanh vùng đúng hơn, bạn đang dùng bộ nào: ORC K2, ORC K3 hay Rover ORC Junior? Khi biết đúng bộ, mình sẽ trả lời gọn và đúng tài liệu hơn.'
+    }
+
+    if (tags.has('rover_family') || tags.has('do_line')) {
+        return 'Để mình hỗ trợ đúng hơn, bạn đang dùng Robot Rover hay Rover ORC Junior? Khi biết đúng bộ, mình sẽ khoanh vùng đúng tài liệu hơn.'
+    }
+
+    if (tags.has('module') || tags.has('motion_kit') || tags.has('servo')) {
+        return 'Để mình hỗ trợ đúng hơn, bạn đang gắn thiết bị này trên bộ nào? Ví dụ: Robot Rover, Rover ORC Junior, ORC K2, ORC K3, Yolo:Bit hay Yolo UNO.'
+    }
+
+    return 'Để mình khoanh vùng đúng hơn, bạn đang dùng sản phẩm nào? Ví dụ: Robot Rover, Rover ORC Junior, ORC K2, ORC K3, Yolo:Bit hay Yolo UNO.'
+}
+
 function isContextDependentQuestion(question = '') {
     const normalized = normalizeQuestionText(question)
 
@@ -701,6 +862,46 @@ function buildSearchQuery(questionText, history) {
     }
 
     return [...userHistory.slice(-2).map((msg) => msg.content), questionText].join('\n')
+}
+
+function buildSupplementalSearchQueries(questionText, classification = null) {
+    const queries = [questionText]
+
+    if (classification?.productLabel && classification.productLabel !== 'Khac') {
+        queries.push(`${questionText}\n${classification.productLabel}`)
+    }
+
+    if (classification?.topicLabel && classification.topicLabel !== 'Khac') {
+        queries.push(`${questionText}\n${classification.topicLabel}`)
+    }
+
+    const tagQuery = splitClassificationTags(
+        classification?.classificationTags || ''
+    )
+        .filter((tag) => !['loi_su_co', 'lap_trinh', 'lap_rap'].includes(tag))
+        .slice(0, 4)
+        .map((tag) => tag.replace(/_/g, ' '))
+        .join(' ')
+
+    if (tagQuery) {
+        queries.push(`${questionText}\n${tagQuery}`)
+    }
+
+    return [...new Set(queries.map((query) => query.trim()).filter(Boolean))]
+}
+
+function collectRelevantPages(queries = [], topKPerQuery = 3, overallLimit = 5) {
+    const dedupedPages = new Map()
+
+    queries.forEach((query) => {
+        searchWikiContext(query, topKPerQuery).forEach((page) => {
+            if (!dedupedPages.has(page.path)) {
+                dedupedPages.set(page.path, page)
+            }
+        })
+    })
+
+    return [...dedupedPages.values()].slice(0, overallLimit)
 }
 
 function createTimeoutController(timeoutMs) {
@@ -1000,17 +1201,81 @@ export async function POST(request) {
         }
 
         const lastMessages = normalizeHistory(history)
-        const searchQuery = buildSearchQuery(questionText, lastMessages)
-        const relevantPages = searchWikiContext(searchQuery, 3)
-        const wikiContext = buildContextStringFromPages(relevantPages)
-        const linkCatalog = buildLinkCatalog(relevantPages)
-        const allowedLinksBlock = buildAllowedLinksBlock(linkCatalog)
-        const systemContent = `${SYSTEM_PROMPT}\n\n${TOOL_RETRY_PROMPT}\n\n${LINK_ONLY_PROMPT}\n\n--- DANH SACH LINK HOP LE ---\n${allowedLinksBlock}\n--- HET DANH SACH LINK HOP LE ---\n\n--- NOI DUNG WIKI LIEN QUAN ---\n${wikiContext || 'Khong tim thay tai lieu wiki lien quan truc tiep.'}\n--- HET NOI DUNG WIKI ---`
         const requestSessionId =
             typeof sessionId === 'string' && sessionId.trim()
                 ? sessionId.trim()
                 : globalThis.crypto?.randomUUID?.() ||
                   `${Date.now()}-${Math.random().toString(36).slice(2)}`
+        const preliminaryClassification = classifyQuestionWithHistoryContext({
+            questionText,
+            lastMessages,
+            pagePath,
+            pageTitle,
+        })
+
+        if (
+            shouldAskForProductClarification({
+                questionText,
+                imagePayload,
+                classification: preliminaryClassification,
+            })
+        ) {
+            const clarificationText = buildProductClarificationText(
+                preliminaryClassification
+            )
+            const clarificationEntry = createAiChatEntry({
+                sessionId: requestSessionId,
+                question: questionText,
+                answer: clarificationText,
+                pagePath,
+                pageTitle,
+                hasImage: Boolean(imagePayload),
+                imageName: imagePayload?.name || '',
+                imageMimeType: imagePayload?.mimeType || '',
+                historyLength: lastMessages.length,
+                provider: 'rule_clarifier',
+                ...preliminaryClassification,
+            })
+            const sheetSyncResult = await sendAiChatEntryToSheet(
+                clarificationEntry
+            )
+            const encodedClassification = encodeHeaderPayload(
+                preliminaryClassification
+            )
+            const responseHeaders = {
+                'Content-Type': 'text/plain; charset=utf-8',
+                'Cache-Control': 'no-cache, no-store',
+                'X-AI-Provider': 'rule_clarifier',
+                'X-Chat-Message-Id': clarificationEntry.id,
+                'X-Chat-Session-Id': clarificationEntry.sessionId,
+                'X-Chat-Sheet-Sync': sheetSyncResult?.ok ? 'ok' : 'error',
+            }
+
+            if (!sheetSyncResult?.ok && sheetSyncResult?.error) {
+                responseHeaders['X-Chat-Sheet-Error'] = encodeURIComponent(
+                    sheetSyncResult.error
+                )
+            }
+
+            if (encodedClassification) {
+                responseHeaders['X-Chat-Classification'] = encodedClassification
+            }
+
+            return new Response(clarificationText, {
+                headers: responseHeaders,
+            })
+        }
+
+        const searchQuery = buildSearchQuery(questionText, lastMessages)
+        const searchQueries = buildSupplementalSearchQueries(
+            searchQuery,
+            preliminaryClassification
+        )
+        const relevantPages = collectRelevantPages(searchQueries, 3, 5)
+        const wikiContext = buildContextStringFromPages(relevantPages)
+        const linkCatalog = buildLinkCatalog(relevantPages)
+        const allowedLinksBlock = buildAllowedLinksBlock(linkCatalog)
+        const systemContent = `${SYSTEM_PROMPT}\n\n${TOOL_RETRY_PROMPT}\n\n${LINK_ONLY_PROMPT}\n\n--- DANH SACH LINK HOP LE ---\n${allowedLinksBlock}\n--- HET DANH SACH LINK HOP LE ---\n\n--- NOI DUNG WIKI LIEN QUAN ---\n${wikiContext || 'Khong tim thay tai lieu wiki lien quan truc tiep den cau hoi nay. Hay tra loi dua tren kien thuc chung ve san pham OhStem neu co the, neu khong thi goi y nguoi dung lien he support@ohstem.vn hoac thu hoi cau khac cu the hon.'}\n--- HET NOI DUNG WIKI ---`
 
         let text = ''
         let provider = 'minimax'

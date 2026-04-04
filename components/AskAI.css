@@ -315,7 +315,7 @@
 }
 
 .askai-message--user .askai-message__bubble {
-    background: linear-gradient(135deg, #6366f1, #7c3aed);
+    background: linear-gradient(135deg, #5b9bd5, #70b8ff);
     color: #fff;
     border-bottom-right-radius: 4px;
 }
@@ -390,11 +390,52 @@
     color: #9ca3af;
 }
 
+/* --- Inline tutorial images (shown at each step) --- */
+.askai-inline-image {
+    display: block;
+    margin: 8px 0;
+}
+
+.askai-inline-image a {
+    display: block;
+    text-decoration: none;
+    border: none !important;
+    border-bottom: none !important;
+}
+
+.askai-inline-image__img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    max-height: 260px;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.askai-inline-image__img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.askai-inline-image__caption {
+    display: block;
+    margin-top: 4px;
+    font-size: 11px;
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.askai-inline-image__caption:empty {
+    display: none;
+}
+
+/* --- Old references section (now hidden, images are inline) --- */
 .askai-message__references {
-    margin-top: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: none;
 }
 
 .askai-message__references-title {
@@ -907,4 +948,15 @@ html[class~="light"] .askai-panel__attachment,
     background: rgba(0, 0, 0, 0.03);
     border-color: rgba(0, 0, 0, 0.08);
     color: #374151;
+}
+
+html[class~="light"] .askai-inline-image__img,
+[data-theme="light"] .askai-inline-image__img {
+    border-color: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.03);
+}
+
+html[class~="light"] .askai-inline-image__caption,
+[data-theme="light"] .askai-inline-image__caption {
+    color: #6b7280;
 }

@@ -495,6 +495,8 @@ export default function AskAI() {
             .replace(/`([^`]+)`/g, '<code>$1</code>')
             .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
             .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+            // Image syntax: ![alt](url) — MUST be before link regex
+            .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<div class="askai-inline-image"><a href="$2" target="_blank" rel="noopener"><img src="$2" alt="$1" class="askai-inline-image__img" loading="lazy" /></a><span class="askai-inline-image__caption">$1</span></div>')
             .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
             .replace(/\n/g, '<br/>')
 
@@ -639,7 +641,7 @@ export default function AskAI() {
                                     message.responseImages.length > 0 && (
                                         <div className="askai-message__references">
                                             <div className="askai-message__references-title">
-                                                Hinh minh hoa tu tai lieu
+                                                Hình minh họa từ tài liệu
                                             </div>
                                             <div className="askai-message__references-list">
                                                 {message.responseImages.map((image, index) => (
