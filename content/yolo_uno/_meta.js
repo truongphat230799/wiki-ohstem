@@ -1,11 +1,10 @@
 export default {
   "index": { "display": "hidden" },
-  "arduino_yolo_uno": "ARDUINO YOLO UNO",
-  "green_house": "GREEN HOUSE",
-  "smart_home_uno": "SMART HOME UNO",
-  "thanh_pho_thong_minhyolouno": "THÀNH PHỐ THÔNG MINH",
-  "thung-rac-thong-minh-yolo-uno": "THÙNG RÁC THÔNG MINH",
-  "trash_bin_yolo_uno": "DỰ ÁN PHÂN LOẠI RÁC VỚI YOLO UNO",
-  "uno_city": "THÀNH PHỐ THÔNG MINH VỚI YOLO UNO",
-  "yolo_uno_khoi_lenh": "YOLO UNO KHỐI LỆNH"
+  "yolo_uno_khoi_lenh": "LẬP TRÌNH Yolo UNO VỚI OHSTEM APP",
+  "green_house": "DỰ ÁN NHÀ KÍNH THÔNG MINH VỚI Yolo UNO",
+  "smart_home_uno": "DỰ ÁN NHÀ THÔNG MINH VỚI Yolo UNO",
+  "thanh_pho_thong_minhyolouno": "DỰ ÁN THÀNH PHỐ THÔNG MINH VỚI Yolo UNO",
+  "thung-rac-thong-minh-yolo-uno": "THÙNG RÁC THÔNG MINH VỚI Yolo UNO",
+  "arduino_yolo_uno": "LẬP TRÌNH ARDUINO VỚI Yolo UNO"
+
 }

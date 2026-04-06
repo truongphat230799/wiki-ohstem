@@ -7,5 +7,6 @@ export default {
   "bai_4": "5. Bật tắt đèn tự động dựa trên ánh sáng",
   "bai_5": "6. Đo và hiển thị độ ẩm của đất",
   "bai_6": "7. Bật tắt máy bơm tự động",
-  "tong_ket": "8. Tổng hợp dự án"
+  "tong_ket": "8. Tổng hợp dự án",
+  "cau_hoi_thuong_gap": "9. Câu hỏi thường gặp"
 }

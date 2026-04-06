@@ -10,5 +10,6 @@ export default {
   "iot": "7. Nhận và gửi thông tin lên server IoT",
   "canh_bao_khi_gas": "7. Cảnh báo khí gas",
   "thoi_gian": "8. Đồng hồ thời gian thực",
-  "tong_ket": "9. Tổng kết"
+  "tong_ket": "9. Tổng kết",
+  "cau_hoi_thuong_gap": "10. Câu hỏi thường gặp"
 }

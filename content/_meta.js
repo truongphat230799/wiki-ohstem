@@ -6,7 +6,7 @@ export default {
   "store": "ĐI ĐẾN CỬA HÀNG",
   "orc_bot": "KIT ROBOT GIÁO DỤC ORC",
   "yolobit_v2": "Yolo:Bit",
-  "stem_kit": "Stem Kit",
+  "stem_kit": "STEM STARTER KIT",
   "aiot": "AIoT KIT",
   "robot_rover": "Robot Rover",
   "yolo_uno": "Yolo Uno",
