@@ -1,0 +1,99 @@
+---
+title: "1. Giới thiệu trạm giám sát thành phố thông minh"
+---
+
+# 1. Giới thiệu trạm giám sát thành phố thông minh
+
+## Giới thiệu
+
+Trạm giám sát thành phố thông minh là một dự án STEM ứng dụng thực tế, mô phỏng hệ thống giám sát môi trường đô thị hiện đại. Dự án sử dụng bo mạch **Yolo UNO** kết hợp với nhiều loại cảm biến chuyên dụng để thu thập và phân tích các thông số môi trường quan trọng trong thành phố.
+
+<img src="/images/yolo_uno/tram_giam_sat/images/smart_city_station.png" style={{display: 'block', margin: '0 auto', width: '35%'}} alt="Tổng quan trạm giám sát thành phố thông minh" />
+
+Với trạm giám sát này, học sinh sẽ được tìm hiểu cách các thành phố thông minh trên thế giới sử dụng công nghệ IoT (Internet of Things) để theo dõi và quản lý chất lượng môi trường sống, từ đó đưa ra các cảnh báo kịp thời cho người dân.
+
+
+## Tại sao cần trạm giám sát thành phố thông minh?
+
+Trong cuộc sống hiện đại, các thành phố phải đối mặt với nhiều vấn đề môi trường:
+
+- **Ô nhiễm không khí:** Bụi mịn PM2.5, khí CO2 từ giao thông và công nghiệp ảnh hưởng nghiêm trọng đến sức khỏe người dân.
+- **Biến đổi khí hậu:** Nhiệt độ tăng cao, thời tiết cực đoan ngày càng phổ biến.
+- **Tia UV nguy hại:** Bức xạ tia cực tím mạnh gây hại cho da và sức khỏe con người.
+- **Tiết kiệm năng lượng:** Cần tận dụng năng lượng tái tạo từ mặt trời để giảm phát thải carbon.
+
+Trạm giám sát thành phố thông minh giúp thu thập dữ liệu liên tục, từ đó:
+- Cảnh báo khi chất lượng không khí xuống thấp
+- Dự báo thời tiết tại chỗ
+- Theo dõi chỉ số UV để bảo vệ sức khỏe
+- Giám sát hiệu suất năng lượng mặt trời
+
+
+## Các tính năng nổi bật
+
+Dự án hướng dẫn xây dựng một trạm giám sát hoàn chỉnh với các chức năng sau:
+
+1. **Đo áp suất khí quyển & nhiệt độ (BMP280):** Theo dõi áp suất không khí và nhiệt độ môi trường, hỗ trợ dự báo thời tiết.
+2. **Đo nhiệt độ & độ ẩm (SHT30):** Cảm biến chính xác cao cho nhiệt độ và độ ẩm không khí.
+3. **Đo cường độ tia UV (GUVA-S12SD):** Giám sát bức xạ tia cực tím, cảnh báo khi mức UV nguy hiểm.
+4. **Đo nồng độ CO2 (ACD1100):** Theo dõi chất lượng không khí thông qua nồng độ khí carbon dioxide.
+5. **Đo bụi mịn (DC01):** Phát hiện và đo lường hàm lượng bụi mịn PM2.5 trong không khí.
+6. **Đo tốc độ gió:** Tính toán tốc độ gió bằng cảm biến, hỗ trợ dự báo thời tiết và đánh giá tiềm năng năng lượng gió.
+7. **Giám sát năng lượng mặt trời:** Đo điện áp từ tấm pin mặt trời, tính toán công suất và hiệu suất sử dụng năng lượng tái tạo.
+
+
+## Thành phần cần chuẩn bị
+
+### Mạch điều khiển
+
+| STT | Tên linh kiện | Số lượng | Mô tả |
+|-----|---------------|----------|-------|
+| 1 | Yolo UNO | 1 | Bo mạch điều khiển chính |
+
+### Các cảm biến
+
+| STT | Tên cảm biến | Chân kết nối | Chức năng |
+|-----|--------------|-------------|-----------|
+| 1 | BMP280 | I2C | Đo áp suất khí quyển & nhiệt độ |
+| 2 | SHT30 | I2C | Đo nhiệt độ & độ ẩm không khí |
+| 3 | GUVA-S12SD | Analog (A0) | Đo cường độ tia UV |
+| 4 | ACD1100 | I2C | Đo nồng độ CO2 |
+| 5 | DC01 (PM2.5) | UART / Digital | Đo bụi mịn PM2.5 |
+| 6 | Cảm biến tốc độ gió | Analog (A1) | Đo vận tốc gió |
+| 7 | Màn hình LCD 1602 | I2C | Hiển thị thông số môi trường |
+
+### Phụ kiện năng lượng mặt trời
+
+| STT | Tên linh kiện | Số lượng | Mô tả |
+|-----|---------------|----------|-------|
+| 1 | Tấm pin năng lượng mặt trời | 1 | Chuyển đổi ánh sáng thành điện năng |
+| 2 | Module đo điện áp | 1 | Đo điện áp đầu ra pin mặt trời |
+
+
+## Sơ đồ kết nối tổng quan
+
+Các cảm biến được kết nối với Yolo UNO như sau:
+
+| Cảm biến | Giao tiếp | Chân trên Yolo UNO |
+|----------|-----------|-------------------|
+| BMP280 | I2C | I2C1 |
+| SHT30 | I2C | I2C2 |
+| ACD1100 | I2C | I2C3 |
+| GUVA-S12SD | Analog | A0 |
+| Cảm biến gió | Analog | A1 |
+| DC01 | UART / Digital | D3-D4 |
+| Màn hình LCD | I2C | I2C4 |
+| Pin mặt trời | Analog | A2 |
+
+> **Lưu ý:** Các cảm biến sử dụng giao tiếp I2C có thể được kết nối chung trên cùng một bus I2C vì mỗi cảm biến có địa chỉ I2C riêng biệt.
+
+
+## Phần mềm lập trình
+
+Dự án sử dụng phần mềm **OhStem App** với phương pháp lập trình kéo thả trực quan:
+
+- **Truy cập:** [https://app.ohstem.vn](https://app.ohstem.vn)
+- **Chọn thiết bị:** Yolo UNO
+- **Thư viện mở rộng cần tải:** Tùy theo từng bài học, sẽ được hướng dẫn cụ thể trong mỗi bài.
+
+Hãy cùng bắt đầu xây dựng trạm giám sát thành phố thông minh nhé! 🌆

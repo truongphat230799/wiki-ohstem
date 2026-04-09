@@ -4,5 +4,6 @@ export default {
   "loi_cua_rover": "1. Robot Rover",
   "loi_cua_ORC": "2. Robot ORC",
   "loi_cua_module": "3. Yolo:Bit và Module",
-  "thaotacohstemapp": "4. Thao tác OhStem App"
+  "thaotacohstemapp": "4. Thao tác OhStem App",
+  "loi_cua_xbot": "5. Robot xBot"
 }

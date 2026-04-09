@@ -9,6 +9,7 @@ export default {
   "stem_kit": "STEM STARTER KIT",
   "aiot": "AIoT KIT",
   "robot_rover": "Robot Rover",
+  "robot_rio": "Robot Rio",
   "yolo_uno": "Yolo Uno",
   "robot_arm": { "display": "hidden" },
   "xbot": "Robot xBot",

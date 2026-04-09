@@ -68,3 +68,40 @@ Nguyên nhân:
 Cách xử lý:
     - Cần kiểm tra lại chương trình để đảm bảo các dòng lệnh Python được canh lề cho đúng và cú pháp chính xác.
     - Với trường hợp phần mềm sinh code sai thì có thể reset lại mạch, tải lại app lập trình và nạp lại chương trình.
+
+## **7. MQTTException:5**
+Nguyên nhân:
+    - Sai username hoặc key để kết nối vào server MQTT (Adafruit IO hoặc OhStem Server).
+
+Cách xử lý:
+    - Kiểm tra lại xem đã nhập chính xác username hoặc key của server chưa, chú ý các ký tự trắng dư thừa. Thay đổi lại cho đúng.
+
+## **8. Dashboard không hiển thị dữ liệu Yolo:Bit gửi lên**
+Nguyên nhân:
+    - Chương trình sử dụng sai tên chủ đề (topic name). Quá trình nhập lệnh và kết nối sẽ không báo lỗi vì chương trình không thể tự phát hiện chủ đề trên server bạn đã lập có khớp với code hay không.
+
+Cách xử lý:
+    - Kiểm tra lại tên các chủ đề trong chương trình trên Yolo:Bit có gõ đúng ký tự hoa/thường khớp với trên Dashboard không. Cần sửa lại cho giống nhau hoàn toàn.
+
+## **9. THROTTLE WARNING: Data rate limit reached, x seconds until throttle released**
+Nguyên nhân:
+    - Chương trình gửi dữ liệu lên server quá nhiều và liên tục, vượt quá dung lượng / tốc độ giới hạn (Quota) cho phép của Server trong khoảng thời gian đó.
+
+Cách xử lý:
+    - Kiểm tra lại chương trình, nên sử dụng các khối lệnh gửi dữ liệu theo chu kỳ dài hơn (VD: cắm lệnh vào khối "Sau mỗi 5 giây thực hiện"), tránh gửi liên tục không có thời gian delay.
+
+## **10. Lỗi Dashboard không điều khiển được Yolo:Bit và quạt mini**
+Lỗi do dữ liệu từ Dashboard gửi về mạch điều khiển không đúng kiểu:
+    - Trong lúc cấu hình dashboard, người dùng dùng sai kiểu dữ liệu (text/number) hoặc sai lệnh điều khiển gửi về chương trình.
+    - Dữ liệu gửi về từ server sẽ ở dạng Text (Chuỗi văn bản). Khi làm toán so sánh trong Yolo:Bit, bạn cần so sánh bằng **kiểu chuỗi Text** hoặc phải có khối lệnh chuyển đổi kiểu dữ liệu thành kiểu Số trước khi so sánh.
+
+Lỗi không bật được quạt mini (điều khiển theo phần trăm %):
+    - Do quạt cần lực cao ở những giây đầu để quay trục motor khởi động. Nếu gửi lệnh phần trăm tốc độ quá thấp, quạt chưa đủ lực quay.
+    - Ban đầu bạn nên gửi lệnh 100% để quạt khởi động quay, sau đó có thể làm chậm lại theo số % nhỏ hơn. Hoặc sử dụng các khối lệnh chuyển đổi kiểu dữ liệu cho đúng định dạng số vòng quay. Kiểm tra lại cổng nối P0, P1, P2,... cho chính xác.
+
+## **11. Lỗi Yolo:Bit không thực hiện chương trình khi kết nối với web lập trình AI**
+Nguyên nhân:
+    - Khi kết nối với trang lập trình AI thông qua kết nối cáp USB, một vài trường hợp chương trình trên Yolo:Bit sẽ dừng lại đơ ở lệnh đợi tín hiệu nên không thực hiện tiếp chương trình AI.
+
+Cách xử lý:
+    - Sau khi đã kết nối Yolo:Bit thông qua USB và trình duyệt AI hiện đã nhận diện thành công, ấn nút **RESET** trên mạch Yolo:Bit một lần, sau đó mới tiến hành ấn chạy code nhận diện AI trên máy tính. (Lưu ý: Đối với kết nối thông qua Bluetooth thì không cần ấn nút reset).

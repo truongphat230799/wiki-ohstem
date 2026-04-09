@@ -16,3 +16,13 @@ Nguyên nhân:
 Cách xử lý:
     - Bổ sung 2 khối lệnh này vào phía dưới câu lệnh tạo robot.
     - Lắp ORC Hub ngay ngắn lại trên robot.
+    
+## **2. Lỗi: Chương trình chạy bị lỗi khi thêm lệnh tạo cảm biến góc**
+Nguyên nhân:
+    - Lỗi này đôi lúc sẽ xảy ra khi dùng lệnh khởi tạo cảm biến góc trong mục Bắt Đầu nhưng ở vòng lặp Lặp lại mãi mãi lại KHÔNG dùng với lệnh "Di chuyển chính xác bằng cảm biến góc" mà chỉ dùng di chuyển bình thường.
+Cách xử lý:
+    - Khi dùng cảm biến góc nhớ thêm đúng khối lệnh di chuyển chính xác dùng cảm biến góc để đọc giá trị điều hướng liên tục.
+    
+## **3. Lỗi: Robot quay, rẽ không đúng hướng**
+Nguyên nhân và Cách xử lý:
+    - Lỗi này kiểm tra lại xem đã gắn cố định mạch nhận tín hiệu ORC Hub ngay ngắn và cân bằng trên thân robot chưa. Không được để bo mạch xéo lệch khi dùng cảm biến đo trục góc vì sẽ sai lệch toạ độ.

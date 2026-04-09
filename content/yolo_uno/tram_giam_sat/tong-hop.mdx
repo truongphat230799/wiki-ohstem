@@ -1,0 +1,147 @@
+---
+title: "9. Tổng hợp trạm giám sát hoàn chỉnh"
+---
+
+# 9. Tổng hợp trạm giám sát hoàn chỉnh
+
+## 1. Mục tiêu
+
+Trong bài này, chúng ta sẽ **tổng hợp tất cả các cảm biến** đã học từ bài 2 đến bài 8 để xây dựng một **trạm giám sát thành phố thông minh hoàn chỉnh**. Trạm giám sát sẽ thu thập đồng thời nhiều thông số môi trường và hiển thị trên màn hình LCD.
+
+
+## 2. Tổng quan hệ thống
+
+### Sơ đồ các cảm biến
+
+| STT | Cảm biến | Chức năng | Chân kết nối |
+|-----|----------|-----------|-------------|
+| 1 | BMP280 | Áp suất & Nhiệt độ | I2C |
+| 2 | SHT30 | Nhiệt độ & Độ ẩm | I2C |
+| 3 | GUVA-S12SD | Tia UV | A0 |
+| 4 | ACD1100 | CO2 | I2C |
+| 5 | DC01 | Bụi mịn PM2.5 | D3-D4 |
+| 6 | Cảm biến gió | Tốc độ gió | A1 |
+| 7 | Pin mặt trời | Năng lượng | A2 |
+| 8 | Màn hình LCD 1602 | Hiển thị | I2C |
+
+> **Lưu ý:** Các cảm biến I2C (BMP280, SHT30, ACD1100) có thể kết nối chung bus I2C vì có địa chỉ khác nhau: BMP280 (0x76), SHT30 (0x44), ACD1100 (địa chỉ riêng).
+
+
+## 3. Kết nối tổng hợp
+
+### Bảng kết nối chi tiết
+
+| Cổng Yolo UNO | Cảm biến | Ghi chú |
+|---------------|----------|---------|
+| I2C1 | Màn hình LCD 1602 | Màn hình hiển thị |
+| I2C2 | BMP280 + SHT30 + ACD1100 | Dùng chung bus I2C |
+| A0 | GUVA-S12SD | Tín hiệu analog UV |
+| A1 | Cảm biến gió | Tín hiệu analog gió |
+| A2 | Pin mặt trời (qua chia áp) | Tín hiệu analog điện áp |
+| D3-D4 | DC01 | Cảm biến bụi mịn |
+
+
+## 4. Viết chương trình tổng hợp
+
+### Bước 1: Khởi tạo (phần Bắt đầu)
+
+Trong phần **Bắt đầu**, khởi tạo tất cả các thành phần:
+
+1. Khởi tạo màn hình LCD 1602
+2. Khởi tạo cảm biến BMP280
+3. Khởi tạo cảm biến SHT30
+4. Khởi tạo cảm biến ACD1100
+5. Khởi tạo cảm biến bụi DC01
+6. Khai báo các biến: `nhietDo`, `doAm`, `apSuat`, `uvIndex`, `co2`, `pm25`, `tocDoGio`, `dienApPin`
+
+### Bước 2: Đọc dữ liệu cảm biến (mỗi 5 giây)
+
+Sử dụng khối lệnh **"Sau mỗi 5 giây thực hiện"**:
+
+1. Đọc nhiệt độ & độ ẩm từ SHT30
+2. Đọc áp suất từ BMP280
+3. Đọc chỉ số UV từ GUVA-S12SD (A0)
+4. Đọc CO2 từ ACD1100
+5. Đọc PM2.5 từ DC01
+6. Tính tốc độ gió từ A1
+7. Tính điện áp pin mặt trời từ A2
+
+### Bước 3: Hiển thị dữ liệu (luân phiên)
+
+Do màn hình LCD có giới hạn hiển thị, hiển thị dữ liệu theo **3 trang luân phiên** mỗi 5 giây:
+
+**Trang 1 - Thời tiết:**
+```
+Nhiet do: XX.X °C
+Do am:    XX.X %
+Ap suat:  XXXX hPa
+```
+
+**Trang 2 - Chất lượng không khí:**
+```
+UV Index: X.X
+CO2:      XXXX ppm
+PM2.5:    XXX ug/m3
+```
+
+**Trang 3 - Gió & Năng lượng:**
+```
+Gio:    X.X m/s
+Solar:  X.XX V
+H.suat: XX %
+```
+
+### Bước 4: Cảnh báo tổng hợp
+
+Thêm hệ thống cảnh báo đa cấp bằng LED RGB:
+
+| Điều kiện | LED | Cảnh báo |
+|-----------|-----|----------|
+| Tất cả bình thường | 🟢 Xanh lá | "TRAM: BINH THUONG" |
+| PM2.5 > 50 hoặc CO2 > 1000 | 🟡 Vàng | "CHAT LUONG KK KEM" |
+| UV > 8 hoặc Nhiệt độ > 38°C | 🟠 Cam | "CANH BAO THOI TIET" |
+| PM2.5 > 150 hoặc Gió > 15 m/s | 🔴 Đỏ | "NGUY HIEM!" |
+
+
+## 5. Bảng tổng hợp ngưỡng cảnh báo
+
+| Thông số | An toàn 🟢 | Cảnh báo 🟡 | Nguy hiểm 🔴 |
+|----------|-----------|------------|-------------|
+| Nhiệt độ | 18-32°C | 32-38°C | > 38°C |
+| Độ ẩm | 40-70% | 70-85% | > 85% |
+| Áp suất | > 1010 hPa | 1000-1010 | < 1000 hPa |
+| UV Index | 0-5 | 6-7 | > 8 |
+| CO2 | < 800 ppm | 800-1500 | > 1500 ppm |
+| PM2.5 | < 50 μg/m³ | 50-150 | > 150 μg/m³ |
+| Tốc độ gió | < 5.5 m/s | 5.5-10.7 | > 10.8 m/s |
+
+
+## 6. Mở rộng: Gửi dữ liệu lên Internet (IoT)
+
+### Kết nối WiFi và gửi dữ liệu
+
+Yolo UNO tích hợp WiFi, có thể gửi dữ liệu lên các nền tảng IoT:
+
+1. **OhStem Dashboard:** Gửi dữ liệu lên dashboard trực tuyến của OhStem.
+2. **ThingSpeak:** Nền tảng IoT miễn phí của MathWorks.
+3. **Blynk:** Ứng dụng điều khiển và giám sát từ xa.
+
+### Lợi ích của IoT trong trạm giám sát
+
+- 📱 Theo dõi dữ liệu từ xa qua điện thoại
+- 📊 Lưu trữ dữ liệu dài hạn, tạo biểu đồ xu hướng
+- 🔔 Nhận cảnh báo thông qua thông báo đẩy
+- 🌐 Chia sẻ dữ liệu với cộng đồng
+
+
+## 7. Ý tưởng phát triển thêm
+
+| Ý tưởng | Mô tả |
+|---------|-------|
+| Màn hình web | Tạo dashboard trên trình duyệt web hiển thị dữ liệu realtime |
+| Dự báo thời tiết | Dùng dữ liệu áp suất, gió để dự báo đơn giản |
+| So sánh vùng miền | Đặt nhiều trạm ở các vị trí khác nhau để so sánh |
+| AI phân tích | Sử dụng AI để phát hiện xu hướng ô nhiễm |
+| Cảnh báo SMS | Gửi tin nhắn khi chỉ số vượt ngưỡng nguy hiểm |
+
+> **Chúc mừng!** 🎉 Bạn đã hoàn thành việc xây dựng một trạm giám sát thành phố thông minh hoàn chỉnh với Yolo UNO! Hãy tiếp tục sáng tạo và phát triển thêm nhiều tính năng mới nhé!

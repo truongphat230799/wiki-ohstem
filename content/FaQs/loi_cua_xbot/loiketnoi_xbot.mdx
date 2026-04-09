@@ -1,0 +1,23 @@
+---
+title: "1. Lỗi kết nối USB và Remote điều khiển xBot"
+---
+
+# 1. Lỗi kết nối USB và Remote điều khiển xBot
+
+## **1.1. Không thể kết nối từ máy tính đến xBot**
+
+Khi nhấn nút kết nối Yolo:Bit / xBot trên phần mềm web thì không tìm thấy thông tin xuất hiện cổng COM của thiết bị xBot trong danh sách chờ ghép nối.
+
+**Nguyên nhân:** 
+- Máy tính của bạn chưa có driver CH340 / CH341 để giao tiếp USB nối tiếp cho xBot.
+
+**Cách khắc phục:**
+- Cài đặt driver lập trình theo hướng dẫn chi tiết tại [http://ohstem.vn/driver](http://ohstem.vn/driver).
+- Lưu ý: Đối với việc tải driver, tùy hệ điều hành, bạn cần phải Extract/Giải nén file `.zip` hoặc `.rar` tải về ra trước rồi mới nhấp vào file `SETUP.exe` bên trong.
+- Sau khi cài đặt driver và chờ nhận diện thiết bị, hãy thử nhấn phím tắt **F5** trên trình duyệt để tải lại trang nếu vẫn chưa tìm thấy cổng COM. Rút cáp xBot ra, cắm vào cổng USB khác nếu máy vẫn không nhận (chú ý chỉ hỗ trợ cáp có tính năng truyền dữ liệu).
+
+## **1.2. Lỗi Remote IR hồng ngoại không điều khiển được robot**
+
+**Nguyên nhân và cách xử lý:**
+- **Do khoảng cách:** Xa quá robot không bắt được tín hiệu hồng ngoại (IR) => Thu hẹp khoảng cách điều khiển robot lại và hướng Remote thẳng vào phần đầu nhận IR trên thân robot.
+- **Do lỗi Remote hoặc pin:** Thay pin hoặc kiểm tra bằng cách mở Camera điện thoại lên, chĩa đầu đèn nhỏ của Remote vào camera và bấm nút. Nếu thấy phát sáng chấm đỏ / tím trên màn hình điện thoại thì Remote vẫn hoạt động (lỗi có thể do board xBot hoặc trùng sáng). Nếu trên điện thoại không thấy đèn nào nháy lên 👉 Remote bị lỏng pin, hết pin hoặc hỏng. Cần thay pin dẹp và thử lại.

@@ -1,0 +1,23 @@
+---
+title: "2. Lỗi trong quá trình hoạt động của xBot"
+---
+
+# 2. Lỗi trong quá trình hoạt động của xBot
+
+## **2.1. Lỗi xBot nhấp nháy đèn LED màu đỏ liên tục (khi chạy code mặc định)**
+
+**Nguyên nhân:**
+- Khi bạn chưa lập trình gì thêm, chương trình mặc định trên xBot sẽ hoạt động. Tuy nhiên, module cảm biến đang bị sai vị trí cổng hoặc rút ra, nên chương trình mặc định bị treo do chờ kết nối từ cảm biến đó, xuất thông báo cảnh báo là đèn LED đỏ nháy liên tục trên board mạch.
+
+**Cách khắc phục:**
+- Kiểm tra lại sơ đồ dây cắm từ cảm biến vào đúng các cổng (Port) số 1 tới 6 trên xBot theo đúng cấu trúc robot nguyên mẫu. 
+- Mặc định: **Cổng số 1** kết nối với **cảm biến dò line** (Line sensor), **Cổng số 2** kết nối với **cảm biến siêu âm** đo khoảng cách (Ultrasonic sensor). Cắm đúng rãnh chiều dây và khởi động lại robot.
+
+## **2.2. Robot lập trình tiến lên nhưng lại lùi, hoặc rẽ sai hướng**
+
+**Nguyên nhân:**
+- Thứ tự cắm dây 2 động cơ trái/phải trên bo mạch bị đảo ngược nhau dẫn tới động cơ đang chạy ngược quỹ đạo, hoặc lắp khối động cơ lên khung bị ngược chiều.
+
+**Cách khắc phục:**
+- Ngắt nguồn và kiểm tra lại vị trí cắm. **Động cơ bên phải** sẽ nối vào cổng **M1**, và **động cơ bên trái** nối vào cổng **M2** (như sách hướng dẫn).
+- Hoặc để tạm thời fix lỗi qua lập trình, bạn có thể chỉnh lại mức bù tốc độ / đảo chiều motor trong khối lệnh cấu hình cài đặt nâng cao của OhStem App để phần mềm tự lật pha di chuyển.

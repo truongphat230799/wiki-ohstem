@@ -8,5 +8,6 @@ export default {
   "ghepnoiorchub": "7. Ghép nối tay cầm với robot",
   "chinhdaugap": "8. Chỉnh đầu gắp robot ORC",
   "chinhdaunang": "9. Chỉnh đầu nâng robot ORC K2/K3",
-  "loi8kenhservo": "10. Lỗi khi dùng ORC với module 8 kênh servo"
+  "loi8kenhservo": "10. Lỗi khi dùng ORC với module 8 kênh servo",
+  "loiindex": "11. Báo lỗi IndexError"
 }

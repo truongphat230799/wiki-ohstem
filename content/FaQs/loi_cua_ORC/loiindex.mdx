@@ -1,0 +1,13 @@
+---
+title: "11. Báo lỗi IndexError: list index out of range"
+---
+
+# 11. Báo lỗi IndexError: list index out of range
+
+Khi nạp chương trình điều khiển robot ORC, màn hình thông báo lỗi **IndexError: list index out of range**.
+
+**Nguyên nhân:**
+- Lỗi này xảy ra khi chưa khai báo hệ thống bánh xe - vị trí 4 động cơ trong khối lệnh khởi tạo robot. Khi thiếu thông số cấu hình, hệ thống gọi tới vị trí động cơ không tồn tại sẽ gây ra lỗi lập chỉ mục (index).
+
+**Cách xử lý:**
+- Hãy kiểm tra lại cấu hình robot và chọn lại khối lệnh tạo động cơ. Đảm bảo bạn đã khai báo đầy đủ và chính xác cổng gắn dây cho cả 4 động cơ trong khối lệnh khởi tạo ở danh mục cài đặt robot.

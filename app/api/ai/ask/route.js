@@ -726,6 +726,10 @@ const SPECIFIC_PRODUCT_CATEGORIES = new Set([
     'yolo_uno',
     'yolobit',
     'ohstem_app',
+    'green_house',
+    'smart_home',
+    'thanh_pho_thong_minh',
+    'thung_rac',
 ])
 
 const DEVICE_OR_SUPPORT_TAGS = new Set([
