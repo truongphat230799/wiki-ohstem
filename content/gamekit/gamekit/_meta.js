@@ -1,7 +1,7 @@
 export default {
   "index": { "display": "hidden" },
   "mo-dau": "1. Giới thiệu GameKit",
-  "hdsd": "2. Hướng dẫn sử dụng Makecode Arcade",
+  "hdsd": "2. Hướng dẫn sử dụng GameLab",
   "nap-code": "3. Nạp code cho GameKit",
   "nhan-vat": "4. Đưa nhân vật vào trò chơi",
   "vi-tri": "5. Thiết lập vị trí của nhân vật",
