@@ -34,6 +34,7 @@ export default {
   "dong-co": "Động cơ",
   "dieu-khien-dong-ngat": "Điều khiển & Đóng ngắt",
   "board-mo-rong": "Board Mở rộng",
+  "ai-vision-camera": "AI Vision Camera",
   "module": { "display": "hidden" },
 
   // ── THI ĐẤU & SỰ KIỆN ──
