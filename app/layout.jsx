@@ -1,5 +1,8 @@
 import AskAI from '../components/AskAI'
+import GaPageViews from '../components/GaPageViews'
 import './globals.css'
+
+const GA_ID = 'G-YHG4Z58BMY'
 
 export const metadata = {
     title: {
@@ -37,10 +40,30 @@ export default function RootLayout({ children }) {
                     data-source="wiki"
                     defer
                 />
+
+                {/* Google tag (gtag.js) */}
+                <script
+                    async
+                    src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+                />
+                {/*
+                  send_page_view: false vì wiki điều hướng kiểu SPA, gtag chỉ
+                  chạy một lần lúc tải trang đầu. Việc đếm lượt xem giao hết
+                  cho <GaPageViews />, kể cả trang đầu tiên.
+                */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_ID}', { send_page_view: false });`,
+                    }}
+                />
             </head>
             <body>
                 {children}
                 <AskAI />
+                <GaPageViews />
             </body>
         </html>
     )
