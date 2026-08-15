@@ -45,25 +45,13 @@ Trong bài này, chúng ta sẽ học cách sử dụng cảm biến **ACD1100**
 | Tự hiệu chuẩn | Có (Automatic Baseline Correction) |
 
 
-## 3. Kết nối
 
 ## 3. Kết nối
 
-Cảm biến ACD1100 kết nối với Yolo UNO thông qua giao tiếp **UART** (RX/TX). Module này sẽ liên tục đẩy dữ liệu CO2 theo chu kỳ mỗi giây qua cổng này, các mạch điều khiển (như Yolo UNO) chỉ việc đọc để lấy chỉ số đo được.
+Cảm biến ACD1100 kết nối với Yolo UNO thông qua giao tiếp **I2C**. Module này sẽ liên tục đẩy dữ liệu CO2 theo chu kỳ mỗi giây qua cổng này, các mạch điều khiển (như Yolo UNO) chỉ việc đọc để lấy chỉ số đo được.
 
-| ACD1100 | Yolo UNO |
-|---------|----------|
-| VCC | 5V |
-| GND | GND |
-| TX | D3 (RX) |
-| RX | D4 (TX) |
-
-Kết nối cảm biến ACD1100 vào Yolo UNO / ESP32:
+Kết nối cảm biến ACD1100 vào Yolo UNO:
 <img src="/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/acd1100_02.png" style={{display: 'block', margin: '0 auto', width: '35%'}} alt="acd1100 02" />
-
-> **Lưu ý quan trọng:**
-> - Chân **TX của cảm biến phải nối với chân RX của Yolo UNO** (D3) và ngược lại (nhưng thông thường chỉ cần nối TX của cảm biến để Yolo UNO đọc dữ liệu).
-> - Cấp nguồn ổn định 5V để cảm biến đo chính xác.
 
 
 ## 4. Giới thiệu khối lệnh
@@ -72,10 +60,7 @@ Kết nối cảm biến ACD1100 vào Yolo UNO / ESP32:
 > `https://github.com/AITT-VN/yolouno_extension_smartcity.git`
 
 *(Xem hướng dẫn thêm thư viện mở rộng [tại đây](https://docs.ohstem.vn/en/latest/module/thu-vien-yolobit.html) hoặc dán đường link trên vào ô tìm kiếm thư viện mở rộng như hình dưới)*
-<img src="/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/acd1100_04.png" style={{display: 'block', margin: '0 auto', width: '35%'}} alt="minh họa tải thư viện" />
-
-Sử dụng OhStem App, bạn chỉ cần sử dụng khối lệnh đọc CO₂ từ thư viện **Smart City** để nhận khối lượng dữ liệu CO₂ từ cảm biến ACD1100:
-<img src="/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/acd1100_03.png" style={{display: 'block', margin: '0 auto', width: '35%'}} alt="acd1100 03" />
+<img src="/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/acd1100_04.png" style={{display: 'block', margin: '0 auto', width: '80%'}} alt="minh họa tải thư viện" />
 
 
 ## 5. Viết chương trình
@@ -86,7 +71,10 @@ Sử dụng OhStem App, bạn chỉ cần sử dụng khối lệnh đọc CO₂
 - Đọc giá trị CO2 (ppm) từ cảm biến ACD1100 qua UART (1 giây một lần).
 - Hiển thị giá trị đó lên màn hình LCD.
 
-> **Lưu ý:** Nên đọc giá trị CO2 mỗi 5 giây thay vì liên tục để cho kết quả ổn định hơn.
+
+<img src="/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/acd1100_03.png" style={{display: 'block', margin: '0 auto', width: '80%'}} alt="acd1100 03" />
+
+> **Lưu ý:** Khi sử dụng trong chương trình, nên đọc giá trị CO2 mỗi 5 giây thay vì liên tục để cho kết quả ổn định hơn.
 
 ### Bảng phân loại chất lượng không khí theo CO2
 

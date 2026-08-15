@@ -42,7 +42,7 @@ Do kích thước cực nhỏ, PM2.5 có thể xâm nhập sâu vào phổi, th�
 | Thông số | Giá trị |
 |----------|---------|
 | Điện áp hoạt động | 5V |
-| Giao tiếp | UART / Digital |
+| Giao tiếp | UART |
 | Dải đo PM2.5 | 0 - 500 μg/m³ |
 | Độ phân giải | 1 μg/m³ |
 | Thời gian phản hồi | < 10 giây |
@@ -52,16 +52,17 @@ Do kích thước cực nhỏ, PM2.5 có thể xâm nhập sâu vào phổi, th�
 
 ## 3. Kết nối
 
-Cảm biến DC01 kết nối với Yolo UNO qua giao tiếp **UART** hoặc **Digital**:
+Cảm biến DC01 kết nối với Yolo UNO qua giao tiếp **UART**:
 
 | DC01 | Yolo UNO |
 |------|----------|
 | VCC | 5V |
 | GND | GND |
-| TX/Data | D3 hoặc D4 |
+| TX|  D4 |
+| RX|  D3 |
 
 Cắm cảm biến DC01 vào cổng phù hợp trên Yolo UNO (ví dụ cổng D3-D4).
-<img src="/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/dc01_02.jpg" style={{display: 'block', margin: '0 auto', width: '35%'}} alt="dc01 02" />
+<img src="/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/dc01_02.jpg" style={{display: 'block', margin: '0 auto', width: '80%'}} alt="dc01 02" />
 
 > **Lưu ý quan trọng:**
 > - Cảm biến bụi cần thời gian **khởi động khoảng 30 giây** để quạt hút bụi hoạt động ổn định.
@@ -76,11 +77,7 @@ Cắm cảm biến DC01 vào cổng phù hợp trên Yolo UNO (ví dụ cổng D
 > `https://github.com/AITT-VN/yolouno_extension_smartcity.git`
 
 *(Xem hướng dẫn thêm thư viện mở rộng [tại đây](https://docs.ohstem.vn/en/latest/module/thu-vien-yolobit.html) hoặc dán đường link trên vào ô tìm kiếm thư viện mở rộng như hình dưới)*
-<img src="/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/acd1100_04.png" style={{display: 'block', margin: '0 auto', width: '35%'}} alt="minh họa tải thư viện" />
-
-Sử dụng OhStem App, bạn có thể lập trình để đọc dữ liệu PM2.5 từ cảm biến DC01 bằng khối lệnh trong thư viện **Smart City**:
-<img src="/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/dc01_03.png" style={{display: 'block', margin: '0 auto', width: '35%'}} alt="dc01 03" />
-
+<img src="/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/acd1100_04.png" style={{display: 'block', margin: '0 auto', width: '80%'}} alt="minh họa tải thư viện" />
 
 ## 5. Viết chương trình
 
@@ -89,6 +86,8 @@ Sử dụng OhStem App, bạn có thể lập trình để đọc dữ liệu PM
 **Mô tả chương trình:**
 - Đọc dữ liệu bụi mịn PM2.5 (μg/m³) từ cảm biến DC01 sau mỗi 1 giây (hoặc 5 giây).
 - Hiển thị giá trị đo được lên màn hình LCD.
+<img src="/images/yolo_uno/yolo_uno_khoi_lenh/cam_bien/images/dc01_03.png" style={{display: 'block', margin: '0 auto', width: '80%'}} alt="dc01 03" />
+
 
 ### Bảng chỉ số chất lượng không khí theo PM2.5 (theo AQI Việt Nam)
 
