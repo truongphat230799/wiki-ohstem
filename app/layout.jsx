@@ -25,6 +25,19 @@ export const viewport = {
 export default function RootLayout({ children }) {
     return (
         <html lang="vi" dir="ltr" suppressHydrationWarning>
+            <head>
+                {/*
+                  Chuyền định danh phiên sang OpenSTEM LMS (openstem.vn khác eTLD+1
+                  nên không share được cookie). Script đọc data-source qua
+                  document.currentScript nên phải là thẻ thật trong HTML, không
+                  dùng next/script được.
+                */}
+                <script
+                    src="https://openstem.vn/js/ohs-link.js"
+                    data-source="wiki"
+                    defer
+                />
+            </head>
             <body>
                 {children}
                 <AskAI />
