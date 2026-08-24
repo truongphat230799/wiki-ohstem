@@ -3,6 +3,11 @@ import { useMDXComponents as getMDXComponents } from '../../../mdx-components'
 
 export const generateStaticParams = generateStaticParamsFor('mdxPath')
 
+// Every docs page is known at build time, so serve them as fully static assets.
+// Leaving this at the default (true) makes the catch-all route fall back to
+// on-demand rendering, which routes every request through the ISR cache.
+export const dynamicParams = false
+
 export async function generateMetadata(props) {
     const params = await props.params
     const { metadata } = await importPage(params.mdxPath)

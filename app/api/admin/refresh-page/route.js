@@ -13,10 +13,10 @@ export async function POST(request) {
             return Response.json({ error: 'Thiếu path.' }, { status: 400 })
         }
 
-        // Revalidate the specific page and the layout
+        // Revalidate only the specific page. Revalidating the root layout would
+        // invalidate every page on the site, forcing a full regeneration.
         try {
             revalidatePath(pagePath)
-            revalidatePath('/', 'layout')
         } catch (e) {
             // In dev mode, revalidatePath may throw but the page will still be fresh
             console.warn('revalidatePath warning:', e.message)
