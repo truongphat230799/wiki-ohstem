@@ -1,6 +1,7 @@
 export default {
   "index": { "display": "hidden" },
   "lam-quen-control-hub": "Làm quen với Control Hub",
+  "robot-orc-k1": "Robot ORC K1",
   "robot-orc-k2": "Robot ORC K2",
   "robot-orc-k3": "Robot ORC K3",
   "arduino_platformio": "LẬP TRÌNH ORC HUB VỚI PLATFORMIO / ARDUINO",

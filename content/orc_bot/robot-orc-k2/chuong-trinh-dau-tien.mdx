@@ -4,51 +4,70 @@ title: "3. Hướng dẫn lập trình"
 
 # 3. Hướng dẫn lập trình
 
-Phần này hướng dẫn quy trình lập trình cho Robot ORC K2 Starter Kit (2025 - 2026), từ chuẩn bị phần mềm đến nạp chương trình và vận hành bằng Gamepad.
+Phần này hướng dẫn thao tác trên OhStem App để kết nối ORC Control Hub và nạp chương trình cho Robot ORC K2 Starter Kit (2025 - 2026). Phần sơ đồ nối dây đã có trong tài liệu hướng dẫn lắp ráp (HDLR).
 
-## 1. Chuẩn bị phần mềm
+## 1. Kết nối ORC Control Hub với OhStem App
 
-- Truy cập [app.ohstem.vn](https://app.ohstem.vn/) và chọn thiết bị **Yolo UNO**.
-- Vào chế độ **Lập trình**.
-- Kết nối `ORC Control Hub` với máy tính qua cáp USB.
-- Chọn đúng cổng kết nối có tên gần giống **Espressif CDC Device**.
-- Vào mục **Mở rộng**, tìm và cài thư viện **ROBOTICS**.
+- **Bước 1:** Truy cập vào link [https://app.ohstem.vn/](https://app.ohstem.vn/):
 
-## 2. Thiết lập mã nguồn
+![Truy cập OhStem App](/images/orc_bot/orc-bot/images/3.7.png)
 
-- Cấu hình robot với các thông số cơ bản:
+- **Bước 2:** Chọn thiết bị lập trình là **Yolo UNO**:
+
+![Chọn thiết bị Yolo UNO](/images/orc_bot/orc-bot/images/3.8.png)
+
+- **Bước 3:** Chọn vào **Lập trình**:
+
+![Chọn mục Lập trình](/images/orc_bot/orc-bot/images/3.9.png)
+
+- **Bước 4:** Kết nối ORC Control Hub với máy tính bằng dây USB Type C:
+
+![Kết nối ORC Control Hub với máy tính](/images/orc_bot/orc-bot/images/app-orc-hub.jpg)
+
+- **Bước 5:** Chọn icon kết nối có dây/Bluetooth → chọn cổng COM có tên gần giống **Espressif CDC Device (COMxx)** → nhấn **Kết nối**. Số thứ tự cổng COM có thể khác nhau trên mỗi máy tính.
+
+![Chọn cổng kết nối](/images/orc_bot/orc-bot/images/3.11.png)
+
+- **Bước 6:** Kết nối thành công khi biểu tượng USB sáng đèn màu xanh:
+
+![Kết nối thành công](/images/orc_bot/orc-bot/images/3.12.png)
+
+Nếu mạch chưa kết nối được, hãy cập nhật firmware theo hướng dẫn tại [Chương trình đầu tiên](/orc_bot/lam-quen-control-hub/chuong-trinh-dau-tien).
+
+## 2. Cài thư viện ROBOTICS
+
+- **Bước 1:** Trong giao diện lập trình, chọn mục **Mở rộng**.
+- **Bước 2:** Tìm và chọn thư viện **ROBOTICS**.
+- **Bước 3:** Chọn **OK** khi app hỏi tải thư viện về thiết bị.
+- **Bước 4:** Tải thành công, các nhóm khối lệnh **ROBOTICS, ĐỘNG CƠ, DI CHUYỂN, SENSOR, DÒ LINE** sẽ xuất hiện trong danh sách khối lệnh.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k3-laptrinh3.PNG" alt="Tải thư viện ROBOTICS trong mục Mở rộng" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Vào Mở rộng, chọn thư viện ROBOTICS và nhấn OK để tải về thiết bị.</figcaption>
+  </figure>
+</div>
+
+## 3. Nạp chương trình mẫu cho robot ORC K2
+
+- **Code tham khảo cho Robot ORC K2 và K3 (mới nhất)**: [Mở chương trình trên OhStem App](https://app.ohstem.vn/#!/share/yolouno/3JOjsTiKo2Q1u3f089XSY5W7kR1)
+- Mở link ở trên, chọn **Import project** để nạp chương trình vào giao diện lập trình.
+- Kiểm tra lại các thông số cấu hình robot trong chương trình:
   - đường kính bánh xe `60 mm`
   - tỉ số truyền `1:34`
   - encoder `350 ppr`
 - Thiết lập giới hạn góc cho servo `S1` và `S2` để tránh kẹt cơ cấu đẩy trong quá trình vận hành.
-- Kiểm tra lại cổng kết nối trước khi nạp chương trình:
-  - bánh xe trái: `M1 / E1`
-  - bánh xe phải: `M2 / E2`
-  - cơ cấu nâng hạ: `M4`
-  - cơ cấu cuộn bóng: `M3`
-  - servo càng đẩy: `S1`, `S2`
-  - Gamepad Receiver: `I2C 3`
-
-<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
-  <img src="/images/orc_bot/orc-bot/images/k2-codemau.PNG" alt="Code mẫu cho robot ORC K2 dùng động cơ xanh - đen" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
-</div>
-
-## 3. Chương trình mẫu cho robot ORC K2
-
-- Chương trình mẫu dưới đây áp dụng cho **ORC K2 dùng động cơ xanh - đen**.
-- Link code mẫu: [Mở chương trình trên OhStem App](https://app.ohstem.vn/#!/share/yolouno/39QLg7xpyGRzYLoyzveIwYoJ2KL)
-- Cấu hình mẫu sử dụng đúng sơ đồ nối dây:
-  - bánh trái: `M1 / E1`
-  - bánh phải: `M2 / E2`
-  - cơ cấu cuộn bóng: `M3`
-  - cơ cấu nâng hạ: `M4`
-  - servo càng đẩy: `S1`, `S2`
-  - Gamepad Receiver: `I2C 3`
 - Khi chạy thử:
   - joystick dùng để điều khiển di chuyển robot
   - `L1 / L2` dùng để nâng hoặc hạ cơ cấu
   - `R1 / R2` dùng để mở hoặc gập càng đẩy
-- Nếu bạn đang dùng phiên bản động cơ `GA25`, cần kiểm tra lại chiều quay, tốc độ và tham số động cơ trước khi dùng chương trình này.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', margin: '12px 0' }}>
+  <figure style={{ width: '600px', maxWidth: '100%', margin: 0 }}>
+    <img src="/images/orc_bot/orc-bot/images/k2-codemau.PNG" alt="Chương trình mẫu cho robot ORC K2" width="600" height="600" style={{ width: '100%', maxWidth: '600px', height: 'auto', objectFit: 'contain', border: '1px solid #ddd', borderRadius: '8px', background: '#fff', padding: '6px' }} />
+    <figcaption style={{ fontSize: '14px', lineHeight: 1.4, textAlign: 'center', marginTop: '8px' }}>Chương trình mẫu cho robot ORC K2 trên OhStem App.</figcaption>
+  </figure>
+</div>
 
 ## 4. Nạp chương trình và xác nhận hoạt động
 
