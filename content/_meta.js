@@ -11,6 +11,7 @@ export default {
   "orc_bot": "KIT Robot Giáo dục ORC",
   "robot_rover": "Robot Rover",
   "xbot": "Robot xBot",
+  "xbot_evo": "Robot xBot Evo",
   "robot_rio": "Robot Rio",
   "gamekit": "Gamekit",
 
