@@ -20,6 +20,7 @@ export default {
   "aiot": "AIoT KIT",
   "stem_kit": "STEM Starter Kit",
   "citybit": "CityBit - Thành phố Thông minh",
+  "citybit_v2": "CityBit V2 - Thành phố Thông minh",
   "homebit": "HomeBit - Nhà Thông minh",
   "plantbit": "PlantBit - Nông nghiệp Thông minh",
   "green_house": "Kit Nhà kính Thông minh",
